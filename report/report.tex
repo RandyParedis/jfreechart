@@ -1,0 +1,36 @@
+\documentclass[11pt]{article}
+\begin{document}
+	\title{Software Reengineering Project}
+	\author{Mitchel Pyl \& Randy Paredis}
+	\date{}
+	
+	\maketitle
+	
+	\begin{abstract}
+		This document is meant as additional information on the reengineering/refactoring of the \texttt{JFreeChart} project, which was the assignment of the \textsf{Software Reengineering} course of 2019, at the \textsf{University of Antwerp}.
+	\end{abstract}
+	
+	\section{Introduction}
+	\texttt{JFreeChart} is a Java library that can be used to add/show professional-looking graphs and charts in your Java applications. This inheritly implies that is it useful in a lot of different contexts and scenarios that require this kind of feature.
+	
+	The ability for such a library for being flexible and expandable with a vast amount of new features would therefore be an incredible advantage for this.
+	
+	\subsection{Problem at Hand}
+	At this point in time, \texttt{JFreeChart} has a wide range of possible graphs, charts and plots it can generate for any kind of data you'd like. Unfortunately the core of this software; i.e. the drawing of a set of points can be considered \textit{legacy code} and is quite solidly hardcoded within the project.
+	
+	If a user or a client would, for instance, like to create graphs in which every datapoint has a different, predetermined and userdetermined, symbol associated with it\footnote{As was the assignment.}, this would be impossible with the current state of the code. A general fix for this kind of problems within the software-world is to refactor the code so it becomes more flexible and easier to understand.
+	
+	\section{Project Management}
+	
+	\section{Project Analysis and Tool Usage}
+	\subsection{Repository Mining with CodeScene}
+	\subsection{Repository Visualization with Gource}
+	
+	\section{Refactoring}
+	\subsection{Design Recovery}
+	\subsection{Design}
+	\subsection{Management}
+	\subsection{Refactoring}
+	
+	\section{Preserved Behaviour}
+\end{document}
