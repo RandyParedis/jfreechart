@@ -1,4 +1,10 @@
 \documentclass[11pt]{article}
+\usepackage{incgraph, tikz}
+
+\newcommand{\attachment}[1]{
+	\incgraph[label={#1},overlay page number at bottom][scale=0.5]{pictures/#1.png}
+}
+
 \begin{document}
 	\title{Software Reengineering Project}
 	\author{Mitchel Pyl \& Randy Paredis}
@@ -6,11 +12,9 @@
 	
 	\maketitle
 	
-	\begin{abstract}
-		This document is meant as additional information on the reengineering/refactoring of the \texttt{JFreeChart} project, which was the assignment of the \textsf{Software Reengineering} course of 2019, at the \textsf{University of Antwerp}.
-	\end{abstract}
-	
 	\section{Introduction}
+	This document is meant as additional information on the reengineering/refactoring of the \texttt{JFreeChart} project, which was the assignment of the \textsf{Software Reengineering} course of 2019, at the \textsf{University of Antwerp}.
+	
 	\texttt{JFreeChart} is a Java library that can be used to add/show professional-looking graphs and charts in your Java applications. This inheritly implies that is it useful in a lot of different contexts and scenarios that require this kind of feature.
 	
 	The ability for such a library for being flexible and expandable with a vast amount of new features would therefore be an incredible advantage for this.
@@ -23,14 +27,56 @@
 	\section{Project Management}
 	
 	\section{Project Analysis and Tool Usage}
-	\subsection{Repository Mining with CodeScene}
+	In order to solidly identify the issues with \texttt{JFreeChart} and find possible refactoring targets, we made use of a few helpful tools that allowed for clear identification of possible problem areas.
+	
 	\subsection{Repository Visualization with Gource}
+	The first tool we made use of was \textsf{Gource}. It is a clean and fancy piece of software that can turn the history of a git repository into a visual representation. This is useful for a few reasons. First, it allows us to see clearly who the main contributers are. There was no surprise that this was \textsl{David Gilbert}.
 	
-	\section{Refactoring}
-	\subsection{Design Recovery}
-	\subsection{Design}
-	\subsection{Management}
-	\subsection{Refactoring}
+	A second thing we could deduce from this simulation is that the code was not made using TDD\footnote{Test Driven Development}. We can clearly see that there are first adaptations to the codebase, before changing the tests.
 	
-	\section{Preserved Behaviour}
+	Thirdly and finally, we can identify the possible points in time when a refactoring stage happened in this project. These are moments when a lot of files are added, removed, or modified; which is highlighted in \textsf{Gource}. Granted, it is possible that some of these changes are due to merging multiple branches together.
+	
+	We've identified that possible refactorings happened in November 2008 (increase in functionality), March 2013 (update to almost all files), December 2014 (update to almost all files and removal of a lot of files), July 2017 (file tree restructuring) and July 2018 (general changes).
+	
+	\subsection{Repository Mining with CodeScene}
+	Another tool we made use of was \textsf{CodeScene}, the powerful visualization tool using \textit{Predictive Analytics} to find hidden risks and social patterns in your code.
+	
+	\textsf{CodeScene} allowed us to get a general feel of the current state of \texttt{JFreeChart}. It gave us a clear representation of possible refactoring targets (see \textsl{attachment \pageref{refactoring-overview}}) and hotspots (see \textsl{attachment \pageref{hotspots-overview}}) within the code\footnote{Please refer to the attachments at the end of this document.}.
+	
+	When we take a deeper look into the code (or at least the graphical representation thereof), we can identify that we most probably will need to take a look at the \texttt{org.jfree.chart.renderer} package (see \textsl{attachment \pageref{hotspots-package-renderer}}) and the \texttt{org.jfree.chart.plot} package (see \textsl{attachment \pageref{hotspots-package-plot}}), as far as the hotspots are concerned.
+	
+	On the topic of refactoring targets, it is clear that the \texttt{org.jfree.chart.plot} package (see \textsl{attachment \pageref{refactoring-package-plot}}) really inquires our attention. More specifically the \texttt{XYPlot} (\textsl{attachment \pageref{refactoring-XYPlot}}), \texttt{CategoryPlot} (\textsl{attachment \pageref{refactoring-CategoryPlot}}), \texttt{PiePlot} (\textsl{attachment \pageref{refactoring-PiePlot}}), \texttt{AbstractXYItemRenderer} (\textsl{attachment \pageref{refactoring-AbstractXYItemRenderer}}) and\\ \texttt{AbstractCategoryItemRenderer} (\textsl{attachment \pageref{refactoring-AbstractCategoryItemRenderer}}) classes. In the attachments, the most complex functions are listed (sorted from high to low complexity). These top functions\footnote{The ones in red.} are most likely to be refactoring targets.
+	
+	\subsection{Code Coverage with Cobertura}
+	Using the already available \textsf{Cobertura} in the project, we were able to get an overview of the general coverage of the project. This overview gives us enough information in order to determine which classes and functions were not covered in the project, also yielding possible refactoring targets.
+	
+	In general, we can deduce that the code coverage of \texttt{JFreeChart} at this point in time is way below comfortable for us.
+	
+	We also noticed that there is currently no mutation testing being done on this project. Even though we do realize this would give way too much situations and possibilities to cover, we currently have no idea of how good the tests currently are.
+	
+%	\section{Refactoring}
+%	\subsection{Design Recovery}
+%	\subsection{Design}
+%	\subsection{Management}
+%	\subsection{Refactoring}
+%	
+%	\section{Preserved Behaviour}
+	
+	\section{Attachments}
+	On the following pages, we've included a set of screenshots from \textsf{CodeScene} that are referred to in the previous sections. The attachment number is overlayed over the image.
+	
+	\clearpage
+	\setcounter{page}{1}
+	\attachment{hotspots-overview}
+	\attachment{hotspots-package-renderer}
+	\attachment{hotspots-package-plot}
+	\attachment{refactoring-overview}
+	\attachment{refactoring-package-plot}
+	\attachment{refactoring-list}
+	\attachment{refactoring-XYPlot}
+	\attachment{refactoring-CategoryPlot}
+	\attachment{refactoring-PiePlot}
+	\attachment{refactoring-AbstractXYItemRenderer}
+	\attachment{refactoring-AbstractCategoryItemRenderer}
+	
 \end{document}
