@@ -1,5 +1,5 @@
 \documentclass[11pt]{article}
-\usepackage{incgraph, tikz}
+\usepackage{incgraph, tikz, csquotes}
 
 \newcommand{\attachment}[1]{
 	\incgraph[label={#1},overlay page number at bottom][scale=0.5]{pictures/#1.png}
@@ -13,30 +13,48 @@
 	\maketitle
 	
 	\section{Introduction}
-	This document is meant as additional information on the reengineering/refactoring of the \texttt{JFreeChart} project, which was the assignment of the \textsf{Software Reengineering} course of 2019, at the \textsf{University of Antwerp}.
+	This document is meant as additional information on the reengineering and refactoring of the \texttt{JFreeChart} project, which was the assignment of the \textsf{Software Reengineering} course of 2019, at the \textsf{University of Antwerp}.
 	
 	\texttt{JFreeChart} is a Java library that can be used to add/show professional-looking graphs and charts in your Java applications. This inheritly implies that is it useful in a lot of different contexts and scenarios that require this kind of feature.
 	
 	The ability for such a library for being flexible and expandable with a vast amount of new features would therefore be an incredible advantage for this.
 	
 	\subsection{Problem at Hand}
-	At this point in time, \texttt{JFreeChart} has a wide range of possible graphs, charts and plots it can generate for any kind of data you'd like. Unfortunately the core of this software; i.e. the drawing of a set of points can be considered \textit{legacy code} and is quite solidly hardcoded within the project.
+	At this point in time, \texttt{JFreeChart} has a wide range of possible graphs, charts and plots it can generate for any kind of data you'd like. Unfortunately, we don't have any experience with this project and/or its uses. When trying to \textsl{Read all the Code in One Hour} (3.2 from \cite{oorp}) and to \textsl{Skim the Documentation} (3.3 from \cite{oorp}), it is quite difficult to get a good understanding of what exactly the core of this library does.
 	
 	If a user or a client would, for instance, like to create graphs in which every datapoint has a different, predetermined and userdetermined, symbol associated with it\footnote{As was the assignment.}, this would be impossible with the current state of the code. A general fix for this kind of problems within the software-world is to refactor the code so it becomes more flexible and easier to understand.
 	
+	When we take a closer look at the code, we can identify a few different symptoms why the code in general should be refactored (\textit{Missing tests}, \textit{Too much time for simple changes}...; 1.1 from \cite{oorp}).
+	
 	\section{Project Management}
+	\subsection{Setting Direction}
+	The most important aspect of managing a reengineering project is to find a strategy in which the reengineering will be the most useful and succesful (Chapter 2 from \cite{oorp}). This is why we first discussed a strategy to use in the actual reengineering, before jumping into the code like headless chickens.
+	
+	Using some tools, we were able to \textsl{Agree on Maxims} (2.1 from \cite{oorp}) and more specifically the \textsl{Most Valuable First} (2.4 from \cite{oorp}). With these strategies in mind, we can give all refactoring targets a weight, so we can easily list the most important ones. As described in 2.4 from \cite{oorp}, such a weight technically has nothing to do with cyclic complexities, but with what's valuable to the customer. In our case, these luckily (or coincidentally) line up to a certain point.
+	
+	Learning the most important rule in software reengineering,
+	\textsl{If It Ain't Broke, Don't Fix It.} (2.6 from \cite{oorp})\footnote{Note: this is a rule, not a lifeline, nor an excuse. (as per \cite{oorp})}, we know we'd best not touch any code that is "working" correctly and has nothing to do with any of the valuable targets. For instance, within the scope of the assignment, it is not useful to take a look at refactoring the \texttt{ImageMapUtils}.
+	
+	While on the topic, although all strategies have their merit and are important in some way, we believe some of them are more important and/or practical to follow. \textsl{Keep It Simple} (2.7 from \cite{oorp}) is one of them, which we will keep in mind during the refactoring process.
+	
 	
 	\section{Project Analysis and Tool Usage}
-	In order to solidly identify the issues with \texttt{JFreeChart} and find possible refactoring targets, we made use of a few helpful tools that allowed for clear identification of possible problem areas.
+	In order to solidly identify the issues with \texttt{JFreeChart} and find possible refactoring targets, we made use of a few helpful tools that allowed for clear identification of possible problem areas. This way we can clearly \textsl{Study the Exceptional Entities} (4.3 from \cite{oorp}). Even though we know that what we find may be tedious or ambiguous to interpret, we will still make our conclusions based on what we know and expect.
 	
 	\subsection{Repository Visualization with Gource}
 	The first tool we made use of was \textsf{Gource}. It is a clean and fancy piece of software that can turn the history of a git repository into a visual representation. This is useful for a few reasons. First, it allows us to see clearly who the main contributers are. There was no surprise that this was \textsl{David Gilbert}.
 	
 	A second thing we could deduce from this simulation is that the code was not made using TDD\footnote{Test Driven Development}. We can clearly see that there are first adaptations to the codebase, before changing the tests.
 	
-	Thirdly and finally, we can identify the possible points in time when a refactoring stage happened in this project. These are moments when a lot of files are added, removed, or modified; which is highlighted in \textsf{Gource}. Granted, it is possible that some of these changes are due to merging multiple branches together.
+	Thirdly, we can identify the possible points in time when a refactoring stage happened in this project. These are moments when a lot of files are added, removed, or modified; which is highlighted in \textsf{Gource}. Granted, it is possible that some of these changes are due to merging multiple branches together.
 	
 	We've identified that possible refactorings happened in November 2008 (increase in functionality), March 2013 (update to almost all files), December 2014 (update to almost all files and removal of a lot of files), July 2017 (file tree restructuring) and July 2018 (general changes).
+	
+	Finally, we can use the resulting visualization to \textsl{Learn from the Past} (5.5 from \cite{oorp}). We can see which classes were changed a lot and which ones remained untouched for the main bulk of the development.
+	
+	Classes that changed a lot most likely indicate that they are coupled to other classes in the system, marking these classes as important in understanding the general feel of the system.
+	
+	Classes that remained mainly untouched could indicate abandoned code, but let's assume (for academic purposes) another possibility. Let's say that these classes indicate features or functionality that are complete. Usually these features cannot give a good enough representation of what's important in the system and whatnot. In either case of untouched code, we can remove our focus from these classes.
 	
 	\subsection{Repository Mining with CodeScene}
 	Another tool we made use of was \textsf{CodeScene}, the powerful visualization tool using \textit{Predictive Analytics} to find hidden risks and social patterns in your code.
@@ -48,7 +66,9 @@
 	On the topic of refactoring targets, it is clear that the \texttt{org.jfree.chart.plot} package (see \textsl{attachment \pageref{refactoring-package-plot}}) really inquires our attention. More specifically the \texttt{XYPlot} (\textsl{attachment \pageref{refactoring-XYPlot}}), \texttt{CategoryPlot} (\textsl{attachment \pageref{refactoring-CategoryPlot}}), \texttt{PiePlot} (\textsl{attachment \pageref{refactoring-PiePlot}}), \texttt{AbstractXYItemRenderer} (\textsl{attachment \pageref{refactoring-AbstractXYItemRenderer}}) and\\ \texttt{AbstractCategoryItemRenderer} (\textsl{attachment \pageref{refactoring-AbstractCategoryItemRenderer}}) classes. In the attachments, the most complex functions are listed (sorted from high to low complexity). These top functions\footnote{The ones in red.} are most likely to be refactoring targets.
 	
 	\subsection{Code Coverage with Cobertura}
-	Using the already available \textsf{Cobertura} in the project, we were able to get an overview of the general coverage of the project. This overview gives us enough information in order to determine which classes and functions were not covered in the project, also yielding possible refactoring targets.
+	6.3 of \cite{oorp} tells us to \textsl{Use a Testing Framework}. Not only is this a good idea in refactoring, but in all software projects in general. JUnit was already available in \texttt{JFreeChart}, so there is no need to change of alter this part of the project. Linked with JUnit was \textsf{Cobertura}, a maven plugin that allows us to check how much code was covered with the available tests.
+	
+	The overview that is generated from this plugin gives us enough information in order to determine which classes and functions were not covered in the project, also yielding possible missing tests. These missing tests can be seen as a symptom for code requiring refactoring (1.1 from \cite{oorp}). But as discussed above, we will \textsl{Fix Problems, Not Symptoms} (2.5 from \cite{oorp}) and more specifically, we will mainly focus on the tests that concern our main refactoring targets.
 	
 	In general, we can deduce that the code coverage of \texttt{JFreeChart} at this point in time is way below comfortable for us.
 	
@@ -61,6 +81,14 @@
 %	\subsection{Refactoring}
 %	
 %	\section{Preserved Behaviour}
+
+	\section{Bibliography}
+	\begin{thebibliography}{9}
+		\bibitem{oorp} 
+Serge Demeyer, St\'{e}phane Ducasse, Oscar Nierstrasz.
+\textit{Object-Oriented Reengineering Patterns}. 2009.
+	\end{thebibliography}
+	
 	
 	\section{Attachments}
 	On the following pages, we've included a set of screenshots from \textsf{CodeScene} that are referred to in the previous sections. The attachment number is overlayed over the image.
