@@ -1,0 +1,29 @@
+
+digraph Pert {
+	rankdir=LR;
+	node[shape=box];
+	1 [label="1. Start"];
+	2 [label="2. Code Analysis"];
+	31 [label="3.1. Repo Visualisation"];
+	32 [label="3.2. Repo Mining"];
+	33 [label="3.3. Code Coverage"];
+	4 [label="4. Design"];
+	51 [label="5.1. Test Restructuring"];
+	52 [label="5.2. Test Alterations"];
+	6 [label="6. Management"];
+	7 [label="7. Code Refactoring"];
+	
+	1 -> 2;
+	2 -> 31;
+	2 -> 32;
+	2 -> 33;
+	31 -> 4;
+	32 -> 4;
+	33 -> 4;
+	4 -> 51;
+	4 -> 52;
+	51 -> 7;
+	52 -> 7;
+	1 -> 6;
+	6 -> 7;
+}
