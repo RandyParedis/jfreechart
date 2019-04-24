@@ -15,14 +15,14 @@
 	\section{Introduction}
 	This document is meant as additional information on the reengineering and refactoring of the \texttt{JFreeChart} project, which was the assignment of the \textsf{Software Reengineering} course of 2019, at the \textsf{University of Antwerp}.
 	
-	During this paper and the process of reengineering the \texttt{JFreeChart} project, we lied heavily on \cite{demeyer2009object}, making sure we could complete our assignment as successful as possible.
+	During this paper and the process of reengineering the \texttt{JFreeChart} project, we relied heavily on \cite{demeyer2009object}, making sure we could complete our assignment as successful as possible.
 	
-	\texttt{JFreeChart} is a Java library that can be used to add/show professional-looking graphs and charts in your Java applications. This inheritly implies that is it useful in a lot of different contexts and scenarios that require this kind of feature.
+	\texttt{JFreeChart} \cite{jfreechart} is a Java library that can be used to add/show professional-looking graphs and charts in your Java applications. This inheritly implies that is it useful in a lot of different contexts and scenarios that require this kind of feature.
 	
 	The ability for such a library for being flexible and expandable with a vast amount of new features would therefore be an incredible advantage for this.
 	
 	\subsection{Problem at Hand}
-	At this point in time, \texttt{JFreeChart} \cite{jfreechart} has a wide range of possible graphs, charts and plots it can generate for any kind of data you'd like. However, there is some functionality missing that we'd like to have. Namely, we'd like to be able to have a different shape or symbol for each datapoint. In order for us to introduce this feature, we'll first have to figure out the current way rendering of datapoints is handeled and afterwards we'll refactor the code so we can easily add this feature.
+	At this point in time, \texttt{JFreeChart} has a wide range of possible graphs, charts and plots it can generate for any kind of data you'd like. However, there is some functionality missing that we'd like to have. Namely, we'd like to be able to have a different shape or symbol for each datapoint. In order for us to introduce this feature, we'll first have to figure out the current way rendering of datapoints is handeled and afterwards we'll refactor the code so we can easily add this feature.
 	
 	Additionally, when we take a closer look at the code in general, there are some symptoms indicating it should be refactored\footnote{\textit{Missing tests}, \textit{Too much time for simple changes}...; 1.1 from \cite{demeyer2009object})}.
 	
@@ -45,9 +45,9 @@
 		\label{pert} 
 	\end{figure} 
    
-	In order for us to cleanly work on the reengineering of \texttt{JFreeChart}, we decided to make a \textsf{PERT}-chart \cite{pert}, as you can see in \textsl{figure \ref{pert}}. This is a simplified model, without annotations of any critical tasks, paths, or the latest end dates for each task. 
+	In order for us to cleanly work on the reengineering of \texttt{JFreeChart}, we decided to make a \textsf{PERT}-chart \cite{pert}, as you can see in \textsl{Fig.\,\ref{pert}}. This is a simplified model, without annotations of any critical tasks, paths, or the latest end dates for each task. 
    
-	As you can see, we will manage throughout the entire process of refactoring the project. Tasks \textsl{3.1. Repo Visualisation}, \textsl{3.2 Repo Mining} and \textsl{3.3 Code Coverage} can be found later in this document, respectively in \textsl{sections \ref{sec:gource}, \ref{sec:codescene}} and \textsl{\ref{sec:coco}}. 
+	As you can see, \textsl{Management} is a task we will do throughout the entire process of refactoring the project. Tasks \textsl{3.1. Repo Visualisation}, \textsl{3.2 Repo Mining} and \textsl{3.3 Code Coverage} can be found later in this document, respectively in \textsl{sections \ref{sec:gource}, \ref{sec:codescene}} and \textsl{\ref{sec:coco}}. 
    
 	
 	\subsection{First Contact}
@@ -61,7 +61,7 @@
 	\label{sec:gource}
 	The first tool we made use of was \textsf{Gource} \cite{gource}. It is a clean and fancy piece of software that can turn the history of a git repository into a visual representation. This is useful for a few reasons. First, it allows us to see clearly who the main contributers are. There was no surprise that this was \textsl{David Gilbert}.
 	
-	A second thing we could deduce from this simulation is that the code was not made using TDD\footnote{Test Driven Development}. We can clearly see that there are first adaptations to the codebase, before changing the tests.
+	A second thing we could deduce from this simulation is that the code was not made using the \textsf{Test Driven Development} methodology. We can clearly see that there are first adaptations to the codebase, before changing the tests.
 	
 	Thirdly, we can identify the possible points in time when a refactoring stage happened in this project. These are moments when a lot of files are added, removed, or modified; which is highlighted in \textsf{Gource}. Granted, it is possible that some of these changes are due to merging multiple branches together.
 	
@@ -71,7 +71,7 @@
 	
 	Classes that changed a lot most likely indicate that they are coupled to other classes in the system, marking these classes as important in understanding the general feel of the system.
 	
-	Classes that remained mainly untouched could indicate abandoned code, but let's assume (for academic purposes) another possibility. Let's say that these classes indicate features or functionality that are complete. Usually these features cannot give a good enough representation of what's important in the system and whatnot. In either case of untouched code, we can remove our focus from these classes.
+	Classes that remained mainly untouched could indicate abandoned code, but let's assume another possibility. Let's say that these classes indicate features or functionality that are complete. Usually these features cannot give a good enough representation of what's important in the system and whatnot. In either case of untouched code, we can remove our focus from these classes.
 	
 	\subsection{Repository Mining with CodeScene}
 	\label{sec:codescene}
@@ -85,7 +85,7 @@
 	
 	\subsection{Code Coverage with Cobertura}
 	\label{sec:coco}
-	6.3 of \cite{demeyer2009object} tells us to \textsl{Use a Testing Framework}. Not only is this a good idea in refactoring, but in all software projects in general. JUnit was already available in \texttt{JFreeChart}, so there is no need to change of alter this part of the project. Linked with JUnit was \textsf{Cobertura} \cite{cobertura}, a maven plugin that allows us to check how much code was covered with the available tests.
+	Chapter 6.3 of \cite{demeyer2009object} tells us to \textsl{Use a Testing Framework}. Not only is this a good idea in refactoring, but in all software projects in general. JUnit was already available in \texttt{JFreeChart}, so there is no need to change of alter this part of the project. Linked with JUnit was \textsf{Cobertura} \cite{cobertura}, a maven plugin that allows us to check how much code was covered with the available tests.
 	
 	The overview that is generated from this plugin gives us enough information in order to determine which classes and functions were not covered in the project, also yielding possible missing tests. These missing tests can be seen as a symptom for code requiring refactoring (1.1 from \cite{demeyer2009object}). But as discussed above, we will \textsl{Fix Problems, Not Symptoms} (2.5 from \cite{demeyer2009object}) and more specifically, we will mainly focus on the tests that concern our main refactoring targets.
 	
@@ -101,10 +101,11 @@
 %	
 %	\section{Preserved Behaviour}
 
+	\clearpage
 	\bibliographystyle{plain}
 	\bibliography{references}
 	
-	\section{Attachments}
+	\section*{Attachments}
 	On the following pages, we've included a set of screenshots from \textsf{CodeScene} that are referred to in the previous sections. The attachment number is overlayed over the image.
 	
 	\clearpage
