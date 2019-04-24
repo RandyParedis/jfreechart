@@ -10,5 +10,12 @@
 # Intellij Idea
 .idea
 *.iml
+
+# LaTeX
 *.aux
 *.synctex.gz
+*.log
+*.bbl
+*.blg
+*.dvi
+*.out.ps
