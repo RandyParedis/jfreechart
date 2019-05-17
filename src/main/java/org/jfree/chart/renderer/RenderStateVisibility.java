@@ -9,7 +9,8 @@ import java.io.Serializable;
 // SERIES VISIBLE (not yet respected by all renderers)
 // SERIES VISIBLE IN LEGEND (not yet respected by all renderers)
 public class RenderStateVisibility implements Serializable, Cloneable, IRendererVisibility {
-    private final AbstractRenderer abstractRenderer;
+    private AbstractRenderer abstractRenderer;
+
     /**
      * A list of flags that controls whether or not each series is visible.
      */
@@ -32,6 +33,10 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
         this.abstractRenderer = abstractRenderer;
     }
 
+    public void setAbstractRenderer(AbstractRenderer abstractRenderer) {
+        this.abstractRenderer = abstractRenderer;
+    }
+
     /**
      * Returns a boolean that indicates whether or not the specified item
      * should be drawn.
@@ -40,6 +45,7 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
      * @param item   the item index.
      * @return A boolean.
      */
+    @Override
     public boolean getItemVisible(int series, int item) {
         return isSeriesVisible(series);
     }
@@ -53,6 +59,7 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
      * @param series the series index.
      * @return A boolean.
      */
+    @Override
     public boolean isSeriesVisible(int series) {
         boolean result = this.defaultSeriesVisible;
         Boolean b = this.seriesVisibleList.getBoolean(series);
@@ -69,6 +76,7 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
      * @return The flag (possibly {@code null}).
      * @see #setSeriesVisible(int, Boolean)
      */
+    @Override
     public Boolean getSeriesVisible(int series) {
         return this.seriesVisibleList.getBoolean(series);
     }
@@ -81,6 +89,7 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
      * @param visible the flag ({@code null} permitted).
      * @see #getSeriesVisible(int)
      */
+    @Override
     public void setSeriesVisible(int series, Boolean visible) {
         setSeriesVisible(series, visible, true);
     }
@@ -95,6 +104,7 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
      * @param notify  notify listeners?
      * @see #getSeriesVisible(int)
      */
+    @Override
     public void setSeriesVisible(int series, Boolean visible, boolean notify) {
         this.seriesVisibleList.setBoolean(series, visible);
         if (notify) {
@@ -113,6 +123,7 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
      * @return The default visibility.
      * @see #setDefaultSeriesVisible(boolean)
      */
+    @Override
     public boolean getDefaultSeriesVisible() {
         return this.defaultSeriesVisible;
     }
@@ -124,6 +135,7 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
      * @param visible the flag.
      * @see #getDefaultSeriesVisible()
      */
+    @Override
     public void setDefaultSeriesVisible(boolean visible) {
         // defer argument checking...
         setDefaultSeriesVisible(visible, true);
@@ -137,6 +149,7 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
      * @param notify  notify listeners?
      * @see #getDefaultSeriesVisible()
      */
+    @Override
     public void setDefaultSeriesVisible(boolean visible, boolean notify) {
         this.defaultSeriesVisible = visible;
         if (notify) {
@@ -156,6 +169,7 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
      * @param series the series index.
      * @return A boolean.
      */
+    @Override
     public boolean isSeriesVisibleInLegend(int series) {
         boolean result = this.defaultSeriesVisibleInLegend;
         Boolean b = this.seriesVisibleInLegendList.getBoolean(series);
@@ -175,6 +189,7 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
      * @return The flag (possibly {@code null}).
      * @see #setSeriesVisibleInLegend(int, Boolean)
      */
+    @Override
     public Boolean getSeriesVisibleInLegend(int series) {
         return this.seriesVisibleInLegendList.getBoolean(series);
     }
@@ -187,6 +202,7 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
      * @param visible the flag ({@code null} permitted).
      * @see #getSeriesVisibleInLegend(int)
      */
+    @Override
     public void setSeriesVisibleInLegend(int series, Boolean visible) {
         setSeriesVisibleInLegend(series, visible, true);
     }
@@ -201,6 +217,7 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
      * @param notify  notify listeners?
      * @see #getSeriesVisibleInLegend(int)
      */
+    @Override
     public void setSeriesVisibleInLegend(int series, Boolean visible,
                                          boolean notify) {
         this.seriesVisibleInLegendList.setBoolean(series, visible);
@@ -215,6 +232,7 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
      * @return The default visibility.
      * @see #setDefaultSeriesVisibleInLegend(boolean)
      */
+    @Override
     public boolean getDefaultSeriesVisibleInLegend() {
         return this.defaultSeriesVisibleInLegend;
     }
@@ -226,6 +244,7 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
      * @param visible the flag.
      * @see #getDefaultSeriesVisibleInLegend()
      */
+    @Override
     public void setDefaultSeriesVisibleInLegend(boolean visible) {
         // defer argument checking...
         setDefaultSeriesVisibleInLegend(visible, true);
@@ -239,6 +258,7 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
      * @param notify  notify listeners?
      * @see #getDefaultSeriesVisibleInLegend()
      */
+    @Override
     public void setDefaultSeriesVisibleInLegend(boolean visible,
                                                 boolean notify) {
         this.defaultSeriesVisibleInLegend = visible;

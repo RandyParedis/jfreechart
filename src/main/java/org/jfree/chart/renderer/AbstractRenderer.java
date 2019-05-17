@@ -2511,7 +2511,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         if (this.defaultEntityRadius != that.defaultEntityRadius) {
             return false;
         }
-        if (!this.getVisibility().equals(that.getVisibility())) {
+        if (!ObjectUtils.equal(this.getVisibility(), that.getVisibility())) {
             return false;
         }
         if (!ObjectUtils.equal(this.paintList, that.paintList)) {
@@ -2684,8 +2684,9 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     protected Object clone() throws CloneNotSupportedException {
         AbstractRenderer clone = (AbstractRenderer) super.clone();
 
-        if (this.getVisibility() != null) {
+        if (this.renderStateVisibility != null) {
             clone.renderStateVisibility = (RenderStateVisibility) this.renderStateVisibility.clone();
+            clone.renderStateVisibility.setAbstractRenderer(clone);
         }
 
         // 'paint' : immutable, no need to clone reference

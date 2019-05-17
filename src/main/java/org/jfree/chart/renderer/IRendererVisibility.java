@@ -4,11 +4,9 @@ import org.jfree.chart.event.RendererChangeEvent;
 
 public interface IRendererVisibility {
 
-    //// VISIBLE //////////////////////////////////////////////////////////////
-
     /**
      * Returns a boolean that indicates whether or not the specified item
-     * should be drawn (this is typically used to hide an entire series).
+     * should be drawn.
      *
      * @param series the series index.
      * @param item   the item index.
@@ -18,7 +16,9 @@ public interface IRendererVisibility {
 
     /**
      * Returns a boolean that indicates whether or not the specified series
-     * should be drawn (this is typically used to hide an entire series).
+     * should be drawn.  In fact this method should be named
+     * lookupSeriesVisible() to be consistent with the other series
+     * attributes and avoid confusion with the getSeriesVisible() method.
      *
      * @param series the series index.
      * @return A boolean.
@@ -65,8 +65,8 @@ public interface IRendererVisibility {
     boolean getDefaultSeriesVisible();
 
     /**
-     * Sets the default visibility and sends a {@link RendererChangeEvent} to all
-     * registered listeners.
+     * Sets the default series visibility and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param visible the flag.
      * @see #getDefaultSeriesVisible()
@@ -74,7 +74,7 @@ public interface IRendererVisibility {
     void setDefaultSeriesVisible(boolean visible);
 
     /**
-     * Sets the default visibility and, if requested, sends
+     * Sets the default series visibility and, if requested, sends
      * a {@link RendererChangeEvent} to all registered listeners.
      *
      * @param visible the visibility.
@@ -82,8 +82,6 @@ public interface IRendererVisibility {
      * @see #getDefaultSeriesVisible()
      */
     void setDefaultSeriesVisible(boolean visible, boolean notify);
-
-    // SERIES VISIBLE IN LEGEND (not yet respected by all renderers)
 
     /**
      * Returns {@code true} if the series should be shown in the legend,
@@ -97,7 +95,7 @@ public interface IRendererVisibility {
     /**
      * Returns the flag that controls whether a series is visible in the
      * legend.  This method returns only the "per series" settings - to
-     * incorporate the override and base settings as well, you need to use the
+     * incorporate the default settings as well, you need to use the
      * {@link #isSeriesVisibleInLegend(int)} method.
      *
      * @param series the series index (zero-based).
@@ -154,6 +152,6 @@ public interface IRendererVisibility {
      * @param notify  notify listeners?
      * @see #getDefaultSeriesVisibleInLegend()
      */
-    void setDefaultSeriesVisibleInLegend(boolean visible, boolean notify);
-
+    void setDefaultSeriesVisibleInLegend(boolean visible,
+                                         boolean notify);
 }
