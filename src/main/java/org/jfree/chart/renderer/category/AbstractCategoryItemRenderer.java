@@ -137,11 +137,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.CategoryItemEntity;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
-import org.jfree.chart.labels.CategoryItemLabelGenerator;
-import org.jfree.chart.labels.CategorySeriesLabelGenerator;
-import org.jfree.chart.labels.CategoryToolTipGenerator;
-import org.jfree.chart.labels.ItemLabelPosition;
-import org.jfree.chart.labels.StandardCategorySeriesLabelGenerator;
+import org.jfree.chart.labels.*;
 import org.jfree.chart.plot.CategoryCrosshairState;
 import org.jfree.chart.plot.CategoryMarker;
 import org.jfree.chart.plot.CategoryPlot;
@@ -1443,8 +1439,8 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             else {
                 position = getNegativeItemLabelPosition(row, column);
             }
-            Point2D anchorPoint = calculateLabelAnchorPoint(
-                    position.getItemLabelAnchor(), x, y, orientation);
+            Point2D anchorPoint = ItemLabelAnchor.calculateLabelAnchorPoint(
+                    position.getItemLabelAnchor(), x, y, orientation, getItemLabelAnchorOffset());
             TextUtils.drawRotatedString(label, g2,
                     (float) anchorPoint.getX(), (float) anchorPoint.getY(),
                     position.getTextAnchor(),

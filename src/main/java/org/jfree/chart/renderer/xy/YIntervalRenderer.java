@@ -63,6 +63,7 @@ import java.io.Serializable;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
+import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
 import org.jfree.chart.labels.XYItemLabelGenerator;
 import org.jfree.chart.plot.CrosshairState;
@@ -276,8 +277,8 @@ public class YIntervalRenderer extends AbstractXYItemRenderer
                 series, item);
 
         ItemLabelPosition position = getNegativeItemLabelPosition(series, item);
-        Point2D anchorPoint = calculateLabelAnchorPoint(
-                position.getItemLabelAnchor(), x, y, orientation);
+        Point2D anchorPoint = ItemLabelAnchor.calculateLabelAnchorPoint(
+                position.getItemLabelAnchor(), x, y, orientation, getItemLabelAnchorOffset());
         TextUtils.drawRotatedString(label, g2,
                 (float) anchorPoint.getX(), (float) anchorPoint.getY(),
                 position.getTextAnchor(), position.getAngle(),

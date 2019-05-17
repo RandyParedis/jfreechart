@@ -160,11 +160,7 @@ import org.jfree.chart.entity.XYItemEntity;
 import org.jfree.chart.event.AnnotationChangeEvent;
 import org.jfree.chart.event.AnnotationChangeListener;
 import org.jfree.chart.event.RendererChangeEvent;
-import org.jfree.chart.labels.ItemLabelPosition;
-import org.jfree.chart.labels.StandardXYSeriesLabelGenerator;
-import org.jfree.chart.labels.XYItemLabelGenerator;
-import org.jfree.chart.labels.XYSeriesLabelGenerator;
-import org.jfree.chart.labels.XYToolTipGenerator;
+import org.jfree.chart.labels.*;
 import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.DrawingSupplier;
 import org.jfree.chart.plot.IntervalMarker;
@@ -1635,8 +1631,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             }
 
             // work out the label anchor point...
-            Point2D anchorPoint = calculateLabelAnchorPoint(
-                    position.getItemLabelAnchor(), x, y, orientation);
+            Point2D anchorPoint = ItemLabelAnchor.calculateLabelAnchorPoint(
+                    position.getItemLabelAnchor(), x, y, orientation, getItemLabelAnchorOffset());
             TextUtils.drawRotatedString(label, g2,
                     (float) anchorPoint.getX(), (float) anchorPoint.getY(),
                     position.getTextAnchor(), position.getAngle(),
