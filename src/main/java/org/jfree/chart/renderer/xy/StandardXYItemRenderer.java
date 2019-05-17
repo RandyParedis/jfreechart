@@ -582,7 +582,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
         LegendItem result = null;
         XYDataset dataset = plot.getDataset(datasetIndex);
         if (dataset != null) {
-            if (getItemVisible(series, 0)) {
+            if (getVisibility().getItemVisible(series, 0)) {
                 String label = getLegendItemLabelGenerator().generateLabel(
                         dataset, series);
                 String description = label;
@@ -737,7 +737,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
             ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
             int series, int item, CrosshairState crosshairState, int pass) {
 
-        boolean itemVisible = getItemVisible(series, item);
+        boolean itemVisible = getVisibility().getItemVisible(series, item);
 
         // setup for collecting optional entity info...
         Shape entityArea = null;

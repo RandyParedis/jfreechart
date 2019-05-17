@@ -459,7 +459,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
         }
 
         // check that a legend item needs to be displayed...
-        if (!isSeriesVisible(series) || !isSeriesVisibleInLegend(series)) {
+        if (!getVisibility().isSeriesVisible(series) || !getVisibility().isSeriesVisibleInLegend(series)) {
             return null;
         }
 
@@ -588,7 +588,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
         int pass) {
 
         // do nothing if item is not visible
-        if (!getItemVisible(row, column)) {
+        if (!getVisibility().getItemVisible(row, column)) {
             return;
         }
 

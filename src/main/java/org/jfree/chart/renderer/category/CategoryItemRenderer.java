@@ -117,6 +117,7 @@ import org.jfree.chart.plot.CategoryMarker;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.renderer.IRendererVisibility;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.urls.CategoryURLGenerator;
 import org.jfree.data.Range;
@@ -139,6 +140,13 @@ import org.jfree.data.category.CategoryDataset;
  * non-{@code null} values.
  */
 public interface CategoryItemRenderer extends LegendItemSource {
+
+    /**
+     * Returns the series visible render state for the renderer.
+     *
+     * @return Series visible render state.
+     */
+    IRendererVisibility getVisibility();
 
     /**
      * Returns the number of passes through the dataset required by the
@@ -221,174 +229,6 @@ public interface CategoryItemRenderer extends LegendItemSource {
                                                 CategoryPlot plot,
                                                 int rendererIndex,
                                                 PlotRenderingInfo info);
-
-    /**
-     * Returns a boolean that indicates whether or not the specified item
-     * should be drawn (this is typically used to hide an entire series).
-     *
-     * @param series  the series index.
-     * @param item  the item index.
-     *
-     * @return A boolean.
-     */
-    public boolean getItemVisible(int series, int item);
-
-    /**
-     * Returns a boolean that indicates whether or not the specified series
-     * should be drawn (this is typically used to hide an entire series).
-     *
-     * @param series  the series index.
-     *
-     * @return A boolean.
-     */
-    public boolean isSeriesVisible(int series);
-
-    /**
-     * Returns the flag that controls whether a series is visible.
-     *
-     * @param series  the series index (zero-based).
-     *
-     * @return The flag (possibly {@code null}).
-     *
-     * @see #setSeriesVisible(int, Boolean)
-     */
-    public Boolean getSeriesVisible(int series);
-
-    /**
-     * Sets the flag that controls whether a series is visible and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param visible  the flag ({@code null} permitted).
-     *
-     * @see #getSeriesVisible(int)
-     */
-    public void setSeriesVisible(int series, Boolean visible);
-
-    /**
-     * Sets the flag that controls whether a series is visible and, if
-     * requested, sends a {@link RendererChangeEvent} to all registered
-     * listeners.
-     *
-     * @param series  the series index.
-     * @param visible  the flag ({@code null} permitted).
-     * @param notify  notify listeners?
-     *
-     * @see #getSeriesVisible(int)
-     */
-    public void setSeriesVisible(int series, Boolean visible, boolean notify);
-
-    /**
-     * Returns the default visibility for all series.
-     *
-     * @return The default visibility.
-     *
-     * @see #setDefaultSeriesVisible(boolean)
-     */
-    public boolean getDefaultSeriesVisible();
-
-    /**
-     * Sets the default visibility and sends a {@link RendererChangeEvent} to all
-     * registered listeners.
-     *
-     * @param visible  the flag.
-     *
-     * @see #getDefaultSeriesVisible()
-     */
-    public void setDefaultSeriesVisible(boolean visible);
-
-    /**
-     * Sets the default visibility and, if requested, sends
-     * a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param visible  the visibility.
-     * @param notify  notify listeners?
-     *
-     * @see #getDefaultSeriesVisible()
-     */
-    public void setDefaultSeriesVisible(boolean visible, boolean notify);
-
-    // SERIES VISIBLE IN LEGEND (not yet respected by all renderers)
-
-    /**
-     * Returns {@code true} if the series should be shown in the legend,
-     * and {@code false} otherwise.
-     *
-     * @param series  the series index.
-     *
-     * @return A boolean.
-     */
-    public boolean isSeriesVisibleInLegend(int series);
-
-    /**
-     * Returns the flag that controls whether a series is visible in the
-     * legend.  This method returns only the "per series" settings - to
-     * incorporate the override and base settings as well, you need to use the
-     * {@link #isSeriesVisibleInLegend(int)} method.
-     *
-     * @param series  the series index (zero-based).
-     *
-     * @return The flag (possibly {@code null}).
-     *
-     * @see #setSeriesVisibleInLegend(int, Boolean)
-     */
-    public Boolean getSeriesVisibleInLegend(int series);
-
-    /**
-     * Sets the flag that controls whether a series is visible in the legend
-     * and sends a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param visible  the flag ({@code null} permitted).
-     *
-     * @see #getSeriesVisibleInLegend(int)
-     */
-    public void setSeriesVisibleInLegend(int series, Boolean visible);
-
-    /**
-     * Sets the flag that controls whether a series is visible in the legend
-     * and, if requested, sends a {@link RendererChangeEvent} to all registered
-     * listeners.
-     *
-     * @param series  the series index.
-     * @param visible  the flag ({@code null} permitted).
-     * @param notify  notify listeners?
-     *
-     * @see #getSeriesVisibleInLegend(int)
-     */
-    public void setSeriesVisibleInLegend(int series, Boolean visible,
-                                         boolean notify);
-
-    /**
-     * Returns the default visibility in the legend for all series.
-     *
-     * @return The default visibility.
-     *
-     * @see #setDefaultSeriesVisibleInLegend(boolean)
-     */
-    public boolean getDefaultSeriesVisibleInLegend();
-
-    /**
-     * Sets the default visibility in the legend and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param visible  the flag.
-     *
-     * @see #getDefaultSeriesVisibleInLegend()
-     */
-    public void setDefaultSeriesVisibleInLegend(boolean visible);
-
-    /**
-     * Sets the default visibility in the legend and, if requested, sends
-     * a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param visible  the visibility.
-     * @param notify  notify listeners?
-     *
-     * @see #getDefaultSeriesVisibleInLegend()
-     */
-    public void setDefaultSeriesVisibleInLegend(boolean visible, boolean notify);
-
 
     //// PAINT /////////////////////////////////////////////////////////////////
 

@@ -219,7 +219,7 @@ public class ScatterRendererTest {
         dataset.add(values, "R2", "C1");
         assertEquals(new Range(-3.2, 6.0), r.findRangeBounds(dataset));
 
-        r.setSeriesVisible(1, Boolean.FALSE);
+        r.getVisibility().setSeriesVisible(1, Boolean.FALSE);
         assertEquals(new Range(-3.2, 2.2), r.findRangeBounds(dataset));
     }
 

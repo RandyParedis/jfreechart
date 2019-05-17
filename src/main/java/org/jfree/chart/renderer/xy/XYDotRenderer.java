@@ -231,7 +231,7 @@ public class XYDotRenderer extends AbstractXYItemRenderer
             int series, int item, CrosshairState crosshairState, int pass) {
 
         // do nothing if item is not visible
-        if (!getItemVisible(series, item)) {
+        if (!getVisibility().getItemVisible(series, item)) {
             return;
         }
 
@@ -290,7 +290,7 @@ public class XYDotRenderer extends AbstractXYItemRenderer
         }
 
         LegendItem result = null;
-        if (getItemVisible(series, 0)) {
+        if (getVisibility().getItemVisible(series, 0)) {
             String label = getLegendItemLabelGenerator().generateLabel(dataset,
                     series);
             String description = label;

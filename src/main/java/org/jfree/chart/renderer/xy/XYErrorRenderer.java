@@ -307,7 +307,7 @@ public class XYErrorRenderer extends XYLineAndShapeRenderer {
             int series, int item, CrosshairState crosshairState, int pass) {
 
         if (pass == 0 && dataset instanceof IntervalXYDataset
-                && getItemVisible(series, item)) {
+                && getVisibility().getItemVisible(series, item)) {
             IntervalXYDataset ixyd = (IntervalXYDataset) dataset;
             PlotOrientation orientation = plot.getOrientation();
             if (this.drawXError) {

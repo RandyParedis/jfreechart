@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -99,27 +99,6 @@
 
 package org.jfree.chart.renderer;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.EventListener;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.event.EventListenerList;
-
 import org.jfree.chart.ChartHints;
 import org.jfree.chart.HashUtils;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -127,32 +106,33 @@ import org.jfree.chart.event.RendererChangeListener;
 import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
 import org.jfree.chart.plot.DrawingSupplier;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.BooleanList;
-import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintList;
-import org.jfree.chart.util.PaintUtils;
-import org.jfree.chart.util.Args;
-import org.jfree.chart.util.SerialUtils;
-import org.jfree.chart.util.ShapeList;
-import org.jfree.chart.util.ShapeUtils;
-import org.jfree.chart.util.StrokeList;
+import org.jfree.chart.util.*;
 import org.jfree.data.ItemKey;
+
+import javax.swing.event.EventListenerList;
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.List;
+import java.util.*;
 
 /**
  * Base class providing common services for renderers.  Most methods that update
  * attributes of the renderer will fire a {@link RendererChangeEvent}, which
  * normally means the plot that owns the renderer will receive notification that
  * the renderer has been changed (the plot will, in turn, notify the chart).
- * 
+ *
  * <b>Subclassing</b>
  * If you create your own renderer that is a subclass of this, you should take
  * care to ensure that the renderer implements cloning correctly, to ensure
  * that {@link JFreeChart} instances that use your renderer are also
- * cloneable.  It is recommended that you also implement the 
- * {@link PublicCloneable} interface to provide simple access to the clone 
+ * cloneable.  It is recommended that you also implement the
+ * {@link PublicCloneable} interface to provide simple access to the clone
  * method.
  */
 public abstract class AbstractRenderer implements Cloneable, Serializable {
@@ -185,21 +165,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
     /** The default value label paint. */
     public static final Paint DEFAULT_VALUE_LABEL_PAINT = Color.BLACK;
-
-    /** A list of flags that controls whether or not each series is visible. */
-    private BooleanList seriesVisibleList;
-
-    /** The default visibility for all series. */
-    private boolean defaultSeriesVisible;
-
-    /**
-     * A list of flags that controls whether or not each series is visible in
-     * the legend.
-     */
-    private BooleanList seriesVisibleInLegendList;
-
-    /** The default visibility for each series in the legend. */
-    private boolean defaultSeriesVisibleInLegend;
 
     /** The paint list. */
     private PaintList paintList;
@@ -400,16 +365,12 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     /** An event for re-use. */
     private transient RendererChangeEvent event;
 
+    private RenderStateVisibility renderStateVisibility = new RenderStateVisibility(this);
+
     /**
      * Default constructor.
      */
     public AbstractRenderer() {
-        this.seriesVisibleList = new BooleanList();
-        this.defaultSeriesVisible = true;
-
-        this.seriesVisibleInLegendList = new BooleanList();
-        this.defaultSeriesVisibleInLegend = true;
-
         this.paintList = new PaintList();
         this.defaultPaint = DEFAULT_PAINT;
         this.autoPopulateSeriesPaint = true;
@@ -443,12 +404,12 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         this.itemLabelPaintList = new PaintList();
         this.defaultItemLabelPaint = Color.BLACK;
 
-        this.positiveItemLabelPositionMap 
+        this.positiveItemLabelPositionMap
                 = new HashMap<Integer, ItemLabelPosition>();
         this.defaultPositiveItemLabelPosition = new ItemLabelPosition(
                 ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER);
 
-        this.negativeItemLabelPositionMap 
+        this.negativeItemLabelPositionMap
                 = new HashMap<Integer, ItemLabelPosition>();
         this.defaultNegativeItemLabelPosition = new ItemLabelPosition(
                 ItemLabelAnchor.OUTSIDE6, TextAnchor.TOP_CENTER);
@@ -481,28 +442,28 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
     /**
      * Adds a {@code KEY_BEGIN_ELEMENT} hint to the graphics target.  This
-     * hint is recognised by <b>JFreeSVG</b> (in theory it could be used by 
+     * hint is recognised by <b>JFreeSVG</b> (in theory it could be used by
      * other {@code Graphics2D} implementations also).
-     * 
+     *
      * @param g2  the graphics target ({@code null} not permitted).
      * @param key  the key ({@code null} not permitted).
-     * 
-     * @see #endElementGroup(java.awt.Graphics2D) 
+     *
+     * @see #endElementGroup(java.awt.Graphics2D)
      * @since 1.0.20
      */
     protected void beginElementGroup(Graphics2D g2, ItemKey key) {
         Args.nullNotPermitted(key, "key");
         Map m = new HashMap(1);
         m.put("ref", key.toJSONString());
-        g2.setRenderingHint(ChartHints.KEY_BEGIN_ELEMENT, m);        
+        g2.setRenderingHint(ChartHints.KEY_BEGIN_ELEMENT, m);
     }
-    
+
     /**
      * Adds a {@code KEY_END_ELEMENT} hint to the graphics target.
-     * 
+     *
      * @param g2  the graphics target ({@code null} not permitted).
-     * 
-     * @see #beginElementGroup(java.awt.Graphics2D, org.jfree.data.ItemKey) 
+     *
+     * @see #beginElementGroup(java.awt.Graphics2D, org.jfree.data.ItemKey)
      * @since 1.0.20
      */
     protected void endElementGroup(Graphics2D g2) {
@@ -510,239 +471,9 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     }
 
     // SERIES VISIBLE (not yet respected by all renderers)
-
-    /**
-     * Returns a boolean that indicates whether or not the specified item
-     * should be drawn.
-     *
-     * @param series  the series index.
-     * @param item  the item index.
-     *
-     * @return A boolean.
-     */
-    public boolean getItemVisible(int series, int item) {
-        return isSeriesVisible(series);
-    }
-
-    /**
-     * Returns a boolean that indicates whether or not the specified series
-     * should be drawn.  In fact this method should be named 
-     * lookupSeriesVisible() to be consistent with the other series
-     * attributes and avoid confusion with the getSeriesVisible() method.
-     *
-     * @param series  the series index.
-     *
-     * @return A boolean.
-     */
-    public boolean isSeriesVisible(int series) {
-        boolean result = this.defaultSeriesVisible;
-        Boolean b = this.seriesVisibleList.getBoolean(series);
-        if (b != null) {
-            result = b;
-        }
-        return result;
-    }
-
-    /**
-     * Returns the flag that controls whether a series is visible.
-     *
-     * @param series  the series index (zero-based).
-     *
-     * @return The flag (possibly {@code null}).
-     *
-     * @see #setSeriesVisible(int, Boolean)
-     */
-    public Boolean getSeriesVisible(int series) {
-        return this.seriesVisibleList.getBoolean(series);
-    }
-
-    /**
-     * Sets the flag that controls whether a series is visible and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param visible  the flag ({@code null} permitted).
-     *
-     * @see #getSeriesVisible(int)
-     */
-    public void setSeriesVisible(int series, Boolean visible) {
-        setSeriesVisible(series, visible, true);
-    }
-
-    /**
-     * Sets the flag that controls whether a series is visible and, if
-     * requested, sends a {@link RendererChangeEvent} to all registered
-     * listeners.
-     *
-     * @param series  the series index.
-     * @param visible  the flag ({@code null} permitted).
-     * @param notify  notify listeners?
-     *
-     * @see #getSeriesVisible(int)
-     */
-    public void setSeriesVisible(int series, Boolean visible, boolean notify) {
-        this.seriesVisibleList.setBoolean(series, visible);
-        if (notify) {
-            // we create an event with a special flag set...the purpose of
-            // this is to communicate to the plot (the default receiver of
-            // the event) that series visibility has changed so the axis
-            // ranges might need updating...
-            RendererChangeEvent e = new RendererChangeEvent(this, true);
-            notifyListeners(e);
-        }
-    }
-
-    /**
-     * Returns the default visibility for all series.
-     *
-     * @return The default visibility.
-     *
-     * @see #setDefaultSeriesVisible(boolean)
-     */
-    public boolean getDefaultSeriesVisible() {
-        return this.defaultSeriesVisible;
-    }
-
-    /**
-     * Sets the default series visibility and sends a 
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param visible  the flag.
-     *
-     * @see #getDefaultSeriesVisible()
-     */
-    public void setDefaultSeriesVisible(boolean visible) {
-        // defer argument checking...
-        setDefaultSeriesVisible(visible, true);
-    }
-
-    /**
-     * Sets the default series visibility and, if requested, sends
-     * a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param visible  the visibility.
-     * @param notify  notify listeners?
-     *
-     * @see #getDefaultSeriesVisible()
-     */
-    public void setDefaultSeriesVisible(boolean visible, boolean notify) {
-        this.defaultSeriesVisible = visible;
-        if (notify) {
-            // we create an event with a special flag set...the purpose of
-            // this is to communicate to the plot (the default receiver of
-            // the event) that series visibility has changed so the axis
-            // ranges might need updating...
-            RendererChangeEvent e = new RendererChangeEvent(this, true);
-            notifyListeners(e);
-        }
-    }
-
     // SERIES VISIBLE IN LEGEND (not yet respected by all renderers)
-
-    /**
-     * Returns {@code true} if the series should be shown in the legend,
-     * and {@code false} otherwise.
-     *
-     * @param series  the series index.
-     *
-     * @return A boolean.
-     */
-    public boolean isSeriesVisibleInLegend(int series) {
-        boolean result = this.defaultSeriesVisibleInLegend;
-        Boolean b = this.seriesVisibleInLegendList.getBoolean(series);
-        if (b != null) {
-            result = b;
-        }
-        return result;
-    }
-
-    /**
-     * Returns the flag that controls whether a series is visible in the
-     * legend.  This method returns only the "per series" settings - to
-     * incorporate the default settings as well, you need to use the
-     * {@link #isSeriesVisibleInLegend(int)} method.
-     *
-     * @param series  the series index (zero-based).
-     *
-     * @return The flag (possibly {@code null}).
-     *
-     * @see #setSeriesVisibleInLegend(int, Boolean)
-     */
-    public Boolean getSeriesVisibleInLegend(int series) {
-        return this.seriesVisibleInLegendList.getBoolean(series);
-    }
-
-    /**
-     * Sets the flag that controls whether a series is visible in the legend
-     * and sends a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param visible  the flag ({@code null} permitted).
-     *
-     * @see #getSeriesVisibleInLegend(int)
-     */
-    public void setSeriesVisibleInLegend(int series, Boolean visible) {
-        setSeriesVisibleInLegend(series, visible, true);
-    }
-
-    /**
-     * Sets the flag that controls whether a series is visible in the legend
-     * and, if requested, sends a {@link RendererChangeEvent} to all registered
-     * listeners.
-     *
-     * @param series  the series index.
-     * @param visible  the flag ({@code null} permitted).
-     * @param notify  notify listeners?
-     *
-     * @see #getSeriesVisibleInLegend(int)
-     */
-    public void setSeriesVisibleInLegend(int series, Boolean visible,
-                                         boolean notify) {
-        this.seriesVisibleInLegendList.setBoolean(series, visible);
-        if (notify) {
-            fireChangeEvent();
-        }
-    }
-
-    /**
-     * Returns the default visibility in the legend for all series.
-     *
-     * @return The default visibility.
-     *
-     * @see #setDefaultSeriesVisibleInLegend(boolean)
-     */
-    public boolean getDefaultSeriesVisibleInLegend() {
-        return this.defaultSeriesVisibleInLegend;
-    }
-
-    /**
-     * Sets the default visibility in the legend and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param visible  the flag.
-     *
-     * @see #getDefaultSeriesVisibleInLegend()
-     */
-    public void setDefaultSeriesVisibleInLegend(boolean visible) {
-        // defer argument checking...
-        setDefaultSeriesVisibleInLegend(visible, true);
-    }
-
-    /**
-     * Sets the default visibility in the legend and, if requested, sends
-     * a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param visible  the visibility.
-     * @param notify  notify listeners?
-     *
-     * @see #getDefaultSeriesVisibleInLegend()
-     */
-    public void setDefaultSeriesVisibleInLegend(boolean visible, 
-            boolean notify) {
-        this.defaultSeriesVisibleInLegend = visible;
-        if (notify) {
-            fireChangeEvent();
-        }
+    public IRendererVisibility getVisibility() {
+        return this.renderStateVisibility;
     }
 
     // PAINT
@@ -1501,7 +1232,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     }
 
     /**
-     * Sets the default outline stroke and sends a {@link RendererChangeEvent} 
+     * Sets the default outline stroke and sends a {@link RendererChangeEvent}
      * to all registered listeners.
      *
      * @param stroke  the stroke ({@code null} not permitted).
@@ -1565,8 +1296,8 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     /**
      * Returns a shape used to represent a data item.
      * <p>
-     * The default implementation passes control to the 
-     * {@link #lookupSeriesShape(int)} method. You can override this method if 
+     * The default implementation passes control to the
+     * {@link #lookupSeriesShape(int)} method. You can override this method if
      * you require different behaviour.
      *
      * @param row  the row (or series) index (zero-based).
@@ -1819,7 +1550,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @param notify  a flag that controls whether or not listeners are
      *                notified.
      *
-     * @see #getDefaultItemLabelsVisible() 
+     * @see #getDefaultItemLabelsVisible()
      */
     public void setDefaultItemLabelsVisible(boolean visible, boolean notify) {
         this.defaultItemLabelsVisible = visible;
@@ -1903,7 +1634,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     }
 
     /**
-     * Sets the default item label font and sends a {@link RendererChangeEvent} 
+     * Sets the default item label font and sends a {@link RendererChangeEvent}
      * to all registered listeners.
      *
      * @param font  the font ({@code null} not permitted).
@@ -2176,7 +1907,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      */
     public ItemLabelPosition getSeriesNegativeItemLabelPosition(int series) {
         // otherwise look up the position list
-        ItemLabelPosition position 
+        ItemLabelPosition position
                 = this.negativeItemLabelPositionMap.get(series);
         if (position == null) {
             position = this.defaultNegativeItemLabelPosition;
@@ -2489,9 +2220,9 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     /**
      * Returns the flag that controls whether or not the legend shape is
      * treated as a line when creating legend items.
-     * 
+     *
      * @return A boolean.
-     * 
+     *
      * @since 1.0.14
      */
     protected boolean getTreatLegendShapeAsLine() {
@@ -2780,18 +2511,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         if (this.defaultEntityRadius != that.defaultEntityRadius) {
             return false;
         }
-        if (!this.seriesVisibleList.equals(that.seriesVisibleList)) {
-            return false;
-        }
-        if (this.defaultSeriesVisible != that.defaultSeriesVisible) {
-            return false;
-        }
-        if (!this.seriesVisibleInLegendList.equals(
-                that.seriesVisibleInLegendList)) {
-            return false;
-        }
-        if (this.defaultSeriesVisibleInLegend
-                != that.defaultSeriesVisibleInLegend) {
+        if (!this.getVisibility().equals(that.getVisibility())) {
             return false;
         }
         if (!ObjectUtils.equal(this.paintList, that.paintList)) {
@@ -2896,7 +2616,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
                 that.defaultLegendShape)) {
             return false;
         }
-        if (!ObjectUtils.equal(this.legendTextFontMap, 
+        if (!ObjectUtils.equal(this.legendTextFontMap,
                 that.legendTextFontMap)) {
             return false;
         }
@@ -2923,10 +2643,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     @Override
     public int hashCode() {
         int result = 193;
-        result = HashUtils.hashCode(result, this.seriesVisibleList);
-        result = HashUtils.hashCode(result, this.defaultSeriesVisible);
-        result = HashUtils.hashCode(result, this.seriesVisibleInLegendList);
-        result = HashUtils.hashCode(result, this.defaultSeriesVisibleInLegend);
+        result = HashUtils.hashCode(result, this.renderStateVisibility);
         result = HashUtils.hashCode(result, this.paintList);
         result = HashUtils.hashCode(result, this.defaultPaint);
         result = HashUtils.hashCode(result, this.fillPaintList);
@@ -2967,14 +2684,8 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     protected Object clone() throws CloneNotSupportedException {
         AbstractRenderer clone = (AbstractRenderer) super.clone();
 
-        if (this.seriesVisibleList != null) {
-            clone.seriesVisibleList
-                    = (BooleanList) this.seriesVisibleList.clone();
-        }
-
-        if (this.seriesVisibleInLegendList != null) {
-            clone.seriesVisibleInLegendList
-                    = (BooleanList) this.seriesVisibleInLegendList.clone();
+        if (this.getVisibility() != null) {
+            clone.renderStateVisibility = (RenderStateVisibility) this.renderStateVisibility.clone();
         }
 
         // 'paint' : immutable, no need to clone reference
@@ -3021,7 +2732,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
         // 'itemLabelFont' : immutable, no need to clone reference
         if (this.itemLabelFontMap != null) {
-            clone.itemLabelFontMap 
+            clone.itemLabelFontMap
                     = new HashMap<Integer, Font>(this.itemLabelFontMap);
         }
         // 'baseItemLabelFont' : immutable, no need to clone reference
@@ -3034,13 +2745,13 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         // 'baseItemLabelPaint' : immutable, no need to clone reference
 
         if (this.positiveItemLabelPositionMap != null) {
-            clone.positiveItemLabelPositionMap 
+            clone.positiveItemLabelPositionMap
                     = new HashMap<Integer, ItemLabelPosition>(
                     this.positiveItemLabelPositionMap);
         }
 
         if (this.negativeItemLabelPositionMap != null) {
-            clone.negativeItemLabelPositionMap 
+            clone.negativeItemLabelPositionMap
                     = new HashMap<Integer, ItemLabelPosition>(
                     this.negativeItemLabelPositionMap);
         }

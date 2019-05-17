@@ -687,7 +687,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         int[] visibleSeriesTemp = new int[this.rowCount];
         int visibleSeriesCount = 0;
         for (int row = 0; row < this.rowCount; row++) {
-            if (isSeriesVisible(row)) {
+            if (getVisibility().isSeriesVisible(row)) {
                 visibleSeriesTemp[visibleSeriesCount] = row;
                 visibleSeriesCount++;
             }
@@ -752,7 +752,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             List visibleSeriesKeys = new ArrayList();
             int seriesCount = dataset.getRowCount();
             for (int s = 0; s < seriesCount; s++) {
-                if (isSeriesVisible(s)) {
+                if (getVisibility().isSeriesVisible(s)) {
                     visibleSeriesKeys.add(dataset.getRowKey(s));
                 }
             }
@@ -1250,7 +1250,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         }
 
         // check that a legend item needs to be displayed...
-        if (!isSeriesVisible(series) || !isSeriesVisibleInLegend(series)) {
+        if (!getVisibility().isSeriesVisible(series) || !getVisibility().isSeriesVisibleInLegend(series)) {
             return null;
         }
 
@@ -1586,7 +1586,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         int seriesCount = dataset.getRowCount();
         if (plot.getRowRenderingOrder().equals(SortOrder.ASCENDING)) {
             for (int i = 0; i < seriesCount; i++) {
-                if (isSeriesVisibleInLegend(i)) {
+                if (getVisibility().isSeriesVisibleInLegend(i)) {
                     LegendItem item = getLegendItem(index, i);
                     if (item != null) {
                         result.add(item);
@@ -1596,7 +1596,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         }
         else {
             for (int i = seriesCount - 1; i >= 0; i--) {
-                if (isSeriesVisibleInLegend(i)) {
+                if (getVisibility().isSeriesVisibleInLegend(i)) {
                     LegendItem item = getLegendItem(index, i);
                     if (item != null) {
                         result.add(item);

@@ -239,7 +239,7 @@ public class StackedXYBarRenderer extends XYBarRenderer {
             ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
             int series, int item, CrosshairState crosshairState, int pass) {
 
-        if (!getItemVisible(series, item)) {
+        if (!getVisibility().getItemVisible(series, item)) {
             return;
         }
 
@@ -287,7 +287,7 @@ public class StackedXYBarRenderer extends XYBarRenderer {
 
         for (int i = 0; i < series; i++) {
             double v = dataset.getYValue(i, item);
-            if (!Double.isNaN(v) && isSeriesVisible(i)) {
+            if (!Double.isNaN(v) && getVisibility().isSeriesVisible(i)) {
                 if (this.renderAsPercentages) {
                     v = v / total;
                 }

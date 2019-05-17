@@ -1121,7 +1121,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
         if (p != null) {
             XYDataset dataset = p.getDataset(datasetIndex);
             if (dataset != null) {
-                if (getItemVisible(series, 0)) {
+                if (getVisibility().getItemVisible(series, 0)) {
                     String label = getLegendItemLabelGenerator().generateLabel(
                             dataset, series);
                     String description = label;

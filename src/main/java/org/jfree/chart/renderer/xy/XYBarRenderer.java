@@ -805,7 +805,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
             ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
             int series, int item, CrosshairState crosshairState, int pass) {
 
-        if (!getItemVisible(series, item)) {
+        if (!getVisibility().getItemVisible(series, item)) {
             return;
         }
         IntervalXYDataset intervalDataset = (IntervalXYDataset) dataset;

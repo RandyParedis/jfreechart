@@ -289,7 +289,7 @@ public class StackedBarRenderer extends BarRenderer
             ValueAxis rangeAxis, CategoryDataset dataset, int row,
             int column, int pass) {
 
-        if (!isSeriesVisible(row)) {
+        if (!getVisibility().isSeriesVisible(row)) {
             return;
         }
 
@@ -317,7 +317,7 @@ public class StackedBarRenderer extends BarRenderer
 
         for (int i = 0; i < row; i++) {
             Number v = dataset.getValue(i, column);
-            if (v != null && isSeriesVisible(i)) {
+            if (v != null && getVisibility().isSeriesVisible(i)) {
                 double d = v.doubleValue();
                 if (this.renderAsPercentages) {
                     d = d / total;

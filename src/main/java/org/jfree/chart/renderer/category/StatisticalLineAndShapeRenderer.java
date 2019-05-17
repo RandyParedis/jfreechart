@@ -225,7 +225,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
             int pass) {
 
         // do nothing if item is not visible
-        if (!getItemVisible(row, column)) {
+        if (!getVisibility().getItemVisible(row, column)) {
             return;
         }
 

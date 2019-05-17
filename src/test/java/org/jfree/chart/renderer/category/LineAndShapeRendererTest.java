@@ -292,7 +292,7 @@ public class LineAndShapeRendererTest {
         dataset.addValue(-6.0, "R2", "C1");
         assertEquals(new Range(-6.0, 1.0), r.findRangeBounds(dataset));
 
-        r.setSeriesVisible(1, Boolean.FALSE);
+        r.getVisibility().setSeriesVisible(1, Boolean.FALSE);
         assertEquals(new Range(-2.0, 1.0), r.findRangeBounds(dataset));
     }
 

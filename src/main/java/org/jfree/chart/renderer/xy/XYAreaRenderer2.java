@@ -289,7 +289,7 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
          ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
          int series, int item, CrosshairState crosshairState, int pass) {
 
-        if (!getItemVisible(series, item)) {
+        if (!getVisibility().getItemVisible(series, item)) {
             return;
         }
         // get the data point...

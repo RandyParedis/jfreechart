@@ -735,7 +735,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
             int series, int item, CrosshairState crosshairState, int pass) {
 
         // do nothing if item is not visible
-        if (!getItemVisible(series, item)) {
+        if (!getVisibility().getItemVisible(series, item)) {
             return;
         }
 
@@ -1056,7 +1056,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
             return null;
         }
 
-        if (!getItemVisible(series, 0)) {
+        if (!getVisibility().getItemVisible(series, 0)) {
             return null;
         }
         String label = getLegendItemLabelGenerator().generateLabel(dataset,

@@ -304,7 +304,7 @@ public class BoxAndWhiskerRendererTest {
         /*JFreeChart chart =*/ new JFreeChart(plot);
         LegendItem li = r.getLegendItem(0, 0);
         assertNotNull(li);
-        r.setSeriesVisibleInLegend(0, Boolean.FALSE);
+        r.getVisibility().setSeriesVisibleInLegend(0, Boolean.FALSE);
         li = r.getLegendItem(0, 0);
         assertNull(li);
     }

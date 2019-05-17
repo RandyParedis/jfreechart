@@ -268,7 +268,7 @@ public class XYBarRendererTest {
         assertEquals(0.5, r.getLowerBound(), EPSILON);
         assertEquals(4.1, r.getUpperBound(), EPSILON);
         
-        renderer.setSeriesVisible(1, Boolean.FALSE);
+        renderer.getVisibility().setSeriesVisible(1, Boolean.FALSE);
         r = renderer.findDomainBounds(dataset);
         assertEquals(0.5, r.getLowerBound(), EPSILON);
         assertEquals(2.1, r.getUpperBound(), EPSILON);
@@ -324,7 +324,7 @@ public class XYBarRendererTest {
         assertEquals(9.0, r.getLowerBound(), EPSILON);
         assertEquals(30.0, r.getUpperBound(), EPSILON);
         
-        renderer.setSeriesVisible(1, Boolean.FALSE);
+        renderer.getVisibility().setSeriesVisible(1, Boolean.FALSE);
         r = renderer.findRangeBounds(dataset);
         assertEquals(10.0, r.getLowerBound(), EPSILON);
         assertEquals(20.0, r.getUpperBound(), EPSILON);

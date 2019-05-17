@@ -718,7 +718,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             List visibleSeriesKeys = new ArrayList();
             int seriesCount = dataset.getSeriesCount();
             for (int s = 0; s < seriesCount; s++) {
-                if (isSeriesVisible(s)) {
+                if (getVisibility().isSeriesVisible(s)) {
                     visibleSeriesKeys.add(dataset.getSeriesKey(s));
                 }
             }
@@ -765,7 +765,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             List visibleSeriesKeys = new ArrayList();
             int seriesCount = dataset.getSeriesCount();
             for (int s = 0; s < seriesCount; s++) {
-                if (isSeriesVisible(s)) {
+                if (getVisibility().isSeriesVisible(s)) {
                     visibleSeriesKeys.add(dataset.getSeriesKey(s));
                 }
             }
@@ -810,7 +810,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         if (dataset != null) {
             int seriesCount = dataset.getSeriesCount();
             for (int i = 0; i < seriesCount; i++) {
-                if (isSeriesVisibleInLegend(i)) {
+                if (getVisibility().isSeriesVisibleInLegend(i)) {
                     LegendItem item = getLegendItem(index, i);
                     if (item != null) {
                         result.add(item);

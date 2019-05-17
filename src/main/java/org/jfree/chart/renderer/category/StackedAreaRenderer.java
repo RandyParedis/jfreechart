@@ -203,7 +203,7 @@ public class StackedAreaRenderer extends AreaRenderer
             ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
             int pass) {
 
-        if (!isSeriesVisible(row)) {
+        if (!getVisibility().isSeriesVisible(row)) {
             return;
         }
         
@@ -421,7 +421,7 @@ public class StackedAreaRenderer extends AreaRenderer
                     validRows);
         }
         for (int i = 0; i < series; i++) {
-            if (isSeriesVisible(i)) {
+            if (getVisibility().isSeriesVisible(i)) {
                 double v = 0.0;
                 Number n = dataset.getValue(i, index);
                 if (n != null) {

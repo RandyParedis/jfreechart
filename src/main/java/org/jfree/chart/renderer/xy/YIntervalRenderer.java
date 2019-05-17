@@ -181,7 +181,7 @@ public class YIntervalRenderer extends AbstractXYItemRenderer
             int series, int item, CrosshairState crosshairState, int pass) {
 
         // do nothing if item is not visible
-        if (!getItemVisible(series, item)) {
+        if (!getVisibility().getItemVisible(series, item)) {
             return;
         }
 

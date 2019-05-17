@@ -5287,8 +5287,8 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             if (renderer != null) {
                 int seriesCount = dataset.getSeriesCount();
                 for (int i = 0; i < seriesCount; i++) {
-                    if (renderer.isSeriesVisible(i)
-                            && renderer.isSeriesVisibleInLegend(i)) {
+                    if (renderer.getVisibility().isSeriesVisible(i)
+                            && renderer.getVisibility().isSeriesVisibleInLegend(i)) {
                         LegendItem item = renderer.getLegendItem(
                                 datasetIndex, i);
                         if (item != null) {

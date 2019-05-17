@@ -200,7 +200,7 @@ public class StatisticalLineAndShapeRendererTest {
         assertEquals(new Range(-2.2, 6.0), r.findRangeBounds(dataset));
 
         // check that the series visible flag is observed
-        r.setSeriesVisible(1, Boolean.FALSE);
+        r.getVisibility().setSeriesVisible(1, Boolean.FALSE);
         assertEquals(new Range(-2.2, 1.5), r.findRangeBounds(dataset));
     }
 

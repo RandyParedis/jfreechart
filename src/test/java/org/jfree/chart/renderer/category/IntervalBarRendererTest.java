@@ -168,7 +168,7 @@ public class IntervalBarRendererTest {
         assertEquals(new Range(0.1, 0.9), r.findRangeBounds(dataset));
         r.setIncludeBaseInRange(true);
 
-        r.setSeriesVisible(1, Boolean.FALSE);
+        r.getVisibility().setSeriesVisible(1, Boolean.FALSE);
         assertEquals(new Range(0.0, 0.7), r.findRangeBounds(dataset));
     }
 

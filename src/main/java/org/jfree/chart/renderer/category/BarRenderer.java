@@ -925,7 +925,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
         }
 
         // check that a legend item needs to be displayed...
-        if (!isSeriesVisible(series) || !isSeriesVisibleInLegend(series)) {
+        if (!getVisibility().isSeriesVisible(series) || !getVisibility().isSeriesVisibleInLegend(series)) {
             return null;
         }
 

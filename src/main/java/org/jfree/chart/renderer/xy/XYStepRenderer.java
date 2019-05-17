@@ -203,7 +203,7 @@ public class XYStepRenderer extends XYLineAndShapeRenderer
             int series, int item, CrosshairState crosshairState, int pass) {
 
         // do nothing if item is not visible
-        if (!getItemVisible(series, item)) {
+        if (!getVisibility().getItemVisible(series, item)) {
             return;
         }
 

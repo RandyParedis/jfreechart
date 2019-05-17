@@ -99,27 +99,27 @@ public class AbstractRendererTest {
         assertTrue(r2.equals(r1));
 
         // seriesVisibleList
-        r1.setSeriesVisible(2, Boolean.TRUE);
+        r1.getVisibility().setSeriesVisible(2, Boolean.TRUE);
         assertFalse(r1.equals(r2));
-        r2.setSeriesVisible(2, Boolean.TRUE);
+        r2.getVisibility().setSeriesVisible(2, Boolean.TRUE);
         assertTrue(r1.equals(r2));
 
         // defaultSeriesVisible
-        r1.setDefaultSeriesVisible(false);
+        r1.getVisibility().setDefaultSeriesVisible(false);
         assertFalse(r1.equals(r2));
-        r2.setDefaultSeriesVisible(false);
+        r2.getVisibility().setDefaultSeriesVisible(false);
         assertTrue(r1.equals(r2));
 
         // seriesVisibleInLegendList
-        r1.setSeriesVisibleInLegend(1, Boolean.TRUE);
+        r1.getVisibility().setSeriesVisibleInLegend(1, Boolean.TRUE);
         assertFalse(r1.equals(r2));
-        r2.setSeriesVisibleInLegend(1, Boolean.TRUE);
+        r2.getVisibility().setSeriesVisibleInLegend(1, Boolean.TRUE);
         assertTrue(r1.equals(r2));
 
         // defaultSeriesVisibleInLegend
-        r1.setDefaultSeriesVisibleInLegend(false);
+        r1.getVisibility().setDefaultSeriesVisibleInLegend(false);
         assertFalse(r1.equals(r2));
-        r2.setDefaultSeriesVisibleInLegend(false);
+        r2.getVisibility().setDefaultSeriesVisibleInLegend(false);
         assertTrue(r1.equals(r2));
 
         // paintList
@@ -434,14 +434,14 @@ public class AbstractRendererTest {
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
 
-        r1.setSeriesVisible(0, Boolean.FALSE);
+        r1.getVisibility().setSeriesVisible(0, Boolean.FALSE);
         assertFalse(r1.equals(r2));
-        r2.setSeriesVisible(0, Boolean.FALSE);
+        r2.getVisibility().setSeriesVisible(0, Boolean.FALSE);
         assertTrue(r1.equals(r2));
 
-        r1.setSeriesVisibleInLegend(0, Boolean.FALSE);
+        r1.getVisibility().setSeriesVisibleInLegend(0, Boolean.FALSE);
         assertFalse(r1.equals(r2));
-        r2.setSeriesVisibleInLegend(0, Boolean.FALSE);
+        r2.getVisibility().setSeriesVisibleInLegend(0, Boolean.FALSE);
         assertTrue(r1.equals(r2));
 
         r1.setSeriesPaint(0, Color.BLACK);

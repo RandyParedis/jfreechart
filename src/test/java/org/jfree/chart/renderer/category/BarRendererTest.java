@@ -249,7 +249,7 @@ public class BarRendererTest {
         /*JFreeChart chart =*/ new JFreeChart(plot);
         LegendItem li = r.getLegendItem(0, 0);
         assertNotNull(li);
-        r.setSeriesVisibleInLegend(0, Boolean.FALSE);
+        r.getVisibility().setSeriesVisibleInLegend(0, Boolean.FALSE);
         li = r.getLegendItem(0, 0);
         assertNull(li);
     }
@@ -305,7 +305,7 @@ public class BarRendererTest {
         dataset.addValue(-6.0, "R2", "C1");
         assertEquals(new Range(-6.0, 1.0), r.findRangeBounds(dataset));
 
-        r.setSeriesVisible(1, Boolean.FALSE);
+        r.getVisibility().setSeriesVisible(1, Boolean.FALSE);
         assertEquals(new Range(-2.0, 1.0), r.findRangeBounds(dataset));
     }
 
