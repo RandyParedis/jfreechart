@@ -310,7 +310,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
                 Composite originalComposite = g2.getComposite();
                 g2.setComposite(AlphaComposite.getInstance(
                         AlphaComposite.SRC_OVER, this.alpha));
-                g2.setPaint(getItemFillPaint(series, item));
+                g2.setPaint(getPaint().getItemFillPaint(series, item));
                 GeneralPath area = new GeneralPath(GeneralPath.WIND_NON_ZERO,
                         drState.lowerCoordinates.size() 
                         + drState.upperCoordinates.size());

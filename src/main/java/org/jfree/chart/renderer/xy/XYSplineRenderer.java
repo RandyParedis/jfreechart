@@ -439,7 +439,7 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
 
                 // fill under the curve...
                 if (this.fillType != FillType.NONE) {
-                    Paint fp = getSeriesFillPaint(series);
+                    Paint fp = getPaint().getSeriesFillPaint(series);
                     if (this.gradientPaintTransformer != null 
                             && fp instanceof GradientPaint) {
                         GradientPaint gp = this.gradientPaintTransformer

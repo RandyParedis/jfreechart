@@ -743,10 +743,10 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
             stickWidth = Math.max(Math.min(3, this.maxCandleWidth), xxWidth);
         }
 
-        Paint p = getItemPaint(series, item);
+        Paint p = getPaint().getItemPaint(series, item);
         Paint outlinePaint = null;
         if (this.useOutlinePaint) {
-            outlinePaint = getItemOutlinePaint(series, item);
+            outlinePaint = getPaint().getItemOutlinePaint(series, item);
         }
         Stroke s = getItemStroke(series, item);
 

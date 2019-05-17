@@ -402,7 +402,7 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
         // end of the series.
         int itemCount = dataset.getItemCount(series);
 
-        Paint paint = getItemPaint(series, item);
+        Paint paint = getPaint().getItemPaint(series, item);
         Stroke seriesStroke = getItemStroke(series, item);
         g2.setPaint(paint);
         g2.setStroke(seriesStroke);

@@ -944,8 +944,8 @@ public class BarRenderer extends AbstractCategoryItemRenderer
                     series);
         }
         Shape shape = lookupLegendShape(series);
-        Paint paint = lookupSeriesPaint(series);
-        Paint outlinePaint = lookupSeriesOutlinePaint(series);
+        Paint paint = getPaint().lookupSeriesPaint(series);
+        Paint outlinePaint = getPaint().lookupSeriesOutlinePaint(series);
         Stroke outlineStroke = lookupSeriesOutlineStroke(series);
 
         LegendItem result = new LegendItem(label, description, toolTipText,

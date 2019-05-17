@@ -193,7 +193,7 @@ public class CategoryStepRenderer extends AbstractCategoryItemRenderer
                     series);
         }
         Shape shape = lookupLegendShape(series);
-        Paint paint = lookupSeriesPaint(series);
+        Paint paint = getPaint().lookupSeriesPaint(series);
 
         LegendItem item = new LegendItem(label, description, toolTipText,
                 urlText, shape, paint);
@@ -295,7 +295,7 @@ public class CategoryStepRenderer extends AbstractCategoryItemRenderer
         double x1e = 2 * x1 - x1s; // or: x1s + 2*(x1-x1s)
         double y1 = rangeAxis.valueToJava2D(value.doubleValue(), dataArea,
                 plot.getRangeAxisEdge());
-        g2.setPaint(getItemPaint(row, column));
+        g2.setPaint(getPaint().getItemPaint(row, column));
         g2.setStroke(getItemStroke(row, column));
 
         if (column != 0) {

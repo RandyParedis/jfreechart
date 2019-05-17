@@ -339,7 +339,7 @@ public class HighLowRenderer extends AbstractXYItemRenderer
         PlotOrientation orientation = plot.getOrientation();
         RectangleEdge location = plot.getRangeAxisEdge();
 
-        Paint itemPaint = getItemPaint(series, item);
+        Paint itemPaint = getPaint().getItemPaint(series, item);
         Stroke itemStroke = getItemStroke(series, item);
         g2.setPaint(itemPaint);
         g2.setStroke(itemStroke);

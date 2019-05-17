@@ -122,7 +122,7 @@ public class WindItemRenderer extends AbstractXYItemRenderer
 
         WindDataset windData = (WindDataset) dataset;
 
-        Paint seriesPaint = getItemPaint(series, item);
+        Paint seriesPaint = getPaint().getItemPaint(series, item);
         Stroke seriesStroke = getItemStroke(series, item);
         g2.setPaint(seriesPaint);
         g2.setStroke(seriesStroke);

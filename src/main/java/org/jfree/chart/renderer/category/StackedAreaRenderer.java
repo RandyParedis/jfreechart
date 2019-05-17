@@ -378,7 +378,7 @@ public class StackedAreaRenderer extends AreaRenderer
         }
 
         if (pass == 0) {
-            Paint itemPaint = getItemPaint(row, column);
+            Paint itemPaint = getPaint().getItemPaint(row, column);
             g2.setPaint(itemPaint);
             g2.fill(left);
             g2.fill(right);

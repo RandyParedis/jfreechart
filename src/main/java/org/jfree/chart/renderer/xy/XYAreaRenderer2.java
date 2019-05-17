@@ -248,7 +248,7 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
                     urlText = getLegendItemURLGenerator().generateLabel(
                             dataset, series);
                 }
-                Paint paint = lookupSeriesPaint(series);
+                Paint paint = getPaint().lookupSeriesPaint(series);
                 result = new LegendItem(label, description, toolTipText,
                         urlText, this.legendArea, paint);
                 result.setLabelFont(lookupLegendTextFont(series));
@@ -353,7 +353,7 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
         hotspot.closePath();
 
         PlotOrientation orientation = plot.getOrientation();
-        Paint paint = getItemPaint(series, item);
+        Paint paint = getPaint().getItemPaint(series, item);
         Stroke stroke = getItemStroke(series, item);
         g2.setPaint(paint);
         g2.setStroke(stroke);
@@ -365,7 +365,7 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
         // draw an outline around the Area.
         if (isOutline()) {
             g2.setStroke(lookupSeriesOutlineStroke(series));
-            g2.setPaint(lookupSeriesOutlinePaint(series));
+            g2.setPaint(getPaint().lookupSeriesOutlinePaint(series));
             g2.draw(hotspot);
         }
         int datasetIndex = plot.indexOf(dataset);

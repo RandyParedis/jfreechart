@@ -323,7 +323,7 @@ public class StatisticalBarRenderer extends BarRenderer
 
         Rectangle2D bar = new Rectangle2D.Double(rectX, rectY, rectWidth,
                 rectHeight);
-        Paint itemPaint = getItemPaint(row, column);
+        Paint itemPaint = getPaint().getItemPaint(row, column);
         GradientPaintTransformer t = getGradientPaintTransformer();
         if (t != null && itemPaint instanceof GradientPaint) {
             itemPaint = t.transform((GradientPaint) itemPaint, bar);
@@ -335,7 +335,7 @@ public class StatisticalBarRenderer extends BarRenderer
         if (isDrawBarOutline()
                 && state.getBarWidth() > BAR_OUTLINE_WIDTH_THRESHOLD) {
             Stroke stroke = getItemOutlineStroke(row, column);
-            Paint paint = getItemOutlinePaint(row, column);
+            Paint paint = getPaint().getItemOutlinePaint(row, column);
             if (stroke != null && paint != null) {
                 g2.setStroke(stroke);
                 g2.setPaint(paint);
@@ -356,7 +356,7 @@ public class StatisticalBarRenderer extends BarRenderer
                 g2.setPaint(this.errorIndicatorPaint);
             }
             else {
-                g2.setPaint(getItemOutlinePaint(row, column));
+                g2.setPaint(getPaint().getItemOutlinePaint(row, column));
             }
             if (this.errorIndicatorStroke != null) {
                 g2.setStroke(this.errorIndicatorStroke);
@@ -471,7 +471,7 @@ public class StatisticalBarRenderer extends BarRenderer
 
         Rectangle2D bar = new Rectangle2D.Double(rectX, rectY, rectWidth,
                 rectHeight);
-        Paint itemPaint = getItemPaint(row, column);
+        Paint itemPaint = getPaint().getItemPaint(row, column);
         GradientPaintTransformer t = getGradientPaintTransformer();
         if (t != null && itemPaint instanceof GradientPaint) {
             itemPaint = t.transform((GradientPaint) itemPaint, bar);
@@ -482,7 +482,7 @@ public class StatisticalBarRenderer extends BarRenderer
         if (isDrawBarOutline()
                 && state.getBarWidth() > BAR_OUTLINE_WIDTH_THRESHOLD) {
             Stroke stroke = getItemOutlineStroke(row, column);
-            Paint paint = getItemOutlinePaint(row, column);
+            Paint paint = getPaint().getItemOutlinePaint(row, column);
             if (stroke != null && paint != null) {
                 g2.setStroke(stroke);
                 g2.setPaint(paint);
@@ -503,7 +503,7 @@ public class StatisticalBarRenderer extends BarRenderer
                 g2.setPaint(this.errorIndicatorPaint);
             }
             else {
-                g2.setPaint(getItemOutlinePaint(row, column));
+                g2.setPaint(getPaint().getItemOutlinePaint(row, column));
             }
             if (this.errorIndicatorStroke != null) {
                 g2.setStroke(this.errorIndicatorStroke);

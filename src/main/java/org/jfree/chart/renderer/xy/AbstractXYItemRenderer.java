@@ -855,7 +855,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
                     series);
         }
         Shape shape = lookupLegendShape(series);
-        Paint paint = lookupSeriesPaint(series);
+        Paint paint = getPaint().lookupSeriesPaint(series);
         LegendItem item = new LegendItem(label, paint);
         item.setToolTipText(toolTipText);
         item.setURLText(urlText);
@@ -876,7 +876,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             item.setShapeVisible(false);
         }
         else {
-            Paint outlinePaint = lookupSeriesOutlinePaint(series);
+            Paint outlinePaint = getPaint().lookupSeriesOutlinePaint(series);
             Stroke outlineStroke = lookupSeriesOutlineStroke(series);
             item.setOutlinePaint(outlinePaint);
             item.setOutlineStroke(outlineStroke);

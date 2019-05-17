@@ -293,7 +293,7 @@ public class LayeredBarRenderer extends BarRenderer implements Serializable {
                     dataset.getColumnKey(column));
         }
         
-        Paint itemPaint = getItemPaint(row, column);
+        Paint itemPaint = getPaint().getItemPaint(row, column);
         GradientPaintTransformer t = getGradientPaintTransformer();
         if (t != null && itemPaint instanceof GradientPaint) {
             itemPaint = t.transform((GradientPaint) itemPaint, bar);
@@ -305,7 +305,7 @@ public class LayeredBarRenderer extends BarRenderer implements Serializable {
         if (isDrawBarOutline()
                 && state.getBarWidth() > BAR_OUTLINE_WIDTH_THRESHOLD) {
             Stroke stroke = getItemOutlineStroke(row, column);
-            Paint paint = getItemOutlinePaint(row, column);
+            Paint paint = getPaint().getItemOutlinePaint(row, column);
             if (stroke != null && paint != null) {
                 g2.setStroke(stroke);
                 g2.setPaint(paint);
@@ -420,7 +420,7 @@ public class LayeredBarRenderer extends BarRenderer implements Serializable {
                     dataset.getColumnKey(column));
         }
 
-        Paint itemPaint = getItemPaint(row, column);
+        Paint itemPaint = getPaint().getItemPaint(row, column);
         GradientPaintTransformer t = getGradientPaintTransformer();
         if (t != null && itemPaint instanceof GradientPaint) {
             itemPaint = t.transform((GradientPaint) itemPaint, bar);
@@ -431,7 +431,7 @@ public class LayeredBarRenderer extends BarRenderer implements Serializable {
         if (isDrawBarOutline() && state.getBarWidth() 
                 > BAR_OUTLINE_WIDTH_THRESHOLD) {
             g2.setStroke(getItemOutlineStroke(row, column));
-            g2.setPaint(getItemOutlinePaint(row, column));
+            g2.setPaint(getPaint().getItemOutlinePaint(row, column));
             g2.draw(bar);
         }
 

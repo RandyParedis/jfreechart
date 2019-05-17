@@ -83,7 +83,7 @@ public class StandardXYBarPainter implements XYBarPainter, Serializable {
     public void paintBar(Graphics2D g2, XYBarRenderer renderer, int row,
             int column, RectangularShape bar, RectangleEdge base) {
 
-        Paint itemPaint = renderer.getItemPaint(row, column);
+        Paint itemPaint = renderer.getPaint().getItemPaint(row, column);
         GradientPaintTransformer t = renderer.getGradientPaintTransformer();
         if (t != null && itemPaint instanceof GradientPaint) {
             itemPaint = t.transform((GradientPaint) itemPaint, bar);
@@ -95,7 +95,7 @@ public class StandardXYBarPainter implements XYBarPainter, Serializable {
         if (renderer.isDrawBarOutline()) {
                // && state.getBarWidth() > BAR_OUTLINE_WIDTH_THRESHOLD) {
             Stroke stroke = renderer.getItemOutlineStroke(row, column);
-            Paint paint = renderer.getItemOutlinePaint(row, column);
+            Paint paint = renderer.getPaint().getItemOutlinePaint(row, column);
             if (stroke != null && paint != null) {
                 g2.setStroke(stroke);
                 g2.setPaint(paint);
@@ -124,7 +124,7 @@ public class StandardXYBarPainter implements XYBarPainter, Serializable {
 
         // handle a special case - if the bar colour has alpha == 0, it is
         // invisible so we shouldn't draw any shadow
-        Paint itemPaint = renderer.getItemPaint(row, column);
+        Paint itemPaint = renderer.getPaint().getItemPaint(row, column);
         if (itemPaint instanceof Color) {
             Color c = (Color) itemPaint;
             if (c.getAlpha() == 0) {

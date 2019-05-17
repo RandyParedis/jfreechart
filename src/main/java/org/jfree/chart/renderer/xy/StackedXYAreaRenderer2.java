@@ -425,7 +425,7 @@ public class StackedXYAreaRenderer2 extends XYAreaRenderer2
         }
 
         //  Get series Paint and Stroke
-        Paint itemPaint = getItemPaint(series, item);
+        Paint itemPaint = getPaint().getItemPaint(series, item);
         if (pass == 0) {
             g2.setPaint(itemPaint);
             g2.fill(left);

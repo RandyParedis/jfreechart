@@ -311,7 +311,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
         else {
             // TODO: could change this to itemFillPaint().  For backwards
             // compatibility, it might require a useFillPaint flag.
-            return getItemPaint(series, item);
+            return getPaint().getItemPaint(series, item);
         }
     }
 
@@ -432,7 +432,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
             }
         }
 
-        g2.setPaint(getItemPaint(series, item));
+        g2.setPaint(getPaint().getItemPaint(series, item));
         Stroke s = getItemStroke(series, item);
         g2.setStroke(s);
 
@@ -461,7 +461,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
             g2.fill(box);
         }
         g2.setStroke(getItemOutlineStroke(series, item));
-        g2.setPaint(getItemOutlinePaint(series, item));
+        g2.setPaint(getPaint().getItemOutlinePaint(series, item));
         g2.draw(box);
 
         // draw median
@@ -579,7 +579,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
             }
         }
 
-        g2.setPaint(getItemPaint(series, item));
+        g2.setPaint(getPaint().getItemPaint(series, item));
         Stroke s = getItemStroke(series, item);
         g2.setStroke(s);
 
@@ -608,7 +608,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
             g2.fill(box);
         }
         g2.setStroke(getItemOutlineStroke(series, item));
-        g2.setPaint(getItemOutlinePaint(series, item));
+        g2.setPaint(getPaint().getItemOutlinePaint(series, item));
         g2.draw(box);
 
         // draw median

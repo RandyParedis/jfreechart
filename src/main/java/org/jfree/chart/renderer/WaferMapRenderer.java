@@ -187,7 +187,7 @@ public class WaferMapRenderer extends AbstractRenderer {
      * @return The paint.
      */
     public Paint getChipColor(Number value) {
-        return getSeriesPaint(getPaintIndex(value));
+        return getPaint().getSeriesPaint(getPaintIndex(value));
     }
 
     /**
@@ -301,7 +301,7 @@ public class WaferMapRenderer extends AbstractRenderer {
                     String label = entry.getKey().toString();
                     String description = label;
                     Shape shape = new Rectangle2D.Double(1d, 1d, 1d, 1d);
-                    Paint paint = lookupSeriesPaint(
+                    Paint paint = getPaint().lookupSeriesPaint(
                             ((Integer) entry.getValue()).intValue());
                     Paint outlinePaint = Color.BLACK;
                     Stroke outlineStroke = DEFAULT_STROKE;
@@ -324,8 +324,8 @@ public class WaferMapRenderer extends AbstractRenderer {
                                 (Integer) entry.getValue()).toString();
                         String description = label;
                         Shape shape = new Rectangle2D.Double(1d, 1d, 1d, 1d);
-                        Paint paint = getSeriesPaint(
-                            ((Integer) entry.getValue()).intValue()
+                        Paint paint = getPaint().getSeriesPaint(
+                                ((Integer) entry.getValue()).intValue()
                         );
                         Paint outlinePaint = Color.BLACK;
                         Stroke outlineStroke = DEFAULT_STROKE;

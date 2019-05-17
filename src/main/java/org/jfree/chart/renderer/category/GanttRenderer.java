@@ -377,7 +377,7 @@ public class GanttRenderer extends IntervalBarRenderer
             if (isDrawBarOutline()
                     && state.getBarWidth() > BAR_OUTLINE_WIDTH_THRESHOLD) {
                 g2.setStroke(getItemStroke(row, column));
-                g2.setPaint(getItemOutlinePaint(row, column));
+                g2.setPaint(getPaint().getItemOutlinePaint(row, column));
                 g2.draw(bar);
             }
 
@@ -517,7 +517,7 @@ public class GanttRenderer extends IntervalBarRenderer
         if (isDrawBarOutline()
                 && state.getBarWidth() > BAR_OUTLINE_WIDTH_THRESHOLD) {
             Stroke stroke = getItemOutlineStroke(row, column);
-            Paint paint = getItemOutlinePaint(row, column);
+            Paint paint = getPaint().getItemOutlinePaint(row, column);
             if (stroke != null && paint != null) {
                 g2.setStroke(stroke);
                 g2.setPaint(paint);

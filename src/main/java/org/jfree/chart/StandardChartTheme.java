@@ -1522,8 +1522,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @param renderer  the renderer ({@code null} not permitted).
      */
     protected void applyToAbstractRenderer(AbstractRenderer renderer) {
-        if (renderer.getAutoPopulateSeriesPaint()) {
-            renderer.clearSeriesPaints(false);
+        if (renderer.getPaint().getAutoPopulateSeriesPaint()) {
+            renderer.getPaint().clearSeriesPaints(false);
         }
         if (renderer.getAutoPopulateSeriesStroke()) {
             renderer.clearSeriesStrokes(false);

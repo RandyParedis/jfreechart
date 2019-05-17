@@ -338,7 +338,7 @@ public class XYErrorRenderer extends XYLineAndShapeRenderer {
                     g2.setPaint(this.errorPaint);
                 }
                 else {
-                    g2.setPaint(getItemPaint(series, item));
+                    g2.setPaint(getPaint().getItemPaint(series, item));
                 }
                 if (this.errorStroke != null) {
                     g2.setStroke(this.errorStroke);
@@ -378,7 +378,7 @@ public class XYErrorRenderer extends XYLineAndShapeRenderer {
                     g2.setPaint(this.errorPaint);
                 }
                 else {
-                    g2.setPaint(getItemPaint(series, item));
+                    g2.setPaint(getPaint().getItemPaint(series, item));
                 }
                 if (this.errorStroke != null) {
                     g2.setStroke(this.errorStroke);

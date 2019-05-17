@@ -185,8 +185,8 @@ public class AreaRenderer extends AbstractCategoryItemRenderer
                     series);
         }
         Shape shape = lookupLegendShape(series);
-        Paint paint = lookupSeriesPaint(series);
-        Paint outlinePaint = lookupSeriesOutlinePaint(series);
+        Paint paint = getPaint().lookupSeriesPaint(series);
+        Paint outlinePaint = getPaint().lookupSeriesOutlinePaint(series);
         Stroke outlineStroke = lookupSeriesOutlineStroke(series);
 
         LegendItem result = new LegendItem(label, description, toolTipText,
@@ -286,7 +286,7 @@ public class AreaRenderer extends AbstractCategoryItemRenderer
         float yz = (float) rangeAxis.valueToJava2D(0.0, dataArea, edge);
         double labelXX = x1;
         double labelYY = y1;
-        g2.setPaint(getItemPaint(row, column));
+        g2.setPaint(getPaint().getItemPaint(row, column));
         g2.setStroke(getItemStroke(row, column));
 
         GeneralPath area = new GeneralPath();
@@ -310,7 +310,7 @@ public class AreaRenderer extends AbstractCategoryItemRenderer
         }
         area.closePath();
 
-        g2.setPaint(getItemPaint(row, column));
+        g2.setPaint(getPaint().getItemPaint(row, column));
         g2.fill(area);
 
         // draw the item labels if there are any...

@@ -93,7 +93,6 @@ import org.jfree.chart.plot.DrawingSupplier;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.PolarPlot;
-import org.jfree.chart.renderer.xy.AbstractXYItemRenderer;
 import org.jfree.chart.text.TextUtils;
 import org.jfree.chart.urls.XYURLGenerator;
 import org.jfree.chart.util.BooleanList;
@@ -523,7 +522,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
             poly.closePath();
         }
 
-        g2.setPaint(lookupSeriesPaint(seriesIndex));
+        g2.setPaint(getPaint().lookupSeriesPaint(seriesIndex));
         g2.setStroke(lookupSeriesStroke(seriesIndex));
         if (isSeriesFilled(seriesIndex)) {
             Composite savedComposite = g2.getComposite();
@@ -532,7 +531,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
             g2.setComposite(savedComposite);
             if (this.drawOutlineWhenFilled) {
                 // draw the outline of the filled polygon
-                g2.setPaint(lookupSeriesOutlinePaint(seriesIndex));
+                g2.setPaint(getPaint().lookupSeriesOutlinePaint(seriesIndex));
                 g2.draw(poly);
             }
         }
@@ -566,15 +565,15 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
 
                 Paint paint;
                 if (useFillPaint) {
-                    paint = lookupSeriesFillPaint(seriesIndex);
+                    paint = getPaint().lookupSeriesFillPaint(seriesIndex);
                 }
                 else {
-                    paint = lookupSeriesPaint(seriesIndex);
+                    paint = getPaint().lookupSeriesPaint(seriesIndex);
                 }
                 g2.setPaint(paint);
                 g2.fill(shape);
                 if (isSeriesFilled(seriesIndex) && this.drawOutlineWhenFilled) {
-                    g2.setPaint(lookupSeriesOutlinePaint(seriesIndex));
+                    g2.setPaint(getPaint().lookupSeriesOutlinePaint(seriesIndex));
                     g2.setStroke(lookupSeriesOutlineStroke(seriesIndex));
                     g2.draw(shape);
                 }
@@ -712,13 +711,13 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         Shape shape = lookupSeriesShape(series);
         Paint paint;
         if (this.useFillPaint) {
-            paint = lookupSeriesFillPaint(series);
+            paint = getPaint().lookupSeriesFillPaint(series);
         }
         else {
-            paint = lookupSeriesPaint(series);
+            paint = getPaint().lookupSeriesPaint(series);
         }
         Stroke stroke = lookupSeriesStroke(series);
-        Paint outlinePaint = lookupSeriesOutlinePaint(series);
+        Paint outlinePaint = getPaint().lookupSeriesOutlinePaint(series);
         Stroke outlineStroke = lookupSeriesOutlineStroke(series);
         boolean shapeOutlined = isSeriesFilled(series)
                 && this.drawOutlineWhenFilled;

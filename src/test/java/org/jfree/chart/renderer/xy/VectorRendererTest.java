@@ -69,9 +69,9 @@ public class VectorRendererTest {
         assertTrue(r2.equals(r1));
 
         // check that super class fields are being looked at...
-        r1.setSeriesFillPaint(0, Color.green);
+        r1.getPaint().setSeriesFillPaint(0, Color.green);
         assertFalse(r1.equals(r2));
-        r2.setSeriesFillPaint(0, Color.green);
+        r2.getPaint().setSeriesFillPaint(0, Color.green);
         assertTrue(r1.equals(r2));
     }
 

@@ -929,7 +929,7 @@ public class XYPlotTest {
         // change event...
         MyPlotChangeListener listener = new MyPlotChangeListener();
         plot.addChangeListener(listener);
-        renderer.setSeriesPaint(0, Color.BLACK);
+        renderer.getPaint().setSeriesPaint(0, Color.BLACK);
         assertTrue(listener.getEvent() != null);
     }
 

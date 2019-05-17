@@ -248,7 +248,7 @@ public class VectorRenderer extends AbstractXYItemRenderer
         else {
             line = new Line2D.Double(xx0, yy0, xx1, yy1);
         }
-        g2.setPaint(getItemPaint(series, item));
+        g2.setPaint(getPaint().getItemPaint(series, item));
         g2.setStroke(getItemStroke(series, item));
         g2.draw(line);
 

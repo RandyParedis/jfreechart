@@ -482,9 +482,9 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
                //}
                 if (this.drawOutlines) {
                     if (getUseOutlinePaint()) {
-                        g2.setPaint(getItemOutlinePaint(series, item));
+                        g2.setPaint(getPaint().getItemOutlinePaint(series, item));
                     } else {
-                        g2.setPaint(getItemPaint(series, item));
+                        g2.setPaint(getPaint().getItemPaint(series, item));
                     }
                     g2.setStroke(getItemOutlineStroke(series, item));
                     g2.draw(shape);
@@ -518,10 +518,10 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
             p = this.paintScale.getPaint(z);
         } else {
             if (this.useFillPaint) {
-                p = getItemFillPaint(series, item);
+                p = getPaint().getItemFillPaint(series, item);
             }
             else {
-                p = getItemPaint(series, item);
+                p = getPaint().getItemPaint(series, item);
             }
         }
         return p;

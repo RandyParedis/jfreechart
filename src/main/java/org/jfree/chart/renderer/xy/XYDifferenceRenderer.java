@@ -873,7 +873,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
             l_entities = x_info.getOwner().getEntityCollection();
         }
 
-        Paint l_seriesPaint   = getItemPaint(x_series, x_item);
+        Paint l_seriesPaint   = getPaint().getItemPaint(x_series, x_item);
         Stroke l_seriesStroke = getItemStroke(x_series, x_item);
         x_graphics.setPaint(l_seriesPaint);
         x_graphics.setStroke(l_seriesStroke);
@@ -900,7 +900,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
                         l_x1, l_y1);
             }
             if (l_shape.intersects(x_dataArea)) {
-                x_graphics.setPaint(getItemPaint(x_series, x_item));
+                x_graphics.setPaint(getPaint().getItemPaint(x_series, x_item));
                 x_graphics.fill(l_shape);
             }
             l_entityArea = l_shape;
@@ -958,7 +958,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
         }
 
         if ((null != l_line) && l_line.intersects(x_dataArea)) {
-            x_graphics.setPaint(getItemPaint(x_series, x_item));
+            x_graphics.setPaint(getPaint().getItemPaint(x_series, x_item));
             x_graphics.setStroke(getItemStroke(x_series, x_item));
             x_graphics.draw(l_line);
         }
@@ -1136,7 +1136,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
                         urlText = getLegendItemURLGenerator().generateLabel(
                                 dataset, series);
                     }
-                    Paint paint = lookupSeriesPaint(series);
+                    Paint paint = getPaint().lookupSeriesPaint(series);
                     Stroke stroke = lookupSeriesStroke(series);
                     Shape line = getLegendLine();
                     result = new LegendItem(label, description,

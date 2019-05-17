@@ -130,7 +130,7 @@ import java.util.*;
  * <b>Subclassing</b>
  * If you create your own renderer that is a subclass of this, you should take
  * care to ensure that the renderer implements cloning correctly, to ensure
- * that {@link JFreeChart} instances that use your renderer are also
+ * that {@link org.jfree.chart.JFreeChart JFreeChart} instances that use your renderer are also
  * cloneable.  It is recommended that you also implement the
  * {@link PublicCloneable} interface to provide simple access to the clone
  * method.
@@ -142,12 +142,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
     /** Zero represented as a {@code double}. */
     public static final Double ZERO = 0.0;
-
-    /** The default paint. */
-    public static final Paint DEFAULT_PAINT = Color.BLUE;
-
-    /** The default outline paint. */
-    public static final Paint DEFAULT_OUTLINE_PAINT = Color.GRAY;
 
     /** The default stroke. */
     public static final Stroke DEFAULT_STROKE = new BasicStroke(1.0f);
@@ -165,48 +159,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
     /** The default value label paint. */
     public static final Paint DEFAULT_VALUE_LABEL_PAINT = Color.BLACK;
-
-    /** The paint list. */
-    private PaintList paintList;
-
-    /**
-     * A flag that controls whether or not the paintList is auto-populated
-     * in the {@link #lookupSeriesPaint(int)} method.
-     *
-     * @since 1.0.6
-     */
-    private boolean autoPopulateSeriesPaint;
-
-    /** The default paint, used when there is no paint assigned for a series. */
-    private transient Paint defaultPaint;
-
-    /** The fill paint list. */
-    private PaintList fillPaintList;
-
-    /**
-     * A flag that controls whether or not the fillPaintList is auto-populated
-     * in the {@link #lookupSeriesFillPaint(int)} method.
-     *
-     * @since 1.0.6
-     */
-    private boolean autoPopulateSeriesFillPaint;
-
-    /** The base fill paint. */
-    private transient Paint defaultFillPaint;
-
-    /** The outline paint list. */
-    private PaintList outlinePaintList;
-
-    /**
-     * A flag that controls whether or not the outlinePaintList is
-     * auto-populated in the {@link #lookupSeriesOutlinePaint(int)} method.
-     *
-     * @since 1.0.6
-     */
-    private boolean autoPopulateSeriesOutlinePaint;
-
-    /** The base outline paint. */
-    private transient Paint defaultOutlinePaint;
 
     /** The stroke list. */
     private StrokeList strokeList;
@@ -366,23 +318,12 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     private transient RendererChangeEvent event;
 
     private RenderStateVisibility renderStateVisibility = new RenderStateVisibility(this);
+    private RenderStatePaint renderStatePaint = new RenderStatePaint(this);
 
     /**
      * Default constructor.
      */
     public AbstractRenderer() {
-        this.paintList = new PaintList();
-        this.defaultPaint = DEFAULT_PAINT;
-        this.autoPopulateSeriesPaint = true;
-
-        this.fillPaintList = new PaintList();
-        this.defaultFillPaint = Color.WHITE;
-        this.autoPopulateSeriesFillPaint = false;
-
-        this.outlinePaintList = new PaintList();
-        this.defaultOutlinePaint = DEFAULT_OUTLINE_PAINT;
-        this.autoPopulateSeriesOutlinePaint = false;
-
         this.strokeList = new StrokeList();
         this.defaultStroke = DEFAULT_STROKE;
         this.autoPopulateSeriesStroke = true;
@@ -477,490 +418,10 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     }
 
     // PAINT
-
-    /**
-     * Returns the paint used to fill data items as they are drawn.
-     * (this is typically the same for an entire series).
-     * <p>
-     * The default implementation passes control to the
-     * {@code lookupSeriesPaint()} method. You can override this method
-     * if you require different behaviour.
-     *
-     * @param row  the row (or series) index (zero-based).
-     * @param column  the column (or category) index (zero-based).
-     *
-     * @return The paint (never {@code null}).
-     */
-    public Paint getItemPaint(int row, int column) {
-        return lookupSeriesPaint(row);
-    }
-
-    /**
-     * Returns the paint used to fill an item drawn by the renderer.
-     *
-     * @param series  the series index (zero-based).
-     *
-     * @return The paint (never {@code null}).
-     *
-     * @since 1.0.6
-     */
-    public Paint lookupSeriesPaint(int series) {
-
-        Paint seriesPaint = getSeriesPaint(series);
-        if (seriesPaint == null && this.autoPopulateSeriesPaint) {
-            DrawingSupplier supplier = getDrawingSupplier();
-            if (supplier != null) {
-                seriesPaint = supplier.getNextPaint();
-                setSeriesPaint(series, seriesPaint, false);
-            }
-        }
-        if (seriesPaint == null) {
-            seriesPaint = this.defaultPaint;
-        }
-        return seriesPaint;
-
-    }
-
-    /**
-     * Returns the paint used to fill an item drawn by the renderer.
-     *
-     * @param series  the series index (zero-based).
-     *
-     * @return The paint (possibly {@code null}).
-     *
-     * @see #setSeriesPaint(int, Paint)
-     */
-    public Paint getSeriesPaint(int series) {
-        return this.paintList.getPaint(series);
-    }
-
-    /**
-     * Sets the paint used for a series and sends a {@link RendererChangeEvent}
-     * to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param paint  the paint ({@code null} permitted).
-     *
-     * @see #getSeriesPaint(int)
-     */
-    public void setSeriesPaint(int series, Paint paint) {
-        setSeriesPaint(series, paint, true);
-    }
-
-    /**
-     * Sets the paint used for a series and, if requested, sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index.
-     * @param paint  the paint ({@code null} permitted).
-     * @param notify  notify listeners?
-     *
-     * @see #getSeriesPaint(int)
-     */
-    public void setSeriesPaint(int series, Paint paint, boolean notify) {
-        this.paintList.setPaint(series, paint);
-        if (notify) {
-            fireChangeEvent();
-        }
-    }
-
-    /**
-     * Clears the series paint settings for this renderer and, if requested,
-     * sends a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param notify  notify listeners?
-     *
-     * @since 1.0.11
-     */
-    public void clearSeriesPaints(boolean notify) {
-        this.paintList.clear();
-        if (notify) {
-            fireChangeEvent();
-        }
-    }
-
-    /**
-     * Returns the default paint.
-     *
-     * @return The default paint (never {@code null}).
-     *
-     * @see #setDefaultPaint(Paint)
-     */
-    public Paint getDefaultPaint() {
-        return this.defaultPaint;
-    }
-
-    /**
-     * Sets the default paint and sends a {@link RendererChangeEvent} to all
-     * registered listeners.
-     *
-     * @param paint  the paint ({@code null} not permitted).
-     *
-     * @see #getDefaultPaint()
-     */
-    public void setDefaultPaint(Paint paint) {
-        // defer argument checking...
-        setDefaultPaint(paint, true);
-    }
-
-    /**
-     * Sets the default paint and, if requested, sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param paint  the paint ({@code null} not permitted).
-     * @param notify  notify listeners?
-     *
-     * @see #getDefaultPaint()
-     */
-    public void setDefaultPaint(Paint paint, boolean notify) {
-        this.defaultPaint = paint;
-        if (notify) {
-            fireChangeEvent();
-        }
-    }
-
-    /**
-     * Returns the flag that controls whether or not the series paint list is
-     * automatically populated when {@link #lookupSeriesPaint(int)} is called.
-     *
-     * @return A boolean.
-     *
-     * @since 1.0.6
-     *
-     * @see #setAutoPopulateSeriesPaint(boolean)
-     */
-    public boolean getAutoPopulateSeriesPaint() {
-        return this.autoPopulateSeriesPaint;
-    }
-
-    /**
-     * Sets the flag that controls whether or not the series paint list is
-     * automatically populated when {@link #lookupSeriesPaint(int)} is called.
-     *
-     * @param auto  the new flag value.
-     *
-     * @since 1.0.6
-     *
-     * @see #getAutoPopulateSeriesPaint()
-     */
-    public void setAutoPopulateSeriesPaint(boolean auto) {
-        this.autoPopulateSeriesPaint = auto;
-    }
-
-    //// FILL PAINT //////////////////////////////////////////////////////////
-
-    /**
-     * Returns the paint used to fill data items as they are drawn.  The
-     * default implementation passes control to the
-     * {@link #lookupSeriesFillPaint(int)} method - you can override this
-     * method if you require different behaviour.
-     *
-     * @param row  the row (or series) index (zero-based).
-     * @param column  the column (or category) index (zero-based).
-     *
-     * @return The paint (never {@code null}).
-     */
-    public Paint getItemFillPaint(int row, int column) {
-        return lookupSeriesFillPaint(row);
-    }
-
-    /**
-     * Returns the paint used to fill an item drawn by the renderer.
-     *
-     * @param series  the series (zero-based index).
-     *
-     * @return The paint (never {@code null}).
-     *
-     * @since 1.0.6
-     */
-    public Paint lookupSeriesFillPaint(int series) {
-
-        Paint seriesFillPaint = getSeriesFillPaint(series);
-        if (seriesFillPaint == null && this.autoPopulateSeriesFillPaint) {
-            DrawingSupplier supplier = getDrawingSupplier();
-            if (supplier != null) {
-                seriesFillPaint = supplier.getNextFillPaint();
-                setSeriesFillPaint(series, seriesFillPaint, false);
-            }
-        }
-        if (seriesFillPaint == null) {
-            seriesFillPaint = this.defaultFillPaint;
-        }
-        return seriesFillPaint;
-
-    }
-
-    /**
-     * Returns the paint used to fill an item drawn by the renderer.
-     *
-     * @param series  the series (zero-based index).
-     *
-     * @return The paint (never {@code null}).
-     *
-     * @see #setSeriesFillPaint(int, Paint)
-     */
-    public Paint getSeriesFillPaint(int series) {
-        return this.fillPaintList.getPaint(series);
-    }
-
-    /**
-     * Sets the paint used for a series fill and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param paint  the paint ({@code null} permitted).
-     *
-     * @see #getSeriesFillPaint(int)
-     */
-    public void setSeriesFillPaint(int series, Paint paint) {
-        setSeriesFillPaint(series, paint, true);
-    }
-
-    /**
-     * Sets the paint used to fill a series and, if requested,
-     * sends a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param paint  the paint ({@code null} permitted).
-     * @param notify  notify listeners?
-     *
-     * @see #getSeriesFillPaint(int)
-     */
-    public void setSeriesFillPaint(int series, Paint paint, boolean notify) {
-        this.fillPaintList.setPaint(series, paint);
-        if (notify) {
-            fireChangeEvent();
-        }
-    }
-
-    /**
-     * Returns the default fill paint.
-     *
-     * @return The paint (never {@code null}).
-     *
-     * @see #setDefaultFillPaint(Paint)
-     */
-    public Paint getDefaultFillPaint() {
-        return this.defaultFillPaint;
-    }
-
-    /**
-     * Sets the default fill paint and sends a {@link RendererChangeEvent} to
-     * all registered listeners.
-     *
-     * @param paint  the paint ({@code null} not permitted).
-     *
-     * @see #getDefaultFillPaint()
-     */
-    public void setDefaultFillPaint(Paint paint) {
-        // defer argument checking...
-        setDefaultFillPaint(paint, true);
-    }
-
-    /**
-     * Sets the default fill paint and, if requested, sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param paint  the paint ({@code null} not permitted).
-     * @param notify  notify listeners?
-     *
-     * @see #getDefaultFillPaint()
-     */
-    public void setDefaultFillPaint(Paint paint, boolean notify) {
-        Args.nullNotPermitted(paint, "paint");
-        this.defaultFillPaint = paint;
-        if (notify) {
-            fireChangeEvent();
-        }
-    }
-
-    /**
-     * Returns the flag that controls whether or not the series fill paint list
-     * is automatically populated when {@link #lookupSeriesFillPaint(int)} is
-     * called.
-     *
-     * @return A boolean.
-     *
-     * @since 1.0.6
-     *
-     * @see #setAutoPopulateSeriesFillPaint(boolean)
-     */
-    public boolean getAutoPopulateSeriesFillPaint() {
-        return this.autoPopulateSeriesFillPaint;
-    }
-
-    /**
-     * Sets the flag that controls whether or not the series fill paint list is
-     * automatically populated when {@link #lookupSeriesFillPaint(int)} is
-     * called.
-     *
-     * @param auto  the new flag value.
-     *
-     * @since 1.0.6
-     *
-     * @see #getAutoPopulateSeriesFillPaint()
-     */
-    public void setAutoPopulateSeriesFillPaint(boolean auto) {
-        this.autoPopulateSeriesFillPaint = auto;
-    }
-
-    // OUTLINE PAINT //////////////////////////////////////////////////////////
-
-    /**
-     * Returns the paint used to outline data items as they are drawn.
-     * (this is typically the same for an entire series).
-     * <p>
-     * The default implementation passes control to the
-     * {@link #lookupSeriesOutlinePaint} method.  You can override this method
-     * if you require different behaviour.
-     *
-     * @param row  the row (or series) index (zero-based).
-     * @param column  the column (or category) index (zero-based).
-     *
-     * @return The paint (never {@code null}).
-     */
-    public Paint getItemOutlinePaint(int row, int column) {
-        return lookupSeriesOutlinePaint(row);
-    }
-
-    /**
-     * Returns the paint used to outline an item drawn by the renderer.
-     *
-     * @param series  the series (zero-based index).
-     *
-     * @return The paint (never {@code null}).
-     *
-     * @since 1.0.6
-     */
-    public Paint lookupSeriesOutlinePaint(int series) {
-
-        Paint seriesOutlinePaint = getSeriesOutlinePaint(series);
-        if (seriesOutlinePaint == null && this.autoPopulateSeriesOutlinePaint) {
-            DrawingSupplier supplier = getDrawingSupplier();
-            if (supplier != null) {
-                seriesOutlinePaint = supplier.getNextOutlinePaint();
-                setSeriesOutlinePaint(series, seriesOutlinePaint, false);
-            }
-        }
-        if (seriesOutlinePaint == null) {
-            seriesOutlinePaint = this.defaultOutlinePaint;
-        }
-        return seriesOutlinePaint;
-
-    }
-
-    /**
-     * Returns the paint used to outline an item drawn by the renderer.
-     *
-     * @param series  the series (zero-based index).
-     *
-     * @return The paint (possibly {@code null}).
-     *
-     * @see #setSeriesOutlinePaint(int, Paint)
-     */
-    public Paint getSeriesOutlinePaint(int series) {
-        return this.outlinePaintList.getPaint(series);
-    }
-
-    /**
-     * Sets the paint used for a series outline and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param paint  the paint ({@code null} permitted).
-     *
-     * @see #getSeriesOutlinePaint(int)
-     */
-    public void setSeriesOutlinePaint(int series, Paint paint) {
-        setSeriesOutlinePaint(series, paint, true);
-    }
-
-    /**
-     * Sets the paint used to draw the outline for a series and, if requested,
-     * sends a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param paint  the paint ({@code null} permitted).
-     * @param notify  notify listeners?
-     *
-     * @see #getSeriesOutlinePaint(int)
-     */
-    public void setSeriesOutlinePaint(int series, Paint paint, boolean notify) {
-        this.outlinePaintList.setPaint(series, paint);
-        if (notify) {
-            fireChangeEvent();
-        }
-    }
-
-    /**
-     * Returns the default outline paint.
-     *
-     * @return The paint (never {@code null}).
-     *
-     * @see #setDefaultOutlinePaint(Paint)
-     */
-    public Paint getDefaultOutlinePaint() {
-        return this.defaultOutlinePaint;
-    }
-
-    /**
-     * Sets the default outline paint and sends a {@link RendererChangeEvent} to
-     * all registered listeners.
-     *
-     * @param paint  the paint ({@code null} not permitted).
-     *
-     * @see #getDefaultOutlinePaint()
-     */
-    public void setDefaultOutlinePaint(Paint paint) {
-        // defer argument checking...
-        setDefaultOutlinePaint(paint, true);
-    }
-
-    /**
-     * Sets the default outline paint and, if requested, sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param paint  the paint ({@code null} not permitted).
-     * @param notify  notify listeners?
-     *
-     * @see #getDefaultOutlinePaint()
-     */
-    public void setDefaultOutlinePaint(Paint paint, boolean notify) {
-        Args.nullNotPermitted(paint, "paint");
-        this.defaultOutlinePaint = paint;
-        if (notify) {
-            fireChangeEvent();
-        }
-    }
-
-    /**
-     * Returns the flag that controls whether or not the series outline paint
-     * list is automatically populated when
-     * {@link #lookupSeriesOutlinePaint(int)} is called.
-     *
-     * @return A boolean.
-     *
-     * @since 1.0.6
-     *
-     * @see #setAutoPopulateSeriesOutlinePaint(boolean)
-     */
-    public boolean getAutoPopulateSeriesOutlinePaint() {
-        return this.autoPopulateSeriesOutlinePaint;
-    }
-
-    /**
-     * Sets the flag that controls whether or not the series outline paint list
-     * is automatically populated when {@link #lookupSeriesOutlinePaint(int)}
-     * is called.
-     *
-     * @param auto  the new flag value.
-     *
-     * @since 1.0.6
-     *
-     * @see #getAutoPopulateSeriesOutlinePaint()
-     */
-    public void setAutoPopulateSeriesOutlinePaint(boolean auto) {
-        this.autoPopulateSeriesOutlinePaint = auto;
+    // FILL PAINT
+    // OUTLINE PAINT
+    public IRendererPaint getPaint() {
+        return this.renderStatePaint;
     }
 
     // STROKE
@@ -2514,25 +1975,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         if (!ObjectUtils.equal(this.getVisibility(), that.getVisibility())) {
             return false;
         }
-        if (!ObjectUtils.equal(this.paintList, that.paintList)) {
-            return false;
-        }
-        if (!PaintUtils.equal(this.defaultPaint, that.defaultPaint)) {
-            return false;
-        }
-        if (!ObjectUtils.equal(this.fillPaintList, that.fillPaintList)) {
-            return false;
-        }
-        if (!PaintUtils.equal(this.defaultFillPaint,
-                that.defaultFillPaint)) {
-            return false;
-        }
-        if (!ObjectUtils.equal(this.outlinePaintList,
-                that.outlinePaintList)) {
-            return false;
-        }
-        if (!PaintUtils.equal(this.defaultOutlinePaint,
-                that.defaultOutlinePaint)) {
+        if (!ObjectUtils.equal(this.getPaint(), that.getPaint())) {
             return false;
         }
         if (!ObjectUtils.equal(this.strokeList, that.strokeList)) {
@@ -2644,12 +2087,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     public int hashCode() {
         int result = 193;
         result = HashUtils.hashCode(result, this.renderStateVisibility);
-        result = HashUtils.hashCode(result, this.paintList);
-        result = HashUtils.hashCode(result, this.defaultPaint);
-        result = HashUtils.hashCode(result, this.fillPaintList);
-        result = HashUtils.hashCode(result, this.defaultFillPaint);
-        result = HashUtils.hashCode(result, this.outlinePaintList);
-        result = HashUtils.hashCode(result, this.defaultOutlinePaint);
+        result = HashUtils.hashCode(result, this.renderStatePaint);
         result = HashUtils.hashCode(result, this.strokeList);
         result = HashUtils.hashCode(result, this.defaultStroke);
         result = HashUtils.hashCode(result, this.outlineStrokeList);
@@ -2687,22 +2125,13 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         if (this.renderStateVisibility != null) {
             clone.renderStateVisibility = (RenderStateVisibility) this.renderStateVisibility.clone();
             clone.renderStateVisibility.setAbstractRenderer(clone);
+            clone.renderStateVisibility.setAbstractRenderer(clone);
         }
 
-        // 'paint' : immutable, no need to clone reference
-        if (this.paintList != null) {
-            clone.paintList = (PaintList) this.paintList.clone();
+        if (this.renderStatePaint != null) {
+            clone.renderStatePaint = (RenderStatePaint) this.renderStatePaint.clone();
+            clone.renderStatePaint.setAbstractRenderer(clone);
         }
-        // 'basePaint' : immutable, no need to clone reference
-
-        if (this.fillPaintList != null) {
-            clone.fillPaintList = (PaintList) this.fillPaintList.clone();
-        }
-        // 'outlinePaint' : immutable, no need to clone reference
-        if (this.outlinePaintList != null) {
-            clone.outlinePaintList = (PaintList) this.outlinePaintList.clone();
-        }
-        // 'baseOutlinePaint' : immutable, no need to clone reference
 
         // 'stroke' : immutable, no need to clone reference
         if (this.strokeList != null) {
@@ -2787,9 +2216,9 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtils.writePaint(this.defaultPaint, stream);
-        SerialUtils.writePaint(this.defaultFillPaint, stream);
-        SerialUtils.writePaint(this.defaultOutlinePaint, stream);
+        SerialUtils.writePaint(this.renderStatePaint.getDefaultPaint(), stream);
+        SerialUtils.writePaint(this.renderStatePaint.getDefaultFillPaint(), stream);
+        SerialUtils.writePaint(this.renderStatePaint.getDefaultOutlinePaint(), stream);
         SerialUtils.writeStroke(this.defaultStroke, stream);
         SerialUtils.writeStroke(this.defaultOutlineStroke, stream);
         SerialUtils.writeShape(this.defaultShape, stream);
@@ -2809,9 +2238,9 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.defaultPaint = SerialUtils.readPaint(stream);
-        this.defaultFillPaint = SerialUtils.readPaint(stream);
-        this.defaultOutlinePaint = SerialUtils.readPaint(stream);
+        this.renderStatePaint.setDefaultPaint(SerialUtils.readPaint(stream), false);
+        this.renderStatePaint.setDefaultFillPaint(SerialUtils.readPaint(stream), false);
+        this.renderStatePaint.setDefaultOutlinePaint(SerialUtils.readPaint(stream), false);
         this.defaultStroke = SerialUtils.readStroke(stream);
         this.defaultOutlineStroke = SerialUtils.readStroke(stream);
         this.defaultShape = SerialUtils.readShape(stream);

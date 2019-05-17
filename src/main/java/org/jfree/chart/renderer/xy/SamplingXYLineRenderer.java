@@ -301,7 +301,7 @@ public class SamplingXYLineRenderer extends AbstractXYItemRenderer
                 pi.next();
             }
             g2.setStroke(getItemStroke(series, item));
-            g2.setPaint(getItemPaint(series, item));
+            g2.setPaint(getPaint().getItemPaint(series, item));
             g2.draw(s.seriesPath);
             g2.draw(s.intervalPath);
         }

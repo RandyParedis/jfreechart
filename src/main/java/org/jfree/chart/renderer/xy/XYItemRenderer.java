@@ -107,6 +107,7 @@ import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.IRendererPaint;
 import org.jfree.chart.renderer.IRendererVisibility;
 import org.jfree.chart.ui.Layer;
 import org.jfree.chart.urls.XYURLGenerator;
@@ -128,6 +129,13 @@ public interface XYItemRenderer extends LegendItemSource {
      * @return Series visible render state.
      */
     IRendererVisibility getVisibility();
+
+    /**
+     * Returns the paint render state for the renderer.
+     *
+     * @return Paint render state.
+     */
+    IRendererPaint getPaint();
 
     /**
      * Returns the plot that this renderer has been assigned to.
@@ -192,169 +200,6 @@ public interface XYItemRenderer extends LegendItemSource {
      * @see #addChangeListener(RendererChangeListener)
      */
     public void removeChangeListener(RendererChangeListener listener);
-
-    //// PAINT ////////////////////////////////////////////////////////////////
-
-    /**
-     * Returns the paint used to color data items as they are drawn.
-     *
-     * @param row  the row (or series) index (zero-based).
-     * @param column  the column (or category) index (zero-based).
-     *
-     * @return The paint (never {@code null}).
-     */
-    public Paint getItemPaint(int row, int column);
-
-    /**
-     * Returns the paint used to color an item drawn by the renderer.
-     *
-     * @param series  the series index (zero-based).
-     *
-     * @return The paint (possibly {@code null}).
-     *
-     * @see #setSeriesPaint(int, Paint)
-     */
-    public Paint getSeriesPaint(int series);
-
-    /**
-     * Sets the paint used for a series and sends a {@link RendererChangeEvent}
-     * to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param paint  the paint ({@code null} permitted).
-     *
-     * @see #getSeriesPaint(int)
-     */
-    public void setSeriesPaint(int series, Paint paint);
-
-    public void setSeriesPaint(int series, Paint paint, boolean notify);
-
-    /**
-     * Returns the default paint.
-     *
-     * @return The default paint (never {@code null}).
-     *
-     * @see #setDefaultPaint(Paint)
-     */
-    public Paint getDefaultPaint();
-
-    /**
-     * Sets the default paint and sends a {@link RendererChangeEvent} to all
-     * registered listeners.
-     *
-     * @param paint  the paint ({@code null} not permitted).
-     *
-     * @see #getDefaultPaint()
-     */
-    public void setDefaultPaint(Paint paint);
-
-    public void setDefaultPaint(Paint paint, boolean notify);
-
-    // FILL PAINT
-
-    /**
-     * Returns the paint used to fill data items as they are drawn.
-     *
-     * @param row  the row (or series) index (zero-based).
-     * @param column  the column (or category) index (zero-based).
-     *
-     * @return The paint (never {@code null}).
-     */
-    public Paint getItemFillPaint(int row, int column);
-
-    /**
-     * Returns the paint used to fill an item drawn by the renderer.
-     *
-     * @param series  the series index (zero-based).
-     *
-     * @return The paint (possibly {@code null}).
-     */
-    public Paint getSeriesFillPaint(int series);
-
-    /**
-     * Sets the paint used for a series and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param paint  the paint ({@code null} permitted).
-     */
-    public void setSeriesFillPaint(int series, Paint paint);
-
-    public void setSeriesFillPaint(int series, Paint paint, boolean notify);
-
-    /**
-     * Returns the default paint.
-     *
-     * @return The default paint (never {@code null}).
-     */
-    public Paint getDefaultFillPaint();
-
-    /**
-     * Sets the default paint and sends a {@link RendererChangeEvent} to all
-     * registered listeners.
-     *
-     * @param paint  the paint ({@code null} not permitted).
-     */
-    public void setDefaultFillPaint(Paint paint);
-
-    public void setDefaultFillPaint(Paint paint, boolean notify);
-
-    //// OUTLINE PAINT ////////////////////////////////////////////////////////
-
-    /**
-     * Returns the paint used to outline data items as they are drawn.
-     *
-     * @param row  the row (or series) index (zero-based).
-     * @param column  the column (or category) index (zero-based).
-     *
-     * @return The paint (never {@code null}).
-     */
-    public Paint getItemOutlinePaint(int row, int column);
-
-    /**
-     * Returns the paint used to outline an item drawn by the renderer.
-     *
-     * @param series  the series (zero-based index).
-     *
-     * @return The paint (possibly {@code null}).
-     *
-     * @see #setSeriesOutlinePaint(int, Paint)
-     */
-    public Paint getSeriesOutlinePaint(int series);
-
-    /**
-     * Sets the paint used for a series outline and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param paint  the paint ({@code null} permitted).
-     *
-     * @see #getSeriesOutlinePaint(int)
-     */
-    public void setSeriesOutlinePaint(int series, Paint paint);
-
-    public void setSeriesOutlinePaint(int series, Paint paint, boolean notify);
-
-    /**
-     * Returns the default outline paint.
-     *
-     * @return The paint (never {@code null}).
-     *
-     * @see #setDefaultOutlinePaint(Paint)
-     */
-    public Paint getDefaultOutlinePaint();
-
-    /**
-     * Sets the default outline paint and sends a {@link RendererChangeEvent} to
-     * all registered listeners.
-     *
-     * @param paint  the paint ({@code null} not permitted).
-     *
-     * @see #getDefaultOutlinePaint()
-     */
-    public void setDefaultOutlinePaint(Paint paint);
-
-    public void setDefaultOutlinePaint(Paint paint, boolean notify);
 
     //// STROKE ///////////////////////////////////////////////////////////////
 

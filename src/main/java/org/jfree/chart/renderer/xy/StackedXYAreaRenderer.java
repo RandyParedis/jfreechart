@@ -423,10 +423,10 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
                 plot.getRangeAxisEdge());
 
         //  Get series Paint and Stroke
-        Paint seriesPaint = getItemPaint(series, item);
+        Paint seriesPaint = getPaint().getItemPaint(series, item);
         Paint seriesFillPaint = seriesPaint;
         if (getUseFillPaint()) {
-            seriesFillPaint = getItemFillPaint(series, item);
+            seriesFillPaint = getPaint().getItemFillPaint(series, item);
         }
         Stroke seriesStroke = getItemStroke(series, item);
 
@@ -529,7 +529,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
                 //  Draw an outline around the Area.
                 if (isOutline()) {
                     g2.setStroke(lookupSeriesOutlineStroke(series));
-                    g2.setPaint(lookupSeriesOutlinePaint(series));
+                    g2.setPaint(getPaint().lookupSeriesOutlinePaint(series));
                     g2.draw(areaState.getSeriesArea());
                 }
             }

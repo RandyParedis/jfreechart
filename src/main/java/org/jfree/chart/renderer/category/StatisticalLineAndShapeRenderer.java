@@ -301,7 +301,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                 g2.setPaint(this.errorIndicatorPaint);
             }
             else {
-                g2.setPaint(getItemPaint(row, column));
+                g2.setPaint(getPaint().getItemPaint(row, column));
             }
             if (this.errorIndicatorStroke != null) {
                 g2.setStroke(this.errorIndicatorStroke);
@@ -342,19 +342,19 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
             
             if (getItemShapeFilled(row, column)) {
                 if (getUseFillPaint()) {
-                    g2.setPaint(getItemFillPaint(row, column));
+                    g2.setPaint(getPaint().getItemFillPaint(row, column));
                 }
                 else {
-                    g2.setPaint(getItemPaint(row, column));
+                    g2.setPaint(getPaint().getItemPaint(row, column));
                 }
                 g2.fill(shape);
             }
             if (getDrawOutlines()) {
                 if (getUseOutlinePaint()) {
-                    g2.setPaint(getItemOutlinePaint(row, column));
+                    g2.setPaint(getPaint().getItemOutlinePaint(row, column));
                 }
                 else {
-                    g2.setPaint(getItemPaint(row, column));
+                    g2.setPaint(getPaint().getItemPaint(row, column));
                 }
                 g2.setStroke(getItemOutlineStroke(row, column));
                 g2.draw(shape);
@@ -403,7 +403,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                     else if (orientation == PlotOrientation.VERTICAL) {
                         line = new Line2D.Double(x0, y0, x1, y1);
                     }
-                    g2.setPaint(getItemPaint(row, column));
+                    g2.setPaint(getPaint().getItemPaint(row, column));
                     g2.setStroke(getItemStroke(row, column));
                     g2.draw(line);
                 }

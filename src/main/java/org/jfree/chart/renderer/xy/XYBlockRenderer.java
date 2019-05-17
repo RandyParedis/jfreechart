@@ -435,7 +435,7 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
         g2.fill(block);
         if (getDrawOutlines()) {
             if (getUseOutlinePaint()) {
-                g2.setPaint(getItemOutlinePaint(series, item));
+                g2.setPaint(getPaint().getItemOutlinePaint(series, item));
             }
             g2.setStroke(lookupSeriesOutlineStroke(series));
             g2.draw(block);

@@ -432,19 +432,19 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
             }
             if (getItemShapeFilled(row, column)) {
                 if (this.useFillPaint) {
-                    g2.setPaint(getItemFillPaint(row, column));
+                    g2.setPaint(getPaint().getItemFillPaint(row, column));
                 }
                 else {
-                    g2.setPaint(getItemPaint(row, column));
+                    g2.setPaint(getPaint().getItemPaint(row, column));
                 }
                 g2.fill(shape);
             }
             if (this.drawOutlines) {
                 if (this.useOutlinePaint) {
-                    g2.setPaint(getItemOutlinePaint(row, column));
+                    g2.setPaint(getPaint().getItemOutlinePaint(row, column));
                 }
                 else {
-                    g2.setPaint(getItemPaint(row, column));
+                    g2.setPaint(getPaint().getItemPaint(row, column));
                 }
                 g2.setStroke(getItemOutlineStroke(row, column));
                 g2.draw(shape);
@@ -485,18 +485,18 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
                         dataset, series);
             }
             Shape shape = lookupLegendShape(series);
-            Paint paint = lookupSeriesPaint(series);
+            Paint paint = getPaint().lookupSeriesPaint(series);
             Paint fillPaint = (this.useFillPaint
-                    ? getItemFillPaint(series, 0) : paint);
+                    ? getPaint().getItemFillPaint(series, 0) : paint);
             boolean shapeOutlineVisible = this.drawOutlines;
             Paint outlinePaint = (this.useOutlinePaint
-                    ? getItemOutlinePaint(series, 0) : paint);
+                    ? getPaint().getItemOutlinePaint(series, 0) : paint);
             Stroke outlineStroke = lookupSeriesOutlineStroke(series);
             LegendItem result = new LegendItem(label, description, toolTipText,
                     urlText, true, shape, getItemShapeFilled(series, 0),
                     fillPaint, shapeOutlineVisible, outlinePaint, outlineStroke,
                     false, new Line2D.Double(-7.0, 0.0, 7.0, 0.0),
-                    getItemStroke(series, 0), getItemPaint(series, 0));
+                    getItemStroke(series, 0), getPaint().getItemPaint(series, 0));
             result.setLabelFont(lookupLegendTextFont(series));
             Paint labelPaint = lookupLegendTextPaint(series);
             if (labelPaint != null) {

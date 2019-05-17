@@ -248,7 +248,7 @@ public class XYDotRenderer extends AbstractXYItemRenderer
             double transY = rangeAxis.valueToJava2D(y, dataArea, yAxisLocation)
                     - adjy;
 
-            g2.setPaint(getItemPaint(series, item));
+            g2.setPaint(getPaint().getItemPaint(series, item));
             PlotOrientation orientation = plot.getOrientation();
             if (orientation == PlotOrientation.HORIZONTAL) {
                 g2.fillRect((int) transY, (int) transX, this.dotHeight,
@@ -304,7 +304,7 @@ public class XYDotRenderer extends AbstractXYItemRenderer
                 urlText = getLegendItemURLGenerator().generateLabel(
                         dataset, series);
             }
-            Paint fillPaint = lookupSeriesPaint(series);
+            Paint fillPaint = getPaint().lookupSeriesPaint(series);
             result = new LegendItem(label, description, toolTipText, urlText,
                     getLegendShape(), fillPaint);
             result.setLabelFont(lookupLegendTextFont(series));

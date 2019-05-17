@@ -108,7 +108,7 @@ public class LevelRenderer extends AbstractCategoryItemRenderer
         setDefaultLegendShape(new Rectangle2D.Float(-5.0f, -1.0f, 10.0f, 2.0f));
         // set the outline paint to fully transparent, then the legend shape
         // will just have the same colour as the lines drawn by the renderer
-        setDefaultOutlinePaint(new Color(0, 0, 0, 0));
+        getPaint().setDefaultOutlinePaint(new Color(0, 0, 0, 0));
     }
 
     /**
@@ -343,7 +343,7 @@ public class LevelRenderer extends AbstractCategoryItemRenderer
         }
         
         Stroke itemStroke = getItemStroke(row, column);
-        Paint itemPaint = getItemPaint(row, column);
+        Paint itemPaint = getPaint().getItemPaint(row, column);
         g2.setStroke(itemStroke);
         g2.setPaint(itemPaint);
         g2.draw(line);
