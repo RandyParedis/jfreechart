@@ -1,6 +1,7 @@
 /nbproject/private/
 /target/
-/target-*/classes
+/target-history/target-*/classes
+/target-history/target-*/test-classes
 /javadoc/
 
 # Eclipse files #
