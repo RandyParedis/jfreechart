@@ -246,63 +246,6 @@ public interface CategoryItemRenderer extends LegendItemSource {
                                                 int rendererIndex,
                                                 PlotRenderingInfo info);
 
-    //// SHAPE /////////////////////////////////////////////////////////////////
-
-    /**
-     * Returns a shape used to represent a data item.
-     *
-     * @param row  the row (or series) index (zero-based).
-     * @param column  the column (or category) index (zero-based).
-     *
-     * @return The shape (never {@code null}).
-     */
-    public Shape getItemShape(int row, int column);
-
-    /**
-     * Returns a shape used to represent the items in a series.
-     *
-     * @param series  the series (zero-based index).
-     *
-     * @return The shape (possibly {@code null}).
-     *
-     * @see #setSeriesShape(int, Shape)
-     */
-    public Shape getSeriesShape(int series);
-
-    /**
-     * Sets the shape used for a series and sends a {@link RendererChangeEvent}
-     * to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param shape  the shape ({@code null} permitted).
-     *
-     * @see #getSeriesShape(int)
-     */
-    public void setSeriesShape(int series, Shape shape);
-
-    public void setSeriesShape(int series, Shape shape, boolean notify);
-
-    /**
-     * Returns the default shape.
-     *
-     * @return The shape (never {@code null}).
-     *
-     * @see #setDefaultShape(Shape)
-     */
-    public Shape getDefaultShape();
-
-    /**
-     * Sets the default shape and sends a {@link RendererChangeEvent} to all
-     * registered listeners.
-     *
-     * @param shape  the shape ({@code null} not permitted).
-     *
-     * @see #getDefaultShape()
-     */
-    public void setDefaultShape(Shape shape);
-
-    public void setDefaultShape(Shape shape, boolean notify);
-
     // ITEM LABELS VISIBLE
 
     /**

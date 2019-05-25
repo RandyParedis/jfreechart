@@ -854,7 +854,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             urlText = getLegendItemURLGenerator().generateLabel(dataset,
                     series);
         }
-        Shape shape = lookupLegendShape(series);
+        Shape shape = getShape().lookupLegendShape(series);
         Paint paint = getPaint().lookupSeriesPaint(series);
         LegendItem item = new LegendItem(label, paint);
         item.setToolTipText(toolTipText);
@@ -869,7 +869,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         item.setDataset(dataset);
         item.setDatasetIndex(datasetIndex);
 
-        if (getTreatLegendShapeAsLine()) {
+        if (getShape().getTreatLegendShapeAsLine()) {
             item.setLineVisible(true);
             item.setLine(shape);
             item.setLinePaint(paint);

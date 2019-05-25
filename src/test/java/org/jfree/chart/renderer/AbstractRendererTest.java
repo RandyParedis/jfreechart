@@ -198,15 +198,15 @@ public class AbstractRendererTest {
         assertTrue(r1.equals(r2));
 
         // shapeList
-        r1.setSeriesShape(1, new Ellipse2D.Double(1, 2, 3, 4));
+        r1.getShape().setSeriesShape(1, new Ellipse2D.Double(1, 2, 3, 4));
         assertFalse(r1.equals(r2));
-        r2.setSeriesShape(1, new Ellipse2D.Double(1, 2, 3, 4));
+        r2.getShape().setSeriesShape(1, new Ellipse2D.Double(1, 2, 3, 4));
         assertTrue(r1.equals(r2));
 
         // defaultShape
-        r1.setDefaultShape(new Ellipse2D.Double(1, 2, 3, 4));
+        r1.getShape().setDefaultShape(new Ellipse2D.Double(1, 2, 3, 4));
         assertFalse(r1.equals(r2));
-        r2.setDefaultShape(new Ellipse2D.Double(1, 2, 3, 4));
+        r2.getShape().setDefaultShape(new Ellipse2D.Double(1, 2, 3, 4));
         assertTrue(r1.equals(r2));
 
         // itemLabelsVisibleList
@@ -298,15 +298,15 @@ public class AbstractRendererTest {
         assertTrue(r1.equals(r2));
 
         // legendShape
-        r1.setLegendShape(0, new Ellipse2D.Double(1.0, 2.0, 3.0, 4.0));
+        r1.getShape().setLegendShape(0, new Ellipse2D.Double(1.0, 2.0, 3.0, 4.0));
         assertFalse(r1.equals(r2));
-        r2.setLegendShape(0, new Ellipse2D.Double(1.0, 2.0, 3.0, 4.0));
+        r2.getShape().setLegendShape(0, new Ellipse2D.Double(1.0, 2.0, 3.0, 4.0));
         assertTrue(r1.equals(r2));
 
         // baseLegendShape
-        r1.setDefaultLegendShape(new Ellipse2D.Double(5.0, 6.0, 7.0, 8.0));
+        r1.getShape().setDefaultLegendShape(new Ellipse2D.Double(5.0, 6.0, 7.0, 8.0));
         assertFalse(r1.equals(r2));
-        r2.setDefaultLegendShape(new Ellipse2D.Double(5.0, 6.0, 7.0, 8.0));
+        r2.getShape().setDefaultLegendShape(new Ellipse2D.Double(5.0, 6.0, 7.0, 8.0));
         assertTrue(r1.equals(r2));
 
         // legendTextFont
@@ -389,9 +389,8 @@ public class AbstractRendererTest {
     }
 
     private static class TestRenderer extends XYLineAndShapeRenderer {
-        @Override
         public void setTreatLegendShapeAsLine(boolean flag) {
-            super.setTreatLegendShapeAsLine(flag);
+            super.getShape().setTreatLegendShapeAsLine(flag);
         }
     }
 
@@ -418,8 +417,8 @@ public class AbstractRendererTest {
         LineAndShapeRenderer r1 = new LineAndShapeRenderer();
         Rectangle2D shape = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
         Rectangle2D baseShape = new Rectangle2D.Double(11.0, 12.0, 13.0, 14.0);
-        r1.setDefaultShape(baseShape);
-        r1.setDefaultLegendShape(new Rectangle(4, 3, 2, 1));
+        r1.getShape().setDefaultShape(baseShape);
+        r1.getShape().setDefaultLegendShape(new Rectangle(4, 3, 2, 1));
         r1.setDefaultLegendTextFont(new Font("Dialog", Font.PLAIN, 3));
         r1.setDefaultLegendTextPaint(new Color(1, 2, 3));
         r1.setSeriesItemLabelFont(0, new Font(Font.MONOSPACED, Font.BOLD, 13));
@@ -471,12 +470,12 @@ public class AbstractRendererTest {
 
         baseShape.setRect(4.0, 3.0, 2.0, 1.0);
         assertFalse(r1.equals(r2));
-        r2.setDefaultShape(new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0));
+        r2.getShape().setDefaultShape(new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0));
         assertTrue(r1.equals(r2));
 
-        r1.setSeriesShape(0, new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
+        r1.getShape().setSeriesShape(0, new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
         assertFalse(r1.equals(r2));
-        r2.setSeriesShape(0, new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
+        r2.getShape().setSeriesShape(0, new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
         assertTrue(r1.equals(r2));
 
         r1.setSeriesItemLabelsVisible(0, Boolean.TRUE);
@@ -504,14 +503,14 @@ public class AbstractRendererTest {
         r2.setSeriesCreateEntities(0, Boolean.FALSE);
         assertTrue(r1.equals(r2));
 
-        r1.setLegendShape(0, new Rectangle(9, 7, 3, 4));
+        r1.getShape().setLegendShape(0, new Rectangle(9, 7, 3, 4));
         assertFalse(r1.equals(r2));
-        r2.setLegendShape(0, new Rectangle(9, 7, 3, 4));
+        r2.getShape().setLegendShape(0, new Rectangle(9, 7, 3, 4));
         assertTrue(r1.equals(r2));
 
-        r1.setDefaultLegendShape(new Rectangle(3, 4, 1, 5));
+        r1.getShape().setDefaultLegendShape(new Rectangle(3, 4, 1, 5));
         assertFalse(r1.equals(r2));
-        r2.setDefaultLegendShape(new Rectangle(3, 4, 1, 5));
+        r2.getShape().setDefaultLegendShape(new Rectangle(3, 4, 1, 5));
         assertTrue(r1.equals(r2));
 
         r1.setLegendTextFont(1, new Font("Dialog", Font.PLAIN, 33));
@@ -625,11 +624,11 @@ public class AbstractRendererTest {
 
         // SHAPE
         detector.setNotified(false);
-        r1.setSeriesShape(0, new Rectangle2D.Float());
+        r1.getShape().setSeriesShape(0, new Rectangle2D.Float());
         assertTrue(detector.getNotified());
 
         detector.setNotified(false);
-        r1.setDefaultShape(new Rectangle2D.Float());
+        r1.getShape().setDefaultShape(new Rectangle2D.Float());
         assertTrue(detector.getNotified());
 
         // ITEM_LABELS_VISIBLE
@@ -694,7 +693,7 @@ public class AbstractRendererTest {
         r1.setDefaultLegendTextFont(new Font("Dialog", Font.PLAIN, 4));
         r1.setDefaultLegendTextPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.GREEN));
-        r1.setDefaultLegendShape(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
+        r1.getShape().setDefaultLegendShape(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
         BarRenderer r2 = (BarRenderer) TestUtils.serialised(r1);
         assertEquals(r1, r2);
         try {
@@ -716,7 +715,7 @@ public class AbstractRendererTest {
         assertEquals(false, r.getPaint().getAutoPopulateSeriesOutlinePaint());
         assertEquals(true, r.getStroke().getAutoPopulateSeriesStroke());
         assertEquals(false, r.getStroke().getAutoPopulateSeriesOutlineStroke());
-        assertEquals(true, r.getAutoPopulateSeriesShape());
+        assertEquals(true, r.getShape().getAutoPopulateSeriesShape());
     }
 
     /**

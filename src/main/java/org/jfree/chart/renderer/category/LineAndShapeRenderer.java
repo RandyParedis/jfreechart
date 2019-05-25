@@ -652,7 +652,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
                 urlText = getLegendItemURLGenerator().generateLabel(
                         dataset, series);
             }
-            Shape shape = lookupLegendShape(series);
+            Shape shape = getShape().lookupLegendShape(series);
             Paint paint = getPaint().lookupSeriesPaint(series);
             Paint fillPaint = (this.useFillPaint
                     ? getPaint().getItemFillPaint(series, 0) : paint);
@@ -789,7 +789,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
         }
 
         if (pass == 1) {
-            Shape shape = getItemShape(row, column);
+            Shape shape = getShape().getItemShape(row, column);
             if (orientation == PlotOrientation.HORIZONTAL) {
                 shape = ShapeUtils.createTranslatedShape(shape, y1, x1);
             }

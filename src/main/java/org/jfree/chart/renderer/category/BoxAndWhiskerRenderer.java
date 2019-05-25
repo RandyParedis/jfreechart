@@ -202,7 +202,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
         this.meanVisible = true;
         this.useOutlinePaintForWhiskers = false;
         this.whiskerWidth = 1.0;
-        setDefaultLegendShape(new Rectangle2D.Double(-4.0, -4.0, 8.0, 8.0));
+        getShape().setDefaultLegendShape(new Rectangle2D.Double(-4.0, -4.0, 8.0, 8.0));
     }
 
     /**
@@ -477,7 +477,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
             urlText = getLegendItemURLGenerator().generateLabel(dataset,
                     series);
         }
-        Shape shape = lookupLegendShape(series);
+        Shape shape = getShape().lookupLegendShape(series);
         Paint paint = getPaint().lookupSeriesPaint(series);
         Paint outlinePaint = getPaint().lookupSeriesOutlinePaint(series);
         Stroke outlineStroke = getStroke().lookupSeriesOutlineStroke(series);

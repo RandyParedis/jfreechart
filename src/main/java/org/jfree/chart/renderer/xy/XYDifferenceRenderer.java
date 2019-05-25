@@ -890,7 +890,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
                 l_rangeAxisLocation);
 
         if (getShapesVisible()) {
-            Shape l_shape = getItemShape(x_series, x_item);
+            Shape l_shape = getShape().getItemShape(x_series, x_item);
             if (l_orientation == PlotOrientation.HORIZONTAL) {
                 l_shape = ShapeUtils.createTranslatedShape(l_shape,
                         l_y1, l_x1);

@@ -493,7 +493,7 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
             }
 
             if (getShapesVisible()) {
-                shape = getItemShape(series, item);
+                shape = getShape().getItemShape(series, item);
                 if (orientation == PlotOrientation.VERTICAL) {
                     shape = ShapeUtils.createTranslatedShape(shape,
                             transX1, transY1);

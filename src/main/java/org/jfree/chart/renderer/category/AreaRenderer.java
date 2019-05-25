@@ -119,7 +119,7 @@ public class AreaRenderer extends AbstractCategoryItemRenderer
     public AreaRenderer() {
         super();
         this.endType = AreaRendererEndType.TAPER;
-        setDefaultLegendShape(new Rectangle2D.Double(-4.0, -4.0, 8.0, 8.0));
+        getShape().setDefaultLegendShape(new Rectangle2D.Double(-4.0, -4.0, 8.0, 8.0));
     }
 
     /**
@@ -184,7 +184,7 @@ public class AreaRenderer extends AbstractCategoryItemRenderer
             urlText = getLegendItemURLGenerator().generateLabel(dataset,
                     series);
         }
-        Shape shape = lookupLegendShape(series);
+        Shape shape = getShape().lookupLegendShape(series);
         Paint paint = getPaint().lookupSeriesPaint(series);
         Paint outlinePaint = getPaint().lookupSeriesOutlinePaint(series);
         Stroke outlineStroke = getStroke().lookupSeriesOutlineStroke(series);

@@ -140,7 +140,7 @@ public class XYBubbleRenderer extends AbstractXYItemRenderer
             throw new IllegalArgumentException("Invalid 'scaleType'.");
         }
         this.scaleType = scaleType;
-        setDefaultLegendShape(new Ellipse2D.Double(-4.0, -4.0, 8.0, 8.0));
+        getShape().setDefaultLegendShape(new Ellipse2D.Double(-4.0, -4.0, 8.0, 8.0));
     }
 
     /**
@@ -309,7 +309,7 @@ public class XYBubbleRenderer extends AbstractXYItemRenderer
                     urlText = getLegendItemURLGenerator().generateLabel(
                             dataset, series);
                 }
-                Shape shape = lookupLegendShape(series);
+                Shape shape = getShape().lookupLegendShape(series);
                 Paint paint = getPaint().lookupSeriesPaint(series);
                 Paint outlinePaint = getPaint().lookupSeriesOutlinePaint(series);
                 Stroke outlineStroke = getStroke().lookupSeriesOutlineStroke(series);

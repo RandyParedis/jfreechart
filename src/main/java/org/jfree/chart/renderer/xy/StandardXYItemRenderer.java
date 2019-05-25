@@ -596,7 +596,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
                     urlText = getLegendItemURLGenerator().generateLabel(
                             dataset, series);
                 }
-                Shape shape = lookupLegendShape(series);
+                Shape shape = getShape().lookupLegendShape(series);
                 boolean shapeFilled = getItemShapeFilled(series, 0);
                 Paint paint = getPaint().lookupSeriesPaint(series);
                 Paint linePaint = paint;
@@ -863,7 +863,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
 
         if (getBaseShapesVisible()) {
 
-            Shape shape = getItemShape(series, item);
+            Shape shape = getShape().getItemShape(series, item);
             if (orientation == PlotOrientation.HORIZONTAL) {
                 shape = ShapeUtils.createTranslatedShape(shape, transY1,
                         transX1);

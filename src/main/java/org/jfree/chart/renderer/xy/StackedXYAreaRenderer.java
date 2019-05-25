@@ -545,7 +545,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
 
             Shape shape = null;
             if (getPlotShapes()) {
-                shape = getItemShape(series, item);
+                shape = getShape().getItemShape(series, item);
                 if (plot.getOrientation() == PlotOrientation.VERTICAL) {
                     shape = ShapeUtils.createTranslatedShape(shape,
                             transX1, transY1);

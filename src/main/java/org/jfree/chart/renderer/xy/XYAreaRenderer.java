@@ -566,7 +566,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
 
         Shape shape;
         if (getPlotShapes()) {
-            shape = getItemShape(series, item);
+            shape = getShape().getItemShape(series, item);
             if (orientation == PlotOrientation.VERTICAL) {
                 shape = ShapeUtils.createTranslatedShape(shape, transX1,
                         transY1);

@@ -331,7 +331,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
 
         Shape hotspot = null;
         if (pass == 1 && getItemShapeVisible(row, column)) {
-            Shape shape = getItemShape(row, column);
+            Shape shape = getShape().getItemShape(row, column);
             if (orientation == PlotOrientation.HORIZONTAL) {
                 shape = ShapeUtils.createTranslatedShape(shape, y1, x1);
             }

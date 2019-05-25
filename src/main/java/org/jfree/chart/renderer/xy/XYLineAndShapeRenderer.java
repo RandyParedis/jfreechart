@@ -978,7 +978,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
         double transY1 = rangeAxis.valueToJava2D(y1, dataArea, yAxisLocation);
 
         if (getItemShapeVisible(series, item)) {
-            Shape shape = getItemShape(series, item);
+            Shape shape = getShape().getItemShape(series, item);
             if (orientation == PlotOrientation.HORIZONTAL) {
                 shape = ShapeUtils.createTranslatedShape(shape, transY1,
                         transX1);
@@ -1073,7 +1073,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
                     series);
         }
         boolean shapeIsVisible = getItemShapeVisible(series, 0);
-        Shape shape = lookupLegendShape(series);
+        Shape shape = getShape().lookupLegendShape(series);
         boolean shapeIsFilled = getItemShapeFilled(series, 0);
         Paint fillPaint = (this.useFillPaint ? getPaint().lookupSeriesFillPaint(series)
                 : getPaint().lookupSeriesPaint(series));

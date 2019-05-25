@@ -144,8 +144,8 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
         this.guideLinesVisible = false;
         this.guideLinePaint = Color.darkGray;
         this.guideLineStroke = new BasicStroke();
-        setDefaultShape(new Ellipse2D.Double(-5.0, -5.0, 10.0, 10.0));
-        setAutoPopulateSeriesShape(false);
+        getShape().setDefaultShape(new Ellipse2D.Double(-5.0, -5.0, 10.0, 10.0));
+        getShape().setAutoPopulateSeriesShape(false);
     }
 
     /**
@@ -466,7 +466,7 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
                         dataArea.getMaxX(), transY));
             }
         } else if (pass == 1) {
-            Shape shape = getItemShape(series, item);
+            Shape shape = getShape().getItemShape(series, item);
             if (orientation == PlotOrientation.HORIZONTAL) {
                 shape = ShapeUtils.createTranslatedShape(shape, transY,
                         transX);
