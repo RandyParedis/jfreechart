@@ -158,16 +158,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     public static final Paint DEFAULT_VALUE_LABEL_PAINT = Color.BLACK;
 
     /**
-     * Visibility of the item labels PER series.
-     */
-    private BooleanList itemLabelsVisibleList;
-
-    /**
-     * The base item labels visible.
-     */
-    private boolean defaultItemLabelsVisible;
-
-    /**
      * The item label font list (one font per series).
      */
     private Map<Integer, Font> itemLabelFontMap;
@@ -255,14 +245,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     private transient Paint defaultLegendTextPaint;
 
     /**
-     * A flag that controls whether or not the renderer will include the
-     * non-visible series when calculating the data bounds.
-     *
-     * @since 1.0.13
-     */
-    private boolean dataBoundsIncludesVisibleSeriesOnly = true;
-
-    /**
      * The default radius for the entity 'hotspot'
      */
     private int defaultEntityRadius;
@@ -286,9 +268,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * Default constructor.
      */
     public AbstractRenderer() {
-        this.itemLabelsVisibleList = new BooleanList();
-        this.defaultItemLabelsVisible = false;
-
         this.itemLabelFontMap = new HashMap<Integer, Font>();
         this.defaultItemLabelFont = new Font("SansSerif", Font.PLAIN, 10);
 
@@ -356,6 +335,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
     // SERIES VISIBLE (not yet respected by all renderers)
     // SERIES VISIBLE IN LEGEND (not yet respected by all renderers)
+    // ITEM LABEL VISIBILITY...
     public IRendererVisibility getVisibility() {
         return this.renderStateVisibility;
     }
@@ -376,113 +356,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     // SHAPE
     public IRendererShape getShape() {
         return renderStateShape;
-    }
-
-    // ITEM LABEL VISIBILITY...
-
-    /**
-     * Returns {@code true} if an item label is visible, and
-     * {@code false} otherwise.
-     *
-     * @param row    the row (or series) index (zero-based).
-     * @param column the column (or category) index (zero-based).
-     * @return A boolean.
-     */
-    public boolean isItemLabelVisible(int row, int column) {
-        return isSeriesItemLabelsVisible(row);
-    }
-
-    /**
-     * Returns {@code true} if the item labels for a series are visible,
-     * and {@code false} otherwise.
-     *
-     * @param series the series index (zero-based).
-     * @return A boolean.
-     */
-    public boolean isSeriesItemLabelsVisible(int series) {
-        Boolean b = this.itemLabelsVisibleList.getBoolean(series);
-        if (b == null) {
-            return this.defaultItemLabelsVisible;
-        }
-        return b;
-    }
-
-    /**
-     * Sets a flag that controls the visibility of the item labels for a series,
-     * and sends a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param visible the flag.
-     */
-    public void setSeriesItemLabelsVisible(int series, boolean visible) {
-        setSeriesItemLabelsVisible(series, Boolean.valueOf(visible));
-    }
-
-    /**
-     * Sets the visibility of the item labels for a series and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param visible the flag ({@code null} permitted).
-     */
-    public void setSeriesItemLabelsVisible(int series, Boolean visible) {
-        setSeriesItemLabelsVisible(series, visible, true);
-    }
-
-    /**
-     * Sets the visibility of item labels for a series and, if requested, sends
-     * a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param visible the visible flag.
-     * @param notify  a flag that controls whether or not listeners are
-     *                notified.
-     */
-    public void setSeriesItemLabelsVisible(int series, Boolean visible,
-                                           boolean notify) {
-        this.itemLabelsVisibleList.setBoolean(series, visible);
-        if (notify) {
-            fireChangeEvent();
-        }
-    }
-
-    /**
-     * Returns the base setting for item label visibility.  A {@code null}
-     * result should be interpreted as equivalent to {@code Boolean.FALSE}.
-     *
-     * @return A flag (possibly {@code null}).
-     * @see #setDefaultItemLabelsVisible(boolean)
-     */
-    public boolean getDefaultItemLabelsVisible() {
-        return this.defaultItemLabelsVisible;
-    }
-
-    /**
-     * Sets the base flag that controls whether or not item labels are visible,
-     * and sends a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param visible the flag.
-     * @see #getDefaultItemLabelsVisible()
-     */
-    public void setDefaultItemLabelsVisible(boolean visible) {
-        setDefaultItemLabelsVisible(visible, true);
-    }
-
-    /**
-     * Sets the base visibility for item labels and, if requested, sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param visible the flag ({@code null} is permitted, and viewed
-     *                as equivalent to {@code Boolean.FALSE}).
-     * @param notify  a flag that controls whether or not listeners are
-     *                notified.
-     * @see #getDefaultItemLabelsVisible()
-     */
-    public void setDefaultItemLabelsVisible(boolean visible, boolean notify) {
-        this.defaultItemLabelsVisible = visible;
-        if (notify) {
-            fireChangeEvent();
-        }
     }
 
     //// ITEM LABEL FONT //////////////////////////////////////////////////////
@@ -1151,30 +1024,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     }
 
     /**
-     * Returns the flag that controls whether or not the data bounds reported
-     * by this renderer will exclude non-visible series.
-     *
-     * @return A boolean.
-     * @since 1.0.13
-     */
-    public boolean getDataBoundsIncludesVisibleSeriesOnly() {
-        return this.dataBoundsIncludesVisibleSeriesOnly;
-    }
-
-    /**
-     * Sets the flag that controls whether or not the data bounds reported
-     * by this renderer will exclude non-visible series and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param visibleOnly include only visible series.
-     * @since 1.0.13
-     */
-    public void setDataBoundsIncludesVisibleSeriesOnly(boolean visibleOnly) {
-        this.dataBoundsIncludesVisibleSeriesOnly = visibleOnly;
-        notifyListeners(new RendererChangeEvent(this, true));
-    }
-
-    /**
      * Registers an object to receive notification of changes to the renderer.
      *
      * @param listener the listener ({@code null} not permitted).
@@ -1258,10 +1107,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
             return false;
         }
         AbstractRenderer that = (AbstractRenderer) obj;
-        if (this.dataBoundsIncludesVisibleSeriesOnly
-                != that.dataBoundsIncludesVisibleSeriesOnly) {
-            return false;
-        }
         if (this.defaultEntityRadius != that.defaultEntityRadius) {
             return false;
         }
@@ -1275,14 +1120,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
             return false;
         }
         if (!ObjectUtils.equal(this.getShape(), that.getShape())) {
-            return false;
-        }
-        if (!ObjectUtils.equal(this.itemLabelsVisibleList,
-                that.itemLabelsVisibleList)) {
-            return false;
-        }
-        if (!ObjectUtils.equal(this.defaultItemLabelsVisible,
-                that.defaultItemLabelsVisible)) {
             return false;
         }
         if (!ObjectUtils.equal(this.itemLabelFontMap,
@@ -1361,8 +1198,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         result = HashUtils.hashCode(result, this.renderStatePaint);
         result = HashUtils.hashCode(result, this.renderStateStroke);
         result = HashUtils.hashCode(result, this.renderStateShape);
-        result = HashUtils.hashCode(result, this.itemLabelsVisibleList);
-        result = HashUtils.hashCode(result, this.defaultItemLabelsVisible);
         // itemLabelFontList
         // baseItemLabelFont
         // itemLabelPaintList
@@ -1408,11 +1243,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
             clone.renderStateShape.setAbstractRenderer(clone);
         }
 
-        // 'itemLabelsVisible' : immutable, no need to clone reference
-        if (this.itemLabelsVisibleList != null) {
-            clone.itemLabelsVisibleList
-                    = (BooleanList) this.itemLabelsVisibleList.clone();
-        }
         // 'basePaint' : immutable, no need to clone reference
 
         // 'itemLabelFont' : immutable, no need to clone reference

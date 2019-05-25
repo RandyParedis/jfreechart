@@ -931,7 +931,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
         }
 
         // draw the item label if there is one...
-        if (isItemLabelVisible(x_series, x_item)) {
+        if (getVisibility().isItemLabelVisible(x_series, x_item)) {
             drawItemLabel(x_graphics, l_orientation, x_dataset, x_series,
                           x_item, l_x1, l_y1, (l_y1 < 0.0));
         }

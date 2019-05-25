@@ -328,7 +328,7 @@ public class CategoryStepRenderer extends AbstractCategoryItemRenderer
        // x1's flat bar
 
        // draw the item labels if there are any...
-       if (isItemLabelVisible(row, column)) {
+       if (getVisibility().isItemLabelVisible(row, column)) {
             drawItemLabel(g2, orientation, dataset, row, column, x1, y1,
                     (value.doubleValue() < 0.0));
        }

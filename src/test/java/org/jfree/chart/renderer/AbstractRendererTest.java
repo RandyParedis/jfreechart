@@ -210,15 +210,15 @@ public class AbstractRendererTest {
         assertTrue(r1.equals(r2));
 
         // itemLabelsVisibleList
-        r1.setSeriesItemLabelsVisible(1, Boolean.TRUE);
+        r1.getVisibility().setSeriesItemLabelsVisible(1, Boolean.TRUE);
         assertFalse(r1.equals(r2));
-        r2.setSeriesItemLabelsVisible(1, Boolean.TRUE);
+        r2.getVisibility().setSeriesItemLabelsVisible(1, Boolean.TRUE);
         assertTrue(r1.equals(r2));
 
         // baseItemLabelsVisible
-        r1.setDefaultItemLabelsVisible(true);
+        r1.getVisibility().setDefaultItemLabelsVisible(true);
         assertFalse(r1.equals(r2));
-        r2.setDefaultItemLabelsVisible(true);
+        r2.getVisibility().setDefaultItemLabelsVisible(true);
         assertTrue(r1.equals(r2));
 
         // itemLabelFontList
@@ -478,9 +478,9 @@ public class AbstractRendererTest {
         r2.getShape().setSeriesShape(0, new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
         assertTrue(r1.equals(r2));
 
-        r1.setSeriesItemLabelsVisible(0, Boolean.TRUE);
+        r1.getVisibility().setSeriesItemLabelsVisible(0, Boolean.TRUE);
         assertFalse(r1.equals(r2));
-        r2.setSeriesItemLabelsVisible(0, Boolean.TRUE);
+        r2.getVisibility().setSeriesItemLabelsVisible(0, Boolean.TRUE);
         assertTrue(r1.equals(r2));
 
         r1.setSeriesItemLabelPaint(0, Color.RED);
@@ -633,11 +633,11 @@ public class AbstractRendererTest {
 
         // ITEM_LABELS_VISIBLE
         detector.setNotified(false);
-        r1.setSeriesItemLabelsVisible(0, Boolean.TRUE);
+        r1.getVisibility().setSeriesItemLabelsVisible(0, Boolean.TRUE);
         assertTrue(detector.getNotified());
 
         detector.setNotified(false);
-        r1.setDefaultItemLabelsVisible(Boolean.TRUE);
+        r1.getVisibility().setDefaultItemLabelsVisible(Boolean.TRUE);
         assertTrue(detector.getNotified());
 
         // ITEM_LABEL_FONT

@@ -248,7 +248,7 @@ public class XYBubbleRenderer extends AbstractXYItemRenderer
             g2.setPaint(getPaint().getItemOutlinePaint(series, item));
             g2.draw(circle);
 
-            if (isItemLabelVisible(series, item)) {
+            if (getVisibility().isItemLabelVisible(series, item)) {
                 if (orientation == PlotOrientation.VERTICAL) {
                     drawItemLabel(g2, orientation, dataset, series, item,
                             transX, transY, false);

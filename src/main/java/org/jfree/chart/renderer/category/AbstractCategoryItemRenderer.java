@@ -748,7 +748,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         if (dataset == null) {
             return null;
         }
-        if (getDataBoundsIncludesVisibleSeriesOnly()) {
+        if (getVisibility().getDataBoundsIncludesVisibleSeriesOnly()) {
             List visibleSeriesKeys = new ArrayList();
             int seriesCount = dataset.getRowCount();
             for (int s = 0; s < seriesCount; s++) {

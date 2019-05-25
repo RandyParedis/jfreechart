@@ -11,7 +11,7 @@ import java.io.Serializable;
 // PAINT
 // FILL PAINT
 // OUTLINE PAINT
-public class RenderStatePaint implements Serializable, Cloneable, IRendererPaint {
+public class RenderStatePaint implements Serializable, PublicCloneable, IRendererPaint {
     private transient AbstractRenderer abstractRenderer;
 
     /**

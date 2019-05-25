@@ -2,16 +2,14 @@ package org.jfree.chart.renderer;
 
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.DrawingSupplier;
-import org.jfree.chart.util.Args;
-import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.ShapeList;
-import org.jfree.chart.util.ShapeUtils;
+import org.jfree.chart.util.*;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
-public class RenderStateShape implements Serializable, Cloneable, IRendererShape {
+// SHAPE
+public class RenderStateShape implements Serializable, PublicCloneable, IRendererShape {
     private transient AbstractRenderer abstractRenderer;
 
     /**

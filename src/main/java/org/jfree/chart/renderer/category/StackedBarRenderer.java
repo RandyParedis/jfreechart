@@ -399,7 +399,7 @@ public class StackedBarRenderer extends BarRenderer
         else if (pass == 2) {
             CategoryItemLabelGenerator generator = getItemLabelGenerator(row,
                     column);
-            if (generator != null && isItemLabelVisible(row, column)) {
+            if (generator != null && getVisibility().isItemLabelVisible(row, column)) {
                 drawItemLabel(g2, dataset, row, column, plot, generator, bar,
                         (value < 0.0));
             }

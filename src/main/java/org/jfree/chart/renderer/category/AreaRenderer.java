@@ -314,7 +314,7 @@ public class AreaRenderer extends AbstractCategoryItemRenderer
         g2.fill(area);
 
         // draw the item labels if there are any...
-        if (isItemLabelVisible(row, column)) {
+        if (getVisibility().isItemLabelVisible(row, column)) {
             drawItemLabel(g2, orientation, dataset, row, column, labelXX,
                     labelYY, (value.doubleValue() < 0.0));
         }

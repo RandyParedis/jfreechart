@@ -360,7 +360,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                 g2.draw(shape);
             }
             // draw the item label if there is one...
-            if (isItemLabelVisible(row, column)) {
+            if (getVisibility().isItemLabelVisible(row, column)) {
                 if (orientation == PlotOrientation.HORIZONTAL) {
                     drawItemLabel(g2, orientation, dataset, row, column,
                             y1, x1, (meanValue.doubleValue() < 0.0));

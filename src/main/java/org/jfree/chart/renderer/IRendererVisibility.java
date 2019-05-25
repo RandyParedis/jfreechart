@@ -154,4 +154,102 @@ public interface IRendererVisibility {
      */
     void setDefaultSeriesVisibleInLegend(boolean visible,
                                          boolean notify);
+
+    /**
+     * Returns {@code true} if an item label is visible, and
+     * {@code false} otherwise.
+     *
+     * @param row    the row (or series) index (zero-based).
+     * @param column the column (or category) index (zero-based).
+     * @return A boolean.
+     */
+    boolean isItemLabelVisible(int row, int column);
+
+    /**
+     * Returns {@code true} if the item labels for a series are visible,
+     * and {@code false} otherwise.
+     *
+     * @param series the series index (zero-based).
+     * @return A boolean.
+     */
+    boolean isSeriesItemLabelsVisible(int series);
+
+    /**
+     * Sets a flag that controls the visibility of the item labels for a series,
+     * and sends a {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param series  the series index (zero-based).
+     * @param visible the flag.
+     */
+    void setSeriesItemLabelsVisible(int series, boolean visible);
+
+    /**
+     * Sets the visibility of the item labels for a series and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param series  the series index (zero-based).
+     * @param visible the flag ({@code null} permitted).
+     */
+    void setSeriesItemLabelsVisible(int series, Boolean visible);
+
+    /**
+     * Sets the visibility of item labels for a series and, if requested, sends
+     * a {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param series  the series index (zero-based).
+     * @param visible the visible flag.
+     * @param notify  a flag that controls whether or not listeners are
+     *                notified.
+     */
+    void setSeriesItemLabelsVisible(int series, Boolean visible,
+                                    boolean notify);
+
+    /**
+     * Returns the base setting for item label visibility.  A {@code null}
+     * result should be interpreted as equivalent to {@code Boolean.FALSE}.
+     *
+     * @return A flag (possibly {@code null}).
+     * @see #setDefaultItemLabelsVisible(boolean)
+     */
+    boolean getDefaultItemLabelsVisible();
+
+    /**
+     * Sets the base flag that controls whether or not item labels are visible,
+     * and sends a {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param visible the flag.
+     * @see #getDefaultItemLabelsVisible()
+     */
+    void setDefaultItemLabelsVisible(boolean visible);
+
+    /**
+     * Sets the base visibility for item labels and, if requested, sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param visible the flag ({@code null} is permitted, and viewed
+     *                as equivalent to {@code Boolean.FALSE}).
+     * @param notify  a flag that controls whether or not listeners are
+     *                notified.
+     * @see #getDefaultItemLabelsVisible()
+     */
+    void setDefaultItemLabelsVisible(boolean visible, boolean notify);
+
+    /**
+     * Returns the flag that controls whether or not the data bounds reported
+     * by this renderer will exclude non-visible series.
+     *
+     * @return A boolean.
+     * @since 1.0.13
+     */
+    boolean getDataBoundsIncludesVisibleSeriesOnly();
+
+    /**
+     * Sets the flag that controls whether or not the data bounds reported
+     * by this renderer will exclude non-visible series and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param visibleOnly include only visible series.
+     * @since 1.0.13
+     */
+    void setDataBoundsIncludesVisibleSeriesOnly(boolean visibleOnly);
 }

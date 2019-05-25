@@ -714,7 +714,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         if (dataset == null) {
             return null;
         }
-        if (getDataBoundsIncludesVisibleSeriesOnly()) {
+        if (getVisibility().getDataBoundsIncludesVisibleSeriesOnly()) {
             List visibleSeriesKeys = new ArrayList();
             int seriesCount = dataset.getSeriesCount();
             for (int s = 0; s < seriesCount; s++) {
@@ -761,7 +761,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         if (dataset == null) {
             return null;
         }
-        if (getDataBoundsIncludesVisibleSeriesOnly()) {
+        if (getVisibility().getDataBoundsIncludesVisibleSeriesOnly()) {
             List visibleSeriesKeys = new ArrayList();
             int seriesCount = dataset.getSeriesCount();
             for (int s = 0; s < seriesCount; s++) {

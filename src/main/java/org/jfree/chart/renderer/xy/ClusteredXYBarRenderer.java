@@ -321,7 +321,7 @@ public class ClusteredXYBarRenderer extends XYBarRenderer
         if (pass == 1) {
             getBarPainter().paintBar(g2, this, series, item, bar, barBase);
 
-            if (isItemLabelVisible(series, item)) {
+            if (getVisibility().isItemLabelVisible(series, item)) {
                 XYItemLabelGenerator generator = getItemLabelGenerator(series,
                         item);
                 drawItemLabel(g2, dataset, series, item, plot, generator, bar,

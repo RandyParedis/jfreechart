@@ -395,7 +395,7 @@ public class StackedXYBarRenderer extends XYBarRenderer {
         else if (pass == 2) {
             // handle item label drawing, now that we know all the bars have
             // been drawn...
-            if (isItemLabelVisible(series, item)) {
+            if (getVisibility().isItemLabelVisible(series, item)) {
                 XYItemLabelGenerator generator = getItemLabelGenerator(series,
                         item);
                 drawItemLabel(g2, dataset, series, item, plot, generator, bar,

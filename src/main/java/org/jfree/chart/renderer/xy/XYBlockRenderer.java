@@ -441,7 +441,7 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
             g2.draw(block);
         }
 
-        if (isItemLabelVisible(series, item)) {
+        if (getVisibility().isItemLabelVisible(series, item)) {
             drawItemLabel(g2, orientation, dataset, series, item, 
                     block.getCenterX(), block.getCenterY(), y < 0.0);
         }

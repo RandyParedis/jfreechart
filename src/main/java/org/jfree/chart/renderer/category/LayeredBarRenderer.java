@@ -315,7 +315,7 @@ public class LayeredBarRenderer extends BarRenderer implements Serializable {
 
         CategoryItemLabelGenerator generator = getItemLabelGenerator(row, 
                 column);
-        if (generator != null && isItemLabelVisible(row, column)) {
+        if (generator != null && getVisibility().isItemLabelVisible(row, column)) {
             drawItemLabel(g2, dataset, row, column, plot, generator, bar,
                     (transX1 > transX2));
         }
@@ -442,7 +442,7 @@ public class LayeredBarRenderer extends BarRenderer implements Serializable {
         // draw the item labels if there are any...
         CategoryItemLabelGenerator generator = getItemLabelGenerator(row, 
                 column);
-        if (generator != null && isItemLabelVisible(row, column)) {
+        if (generator != null && getVisibility().isItemLabelVisible(row, column)) {
             double transX1 = rangeAxis.valueToJava2D(base, dataArea, edge);
             double transX2 = rangeAxis.valueToJava2D(value, dataArea, edge);
             drawItemLabel(g2, dataset, row, column, plot, generator, bar,

@@ -926,7 +926,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
             endElementGroup(g2);
         }
 
-        if (isItemLabelVisible(series, item)) {
+        if (getVisibility().isItemLabelVisible(series, item)) {
             XYItemLabelGenerator generator = getItemLabelGenerator(series,
                     item);
             drawItemLabel(g2, dataset, series, item, plot, generator, bar,
