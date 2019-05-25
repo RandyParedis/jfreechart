@@ -480,7 +480,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
         Shape shape = lookupLegendShape(series);
         Paint paint = getPaint().lookupSeriesPaint(series);
         Paint outlinePaint = getPaint().lookupSeriesOutlinePaint(series);
-        Stroke outlineStroke = lookupSeriesOutlineStroke(series);
+        Stroke outlineStroke = getStroke().lookupSeriesOutlineStroke(series);
         LegendItem result = new LegendItem(label, description, toolTipText,
                 urlText, shape, paint, outlineStroke, outlinePaint);
         result.setLabelFont(lookupLegendTextFont(series));
@@ -663,7 +663,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
         }
 
         g2.setPaint(getPaint().getItemPaint(row, column));
-        Stroke s = getItemStroke(row, column);
+        Stroke s = getStroke().getItemStroke(row, column);
         g2.setStroke(s);
 
         RectangleEdge location = plot.getRangeAxisEdge();
@@ -708,7 +708,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
             g2.draw(new Line2D.Double(xxMin, yymid - halfW, xxMin,
                     yymid + halfW));
 
-            g2.setStroke(getItemOutlineStroke(row, column));
+            g2.setStroke(getStroke().getItemOutlineStroke(row, column));
             g2.setPaint(outlinePaint);
             g2.draw(box);
         }
@@ -810,7 +810,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
 
         Paint itemPaint = getPaint().getItemPaint(row, column);
         g2.setPaint(itemPaint);
-        Stroke s = getItemStroke(row, column);
+        Stroke s = getStroke().getItemStroke(row, column);
         g2.setStroke(s);
 
         double aRadius = 0;                 // average radius
@@ -854,7 +854,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
             g2.draw(new Line2D.Double(xxmid, yyMin, xxmid, yyQ1));
             g2.draw(new Line2D.Double(xxmid - halfW, yyMin, xxmid + halfW, yyMin));
 
-            g2.setStroke(getItemOutlineStroke(row, column));
+            g2.setStroke(getStroke().getItemOutlineStroke(row, column));
             g2.setPaint(outlinePaint);
             g2.draw(box);
         }

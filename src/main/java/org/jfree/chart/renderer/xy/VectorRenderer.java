@@ -249,7 +249,7 @@ public class VectorRenderer extends AbstractXYItemRenderer
             line = new Line2D.Double(xx0, yy0, xx1, yy1);
         }
         g2.setPaint(getPaint().getItemPaint(series, item));
-        g2.setStroke(getItemStroke(series, item));
+        g2.setStroke(getStroke().getItemStroke(series, item));
         g2.draw(line);
 
         // calculate the arrow head and draw it...

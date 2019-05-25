@@ -433,7 +433,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
         }
 
         g2.setPaint(getPaint().getItemPaint(series, item));
-        Stroke s = getItemStroke(series, item);
+        Stroke s = getStroke().getItemStroke(series, item);
         g2.setStroke(s);
 
         // draw the upper shadow
@@ -460,7 +460,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
             g2.setPaint(lookupBoxPaint(series, item));
             g2.fill(box);
         }
-        g2.setStroke(getItemOutlineStroke(series, item));
+        g2.setStroke(getStroke().getItemOutlineStroke(series, item));
         g2.setPaint(getPaint().getItemOutlinePaint(series, item));
         g2.draw(box);
 
@@ -580,7 +580,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
         }
 
         g2.setPaint(getPaint().getItemPaint(series, item));
-        Stroke s = getItemStroke(series, item);
+        Stroke s = getStroke().getItemStroke(series, item);
         g2.setStroke(s);
 
         // draw the upper shadow
@@ -607,7 +607,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
             g2.setPaint(lookupBoxPaint(series, item));
             g2.fill(box);
         }
-        g2.setStroke(getItemOutlineStroke(series, item));
+        g2.setStroke(getStroke().getItemOutlineStroke(series, item));
         g2.setPaint(getPaint().getItemOutlinePaint(series, item));
         g2.draw(box);
 

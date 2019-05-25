@@ -354,7 +354,7 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
 
         PlotOrientation orientation = plot.getOrientation();
         Paint paint = getPaint().getItemPaint(series, item);
-        Stroke stroke = getItemStroke(series, item);
+        Stroke stroke = getStroke().getItemStroke(series, item);
         g2.setPaint(paint);
         g2.setStroke(stroke);
 
@@ -364,7 +364,7 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
 
         // draw an outline around the Area.
         if (isOutline()) {
-            g2.setStroke(lookupSeriesOutlineStroke(series));
+            g2.setStroke(getStroke().lookupSeriesOutlineStroke(series));
             g2.setPaint(getPaint().lookupSeriesOutlinePaint(series));
             g2.draw(hotspot);
         }

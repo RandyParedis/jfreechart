@@ -523,7 +523,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         }
 
         g2.setPaint(getPaint().lookupSeriesPaint(seriesIndex));
-        g2.setStroke(lookupSeriesStroke(seriesIndex));
+        g2.setStroke(getStroke().lookupSeriesStroke(seriesIndex));
         if (isSeriesFilled(seriesIndex)) {
             Composite savedComposite = g2.getComposite();
             g2.setComposite(this.fillComposite);
@@ -574,7 +574,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
                 g2.fill(shape);
                 if (isSeriesFilled(seriesIndex) && this.drawOutlineWhenFilled) {
                     g2.setPaint(getPaint().lookupSeriesOutlinePaint(seriesIndex));
-                    g2.setStroke(lookupSeriesOutlineStroke(seriesIndex));
+                    g2.setStroke(getStroke().lookupSeriesOutlineStroke(seriesIndex));
                     g2.draw(shape);
                 }
 
@@ -716,9 +716,9 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         else {
             paint = getPaint().lookupSeriesPaint(series);
         }
-        Stroke stroke = lookupSeriesStroke(series);
+        Stroke stroke = getStroke().lookupSeriesStroke(series);
         Paint outlinePaint = getPaint().lookupSeriesOutlinePaint(series);
-        Stroke outlineStroke = lookupSeriesOutlineStroke(series);
+        Stroke outlineStroke = getStroke().lookupSeriesOutlineStroke(series);
         boolean shapeOutlined = isSeriesFilled(series)
                 && this.drawOutlineWhenFilled;
         result = new LegendItem(label, description, toolTipText, urlText,

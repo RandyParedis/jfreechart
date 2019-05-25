@@ -108,6 +108,7 @@ import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.IRendererPaint;
+import org.jfree.chart.renderer.IRendererStroke;
 import org.jfree.chart.renderer.IRendererVisibility;
 import org.jfree.chart.ui.Layer;
 import org.jfree.chart.urls.XYURLGenerator;
@@ -136,6 +137,13 @@ public interface XYItemRenderer extends LegendItemSource {
      * @return Paint render state.
      */
     IRendererPaint getPaint();
+
+    /**
+     * Returns the stroke render state for the renderer.
+     *
+     * @return Stroke render state.
+     */
+    IRendererStroke getStroke();
 
     /**
      * Returns the plot that this renderer has been assigned to.
@@ -200,122 +208,6 @@ public interface XYItemRenderer extends LegendItemSource {
      * @see #addChangeListener(RendererChangeListener)
      */
     public void removeChangeListener(RendererChangeListener listener);
-
-    //// STROKE ///////////////////////////////////////////////////////////////
-
-    /**
-     * Returns the stroke used to draw data items.
-     *
-     * @param row  the row (or series) index (zero-based).
-     * @param column  the column (or category) index (zero-based).
-     *
-     * @return The stroke (never {@code null}).
-     */
-    public Stroke getItemStroke(int row, int column);
-
-    /**
-     * Returns the stroke used to draw the items in a series.
-     *
-     * @param series  the series (zero-based index).
-     *
-     * @return The stroke (possibly {@code null}).
-     *
-     * @see #setSeriesStroke(int, Stroke)
-     */
-    public Stroke getSeriesStroke(int series);
-
-    /**
-     * Sets the stroke used for a series and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param stroke  the stroke ({@code null} permitted).
-     *
-     * @see #getSeriesStroke(int)
-     */
-    public void setSeriesStroke(int series, Stroke stroke);
-
-    public void setSeriesStroke(int series, Stroke stroke, boolean notify);
-
-    /**
-     * Returns the default stroke.
-     *
-     * @return The default stroke (never {@code null}).
-     *
-     * @see #setDefaultStroke(Stroke)
-     */
-    public Stroke getDefaultStroke();
-
-    /**
-     * Sets the default stroke and sends a {@link RendererChangeEvent} to all
-     * registered listeners.
-     *
-     * @param stroke  the stroke ({@code null} not permitted).
-     *
-     * @see #getDefaultStroke()
-     */
-    public void setDefaultStroke(Stroke stroke);
-
-    public void setDefaultStroke(Stroke stroke, boolean notify);
-
-    //// OUTLINE STROKE ///////////////////////////////////////////////////////
-
-    /**
-     * Returns the stroke used to outline data items.  The default
-     * implementation passes control to the lookupSeriesOutlineStroke method.
-     * You can override this method if you require different behaviour.
-     *
-     * @param row  the row (or series) index (zero-based).
-     * @param column  the column (or category) index (zero-based).
-     *
-     * @return The stroke (never {@code null}).
-     */
-    public Stroke getItemOutlineStroke(int row, int column);
-
-    /**
-     * Returns the stroke used to outline the items in a series.
-     *
-     * @param series  the series (zero-based index).
-     *
-     * @return The stroke (possibly {@code null}).
-     *
-     * @see #setSeriesOutlineStroke(int, Stroke)
-     */
-    public Stroke getSeriesOutlineStroke(int series);
-
-    /**
-     * Sets the outline stroke used for a series and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param stroke  the stroke ({@code null} permitted).
-     *
-     * @see #getSeriesOutlineStroke(int)
-     */
-    public void setSeriesOutlineStroke(int series, Stroke stroke);
-
-    public void setSeriesOutlineStroke(int series, Stroke stroke, boolean notify);
-
-    /**
-     * Returns the default outline stroke.
-     *
-     * @return The stroke (never {@code null}).
-     *
-     * @see #setDefaultOutlineStroke(Stroke)
-     */
-    public Stroke getDefaultOutlineStroke();
-
-    /**
-     * Sets the base outline stroke and sends a {@link RendererChangeEvent} to
-     * all registered listeners.
-     *
-     * @param stroke  the stroke ({@code null} not permitted).
-     *
-     * @see #getDefaultOutlineStroke()
-     */
-    public void setDefaultOutlineStroke(Stroke stroke);
-
-    public void setDefaultOutlineStroke(Stroke stroke, boolean notify);
 
     //// SHAPE ////////////////////////////////////////////////////////////////
 

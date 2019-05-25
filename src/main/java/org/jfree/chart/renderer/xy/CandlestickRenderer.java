@@ -748,7 +748,7 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
         if (this.useOutlinePaint) {
             outlinePaint = getPaint().getItemOutlinePaint(series, item);
         }
-        Stroke s = getItemStroke(series, item);
+        Stroke s = getStroke().getItemStroke(series, item);
 
         g2.setStroke(s);
 

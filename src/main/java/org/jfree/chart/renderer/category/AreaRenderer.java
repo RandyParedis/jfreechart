@@ -187,7 +187,7 @@ public class AreaRenderer extends AbstractCategoryItemRenderer
         Shape shape = lookupLegendShape(series);
         Paint paint = getPaint().lookupSeriesPaint(series);
         Paint outlinePaint = getPaint().lookupSeriesOutlinePaint(series);
-        Stroke outlineStroke = lookupSeriesOutlineStroke(series);
+        Stroke outlineStroke = getStroke().lookupSeriesOutlineStroke(series);
 
         LegendItem result = new LegendItem(label, description, toolTipText,
                 urlText, shape, paint, outlineStroke, outlinePaint);
@@ -287,7 +287,7 @@ public class AreaRenderer extends AbstractCategoryItemRenderer
         double labelXX = x1;
         double labelYY = y1;
         g2.setPaint(getPaint().getItemPaint(row, column));
-        g2.setStroke(getItemStroke(row, column));
+        g2.setStroke(getStroke().getItemStroke(row, column));
 
         GeneralPath area = new GeneralPath();
 

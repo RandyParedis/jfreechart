@@ -342,7 +342,7 @@ public class LevelRenderer extends AbstractCategoryItemRenderer
                     dataset.getColumnKey(column));
         }
         
-        Stroke itemStroke = getItemStroke(row, column);
+        Stroke itemStroke = getStroke().getItemStroke(row, column);
         Paint itemPaint = getPaint().getItemPaint(row, column);
         g2.setStroke(itemStroke);
         g2.setPaint(itemPaint);

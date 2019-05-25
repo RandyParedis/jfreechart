@@ -401,7 +401,7 @@ public class WaterfallBarRenderer extends BarRenderer {
         // draw the outline...
         if (isDrawBarOutline()
                 && state.getBarWidth() > BAR_OUTLINE_WIDTH_THRESHOLD) {
-            Stroke stroke = getItemOutlineStroke(row, column);
+            Stroke stroke = getStroke().getItemOutlineStroke(row, column);
             Paint paint = getPaint().getItemOutlinePaint(row, column);
             if (stroke != null && paint != null) {
                 g2.setStroke(stroke);

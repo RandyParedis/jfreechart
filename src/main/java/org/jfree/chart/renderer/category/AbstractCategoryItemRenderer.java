@@ -1271,7 +1271,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         Shape shape = lookupLegendShape(series);
         Paint paint = getPaint().lookupSeriesPaint(series);
         Paint outlinePaint = getPaint().lookupSeriesOutlinePaint(series);
-        Stroke outlineStroke = lookupSeriesOutlineStroke(series);
+        Stroke outlineStroke = getStroke().lookupSeriesOutlineStroke(series);
 
         LegendItem item = new LegendItem(label, description, toolTipText,
                 urlText, shape, paint, outlineStroke, outlinePaint);

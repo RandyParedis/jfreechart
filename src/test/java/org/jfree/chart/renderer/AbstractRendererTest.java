@@ -174,27 +174,27 @@ public class AbstractRendererTest {
         Stroke s = new BasicStroke(3.21f);
 
         // strokeList
-        r1.setSeriesStroke(1, s);
+        r1.getStroke().setSeriesStroke(1, s);
         assertFalse(r1.equals(r2));
-        r2.setSeriesStroke(1, s);
+        r2.getStroke().setSeriesStroke(1, s);
         assertTrue(r1.equals(r2));
 
         // defaultStroke
-        r1.setDefaultStroke(s);
+        r1.getStroke().setDefaultStroke(s);
         assertFalse(r1.equals(r2));
-        r2.setDefaultStroke(s);
+        r2.getStroke().setDefaultStroke(s);
         assertTrue(r1.equals(r2));
 
         // outlineStrokeList
-        r1.setSeriesOutlineStroke(0, s);
+        r1.getStroke().setSeriesOutlineStroke(0, s);
         assertFalse(r1.equals(r2));
-        r2.setSeriesOutlineStroke(0, s);
+        r2.getStroke().setSeriesOutlineStroke(0, s);
         assertTrue(r1.equals(r2));
 
         // defaultOutlineStroke
-        r1.setDefaultOutlineStroke(s);
+        r1.getStroke().setDefaultOutlineStroke(s);
         assertFalse(r1.equals(r2));
-        r2.setDefaultOutlineStroke(s);
+        r2.getStroke().setDefaultOutlineStroke(s);
         assertTrue(r1.equals(r2));
 
         // shapeList
@@ -459,14 +459,14 @@ public class AbstractRendererTest {
         r2.getPaint().setSeriesOutlinePaint(0, Color.YELLOW);
         assertTrue(r1.equals(r2));
 
-        r1.setSeriesStroke(0, new BasicStroke(2.2f));
+        r1.getStroke().setSeriesStroke(0, new BasicStroke(2.2f));
         assertFalse(r1.equals(r2));
-        r2.setSeriesStroke(0, new BasicStroke(2.2f));
+        r2.getStroke().setSeriesStroke(0, new BasicStroke(2.2f));
         assertTrue(r1.equals(r2));
 
-        r1.setSeriesOutlineStroke(0, new BasicStroke(2.2f));
+        r1.getStroke().setSeriesOutlineStroke(0, new BasicStroke(2.2f));
         assertFalse(r1.equals(r2));
-        r2.setSeriesOutlineStroke(0, new BasicStroke(2.2f));
+        r2.getStroke().setSeriesOutlineStroke(0, new BasicStroke(2.2f));
         assertTrue(r1.equals(r2));
 
         baseShape.setRect(4.0, 3.0, 2.0, 1.0);
@@ -607,20 +607,20 @@ public class AbstractRendererTest {
 
         // STROKE
         detector.setNotified(false);
-        r1.setSeriesStroke(0, new BasicStroke(1.0f));
+        r1.getStroke().setSeriesStroke(0, new BasicStroke(1.0f));
         assertTrue(detector.getNotified());
 
         detector.setNotified(false);
-        r1.setDefaultStroke(new BasicStroke(1.0f));
+        r1.getStroke().setDefaultStroke(new BasicStroke(1.0f));
         assertTrue(detector.getNotified());
 
         // OUTLINE STROKE
         detector.setNotified(false);
-        r1.setSeriesOutlineStroke(0, new BasicStroke(1.0f));
+        r1.getStroke().setSeriesOutlineStroke(0, new BasicStroke(1.0f));
         assertTrue(detector.getNotified());
 
         detector.setNotified(false);
-        r1.setDefaultOutlineStroke(new BasicStroke(1.0f));
+        r1.getStroke().setDefaultOutlineStroke(new BasicStroke(1.0f));
         assertTrue(detector.getNotified());
 
         // SHAPE
@@ -714,8 +714,8 @@ public class AbstractRendererTest {
         assertEquals(true, r.getPaint().getAutoPopulateSeriesPaint());
         assertEquals(false, r.getPaint().getAutoPopulateSeriesFillPaint());
         assertEquals(false, r.getPaint().getAutoPopulateSeriesOutlinePaint());
-        assertEquals(true, r.getAutoPopulateSeriesStroke());
-        assertEquals(false, r.getAutoPopulateSeriesOutlineStroke());
+        assertEquals(true, r.getStroke().getAutoPopulateSeriesStroke());
+        assertEquals(false, r.getStroke().getAutoPopulateSeriesOutlineStroke());
         assertEquals(true, r.getAutoPopulateSeriesShape());
     }
 

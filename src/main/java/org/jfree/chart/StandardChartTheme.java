@@ -1525,8 +1525,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         if (renderer.getPaint().getAutoPopulateSeriesPaint()) {
             renderer.getPaint().clearSeriesPaints(false);
         }
-        if (renderer.getAutoPopulateSeriesStroke()) {
-            renderer.clearSeriesStrokes(false);
+        if (renderer.getStroke().getAutoPopulateSeriesStroke()) {
+            renderer.getStroke().clearSeriesStrokes(false);
         }
     }
 

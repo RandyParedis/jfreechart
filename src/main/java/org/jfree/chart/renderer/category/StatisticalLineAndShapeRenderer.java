@@ -307,7 +307,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                 g2.setStroke(this.errorIndicatorStroke);
             }
             else {
-                g2.setStroke(getItemOutlineStroke(row, column));
+                g2.setStroke(getStroke().getItemOutlineStroke(row, column));
             }
             Line2D line = new Line2D.Double();
             if (orientation == PlotOrientation.HORIZONTAL) {
@@ -356,7 +356,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                 else {
                     g2.setPaint(getPaint().getItemPaint(row, column));
                 }
-                g2.setStroke(getItemOutlineStroke(row, column));
+                g2.setStroke(getStroke().getItemOutlineStroke(row, column));
                 g2.draw(shape);
             }
             // draw the item label if there is one...
@@ -404,7 +404,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                         line = new Line2D.Double(x0, y0, x1, y1);
                     }
                     g2.setPaint(getPaint().getItemPaint(row, column));
-                    g2.setStroke(getItemStroke(row, column));
+                    g2.setStroke(getStroke().getItemStroke(row, column));
                     g2.draw(line);
                 }
             }

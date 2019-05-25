@@ -337,7 +337,7 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
             Shape hotspot = new Rectangle2D.Double(x1 - 4, y1 - 4, 8.0, 8.0);
 
             g2.setPaint(getPaint().getItemPaint(row, column));
-            g2.setStroke(getItemStroke(row, column));
+            g2.setStroke(getStroke().getItemStroke(row, column));
 
             PlotOrientation orient = plot.getOrientation();
             if (orient == PlotOrientation.VERTICAL) {
@@ -395,7 +395,7 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
                         double y0 = rangeAxis.valueToJava2D(previous, dataArea,
                                 plot.getRangeAxisEdge());
                         g2.setPaint(getPaint().getItemPaint(row, column));
-                        g2.setStroke(getItemStroke(row, column));
+                        g2.setStroke(getStroke().getItemStroke(row, column));
                         Line2D line;
                         if (orient == PlotOrientation.VERTICAL) {
                             line = new Line2D.Double(x0, y0, x1, y1);

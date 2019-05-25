@@ -205,7 +205,7 @@ public class YIntervalRenderer extends AbstractXYItemRenderer
         double yyHigh = rangeAxis.valueToJava2D(yHigh, dataArea, yAxisLocation);
 
         Paint p = getPaint().getItemPaint(series, item);
-        Stroke s = getItemStroke(series, item);
+        Stroke s = getStroke().getItemStroke(series, item);
 
         Line2D line = null;
         Shape shape = getItemShape(series, item);

@@ -659,14 +659,14 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
             boolean shapeOutlineVisible = this.drawOutlines;
             Paint outlinePaint = (this.useOutlinePaint
                     ? getPaint().getItemOutlinePaint(series, 0) : paint);
-            Stroke outlineStroke = lookupSeriesOutlineStroke(series);
+            Stroke outlineStroke = getStroke().lookupSeriesOutlineStroke(series);
             boolean lineVisible = getItemLineVisible(series, 0);
             boolean shapeVisible = getItemShapeVisible(series, 0);
             LegendItem result = new LegendItem(label, description, toolTipText,
                     urlText, shapeVisible, shape, getItemShapeFilled(series, 0),
                     fillPaint, shapeOutlineVisible, outlinePaint, outlineStroke,
                     lineVisible, new Line2D.Double(-7.0, 0.0, 7.0, 0.0),
-                    getItemStroke(series, 0), getPaint().getItemPaint(series, 0));
+                    getStroke().getItemStroke(series, 0), getPaint().getItemPaint(series, 0));
             result.setLabelFont(lookupLegendTextFont(series));
             Paint labelPaint = lookupLegendTextPaint(series);
             if (labelPaint != null) {
@@ -782,7 +782,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
                         line = new Line2D.Double(x0, y0, x1, y1);
                     }
                     g2.setPaint(getPaint().getItemPaint(row, column));
-                    g2.setStroke(getItemStroke(row, column));
+                    g2.setStroke(getStroke().getItemStroke(row, column));
                     g2.draw(line);
                 }
             }
@@ -814,7 +814,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
                     else {
                         g2.setPaint(getPaint().getItemPaint(row, column));
                     }
-                    g2.setStroke(getItemOutlineStroke(row, column));
+                    g2.setStroke(getStroke().getItemOutlineStroke(row, column));
                     g2.draw(shape);
                 }
             }

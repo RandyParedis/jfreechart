@@ -486,7 +486,7 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
                     } else {
                         g2.setPaint(getPaint().getItemPaint(series, item));
                     }
-                    g2.setStroke(getItemOutlineStroke(series, item));
+                    g2.setStroke(getStroke().getItemOutlineStroke(series, item));
                     g2.draw(shape);
                 }
             }

@@ -181,7 +181,7 @@ public class GradientBarPainter implements BarPainter, Serializable {
         // draw the outline...
         if (renderer.isDrawBarOutline()
             /*&& state.getBarWidth() > renderer.BAR_OUTLINE_WIDTH_THRESHOLD*/) {
-            Stroke stroke = renderer.getItemOutlineStroke(row, column);
+            Stroke stroke = renderer.getStroke().getItemOutlineStroke(row, column);
             Paint paint = renderer.getPaint().getItemOutlinePaint(row, column);
             if (stroke != null && paint != null) {
                 g2.setStroke(stroke);

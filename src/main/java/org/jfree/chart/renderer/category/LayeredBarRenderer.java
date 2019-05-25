@@ -304,7 +304,7 @@ public class LayeredBarRenderer extends BarRenderer implements Serializable {
         // draw the outline...
         if (isDrawBarOutline()
                 && state.getBarWidth() > BAR_OUTLINE_WIDTH_THRESHOLD) {
-            Stroke stroke = getItemOutlineStroke(row, column);
+            Stroke stroke = getStroke().getItemOutlineStroke(row, column);
             Paint paint = getPaint().getItemOutlinePaint(row, column);
             if (stroke != null && paint != null) {
                 g2.setStroke(stroke);
@@ -430,7 +430,7 @@ public class LayeredBarRenderer extends BarRenderer implements Serializable {
 
         if (isDrawBarOutline() && state.getBarWidth() 
                 > BAR_OUTLINE_WIDTH_THRESHOLD) {
-            g2.setStroke(getItemOutlineStroke(row, column));
+            g2.setStroke(getStroke().getItemOutlineStroke(row, column));
             g2.setPaint(getPaint().getItemOutlinePaint(row, column));
             g2.draw(bar);
         }

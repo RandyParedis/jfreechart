@@ -600,7 +600,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
                 boolean shapeFilled = getItemShapeFilled(series, 0);
                 Paint paint = getPaint().lookupSeriesPaint(series);
                 Paint linePaint = paint;
-                Stroke lineStroke = lookupSeriesStroke(series);
+                Stroke lineStroke = getStroke().lookupSeriesStroke(series);
                 result = new LegendItem(label, description, toolTipText,
                         urlText, this.baseShapesVisible, shape, shapeFilled,
                         paint, !shapeFilled, paint, lineStroke,
@@ -748,7 +748,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
 
         PlotOrientation orientation = plot.getOrientation();
         Paint paint = getPaint().getItemPaint(series, item);
-        Stroke seriesStroke = getItemStroke(series, item);
+        Stroke seriesStroke = getStroke().getItemStroke(series, item);
         g2.setPaint(paint);
         g2.setStroke(seriesStroke);
 
@@ -798,7 +798,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
                 if (item == dataset.getItemCount(series) - 1) {
                     if (s.seriesIndex == series) {
                         // draw path
-                        g2.setStroke(lookupSeriesStroke(series));
+                        g2.setStroke(getStroke().lookupSeriesStroke(series));
                         g2.setPaint(getPaint().lookupSeriesPaint(series));
                         g2.draw(s.seriesPath);
                     }

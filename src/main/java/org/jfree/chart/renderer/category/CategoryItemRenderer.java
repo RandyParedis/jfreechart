@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -118,6 +118,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.renderer.IRendererPaint;
+import org.jfree.chart.renderer.IRendererStroke;
 import org.jfree.chart.renderer.IRendererVisibility;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.urls.CategoryURLGenerator;
@@ -136,7 +137,7 @@ import org.jfree.data.category.CategoryDataset;
  * looking up an attribute (for example, the outline paint) the renderer first
  * checks to see if there is a setting that applies to a specific series
  * that the renderer draws.  If there is, that setting is used, but if it is
- * {@code null} the renderer looks up the default setting.  Some attributes 
+ * {@code null} the renderer looks up the default setting.  Some attributes
  * allow the base setting to be {@code null}, while other attributes enforce
  * non-{@code null} values.
  */
@@ -155,6 +156,13 @@ public interface CategoryItemRenderer extends LegendItemSource {
      * @return Paint render state.
      */
     IRendererPaint getPaint();
+
+    /**
+     * Returns the stroke render state for the renderer.
+     *
+     * @return Stroke render state.
+     */
+    IRendererStroke getStroke();
 
     /**
      * Returns the number of passes through the dataset required by the
@@ -237,124 +245,6 @@ public interface CategoryItemRenderer extends LegendItemSource {
                                                 CategoryPlot plot,
                                                 int rendererIndex,
                                                 PlotRenderingInfo info);
-
-    //// STROKE ////////////////////////////////////////////////////////////////
-
-    /**
-     * Returns the stroke used to draw data items.
-     *
-     * @param row  the row (or series) index (zero-based).
-     * @param column  the column (or category) index (zero-based).
-     *
-     * @return The stroke (never {@code null}).
-     */
-    public Stroke getItemStroke(int row, int column);
-
-    /**
-     * Returns the stroke used to draw the items in a series.
-     *
-     * @param series  the series (zero-based index).
-     *
-     * @return The stroke (never {@code null}).
-     *
-     * @see #setSeriesStroke(int, Stroke)
-     */
-    public Stroke getSeriesStroke(int series);
-
-    /**
-     * Sets the stroke used for a series and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param stroke  the stroke ({@code null} permitted).
-     *
-     * @see #getSeriesStroke(int)
-     */
-    public void setSeriesStroke(int series, Stroke stroke);
-
-    public void setSeriesStroke(int series, Stroke stroke, boolean notify);
-
-    /**
-     * Returns the default stroke.
-     *
-     * @return The default stroke (never {@code null}).
-     *
-     * @see #setDefaultStroke(Stroke)
-     */
-    public Stroke getDefaultStroke();
-
-    /**
-     * Sets the default stroke and sends a {@link RendererChangeEvent} to all
-     * registered listeners.
-     *
-     * @param stroke  the stroke ({@code null} not permitted).
-     *
-     * @see #getDefaultStroke()
-     */
-    public void setDefaultStroke(Stroke stroke);
-
-    public void setDefaultStroke(Stroke stroke, boolean notify);
-
-    //// OUTLINE STROKE ////////////////////////////////////////////////////////
-
-    /**
-     * Returns the stroke used to outline data items.
-     * <p>
-     * The default implementation passes control to the
-     * lookupSeriesOutlineStroke method.  You can override this method if you
-     * require different behaviour.
-     *
-     * @param row  the row (or series) index (zero-based).
-     * @param column  the column (or category) index (zero-based).
-     *
-     * @return The stroke (never {@code null}).
-     */
-    public Stroke getItemOutlineStroke(int row, int column);
-
-    /**
-     * Returns the stroke used to outline the items in a series.
-     *
-     * @param series  the series (zero-based index).
-     *
-     * @return The stroke (possibly {@code null}).
-     *
-     * @see #setSeriesOutlineStroke(int, Stroke)
-     */
-    public Stroke getSeriesOutlineStroke(int series);
-
-    /**
-     * Sets the outline stroke used for a series and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param stroke  the stroke ({@code null} permitted).
-     *
-     * @see #getSeriesOutlineStroke(int)
-     */
-    public void setSeriesOutlineStroke(int series, Stroke stroke);
-
-    public void setSeriesOutlineStroke(int series, Stroke stroke, boolean notify);
-
-    /**
-     * Returns the default outline stroke.
-     *
-     * @return The stroke (never {@code null}).
-     *
-     * @see #setDefaultOutlineStroke(Stroke)
-     */
-    public Stroke getDefaultOutlineStroke();
-
-    /**
-     * Sets the default outline stroke and sends a {@link RendererChangeEvent} to
-     * all registered listeners.
-     *
-     * @param stroke  the stroke ({@code null} not permitted).
-     *
-     * @see #getDefaultOutlineStroke()
-     */
-    public void setDefaultOutlineStroke(Stroke stroke);
-
-    public void setDefaultOutlineStroke(Stroke stroke, boolean notify);
 
     //// SHAPE /////////////////////////////////////////////////////////////////
 
@@ -542,7 +432,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
     public void setSeriesItemLabelGenerator(int series,
             CategoryItemLabelGenerator generator);
 
-    public void setSeriesItemLabelGenerator(int series, 
+    public void setSeriesItemLabelGenerator(int series,
             CategoryItemLabelGenerator generator, boolean notify);
 
     /**
@@ -606,7 +496,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
     public void setSeriesToolTipGenerator(int series,
             CategoryToolTipGenerator generator);
 
-    public void setSeriesToolTipGenerator(int series, 
+    public void setSeriesToolTipGenerator(int series,
             CategoryToolTipGenerator generator, boolean notify);
 
     /**
@@ -629,7 +519,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      */
     public void setDefaultToolTipGenerator(CategoryToolTipGenerator generator);
 
-    public void setDefaultToolTipGenerator(CategoryToolTipGenerator generator, 
+    public void setDefaultToolTipGenerator(CategoryToolTipGenerator generator,
             boolean notify);
 
     //// ITEM LABEL FONT  //////////////////////////////////////////////////////
@@ -961,7 +851,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
     public void setSeriesItemURLGenerator(int series,
                                           CategoryURLGenerator generator);
 
-    public void setSeriesItemURLGenerator(int series, 
+    public void setSeriesItemURLGenerator(int series,
             CategoryURLGenerator generator, boolean notify);
 
     /**

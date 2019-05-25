@@ -210,7 +210,7 @@ public class XYStepRenderer extends XYLineAndShapeRenderer
         PlotOrientation orientation = plot.getOrientation();
 
         Paint seriesPaint = getPaint().getItemPaint(series, item);
-        Stroke seriesStroke = getItemStroke(series, item);
+        Stroke seriesStroke = getStroke().getItemStroke(series, item);
         g2.setPaint(seriesPaint);
         g2.setStroke(seriesStroke);
 

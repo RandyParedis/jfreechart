@@ -428,7 +428,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
         if (getUseFillPaint()) {
             seriesFillPaint = getPaint().getItemFillPaint(series, item);
         }
-        Stroke seriesStroke = getItemStroke(series, item);
+        Stroke seriesStroke = getStroke().getItemStroke(series, item);
 
         if (pass == 0) {
             //  On first pass render the areas, line and outlines
@@ -528,7 +528,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
 
                 //  Draw an outline around the Area.
                 if (isOutline()) {
-                    g2.setStroke(lookupSeriesOutlineStroke(series));
+                    g2.setStroke(getStroke().lookupSeriesOutlineStroke(series));
                     g2.setPaint(getPaint().lookupSeriesOutlinePaint(series));
                     g2.draw(areaState.getSeriesArea());
                 }

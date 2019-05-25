@@ -344,7 +344,7 @@ public class XYErrorRenderer extends XYLineAndShapeRenderer {
                     g2.setStroke(this.errorStroke);
                 }
                 else {
-                    g2.setStroke(getItemStroke(series, item));
+                    g2.setStroke(getStroke().getItemStroke(series, item));
                 }
                 g2.draw(line);
                 g2.draw(cap1);
@@ -384,7 +384,7 @@ public class XYErrorRenderer extends XYLineAndShapeRenderer {
                     g2.setStroke(this.errorStroke);
                 }
                 else {
-                    g2.setStroke(getItemStroke(series, item));
+                    g2.setStroke(getStroke().getItemStroke(series, item));
                 }
                 g2.draw(line);
                 g2.draw(cap1);

@@ -8,8 +8,11 @@ import org.jfree.chart.util.*;
 import java.awt.*;
 import java.io.Serializable;
 
+// PAINT
+// FILL PAINT
+// OUTLINE PAINT
 public class RenderStatePaint implements Serializable, Cloneable, IRendererPaint {
-    private AbstractRenderer abstractRenderer;
+    private transient AbstractRenderer abstractRenderer;
 
     /**
      * The default paint.

@@ -560,7 +560,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
 
         PlotOrientation orientation = plot.getOrientation();
         Paint paint = getPaint().getItemPaint(series, item);
-        Stroke stroke = getItemStroke(series, item);
+        Stroke stroke = getStroke().getItemStroke(series, item);
         g2.setPaint(paint);
         g2.setStroke(stroke);
 
@@ -622,7 +622,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
                 // Java bug database.  So, we'll check if the outline is
                 // dashed and, if it is, do our own clipping before drawing
                 // the outline...
-                Stroke outlineStroke = lookupSeriesOutlineStroke(series);
+                Stroke outlineStroke = getStroke().lookupSeriesOutlineStroke(series);
                 if (outlineStroke instanceof BasicStroke) {
                     BasicStroke bs = (BasicStroke) outlineStroke;
                     if (bs.getDashArray() != null) {

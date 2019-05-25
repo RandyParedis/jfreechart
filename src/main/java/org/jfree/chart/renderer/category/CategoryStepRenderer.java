@@ -296,7 +296,7 @@ public class CategoryStepRenderer extends AbstractCategoryItemRenderer
         double y1 = rangeAxis.valueToJava2D(value.doubleValue(), dataArea,
                 plot.getRangeAxisEdge());
         g2.setPaint(getPaint().getItemPaint(row, column));
-        g2.setStroke(getItemStroke(row, column));
+        g2.setStroke(getStroke().getItemStroke(row, column));
 
         if (column != 0) {
             Number previousValue = dataset.getValue(row, column - 1);

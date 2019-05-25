@@ -873,7 +873,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      */
     protected void drawFirstPassShape(Graphics2D g2, int pass, int series,
                                       int item, Shape shape) {
-        g2.setStroke(getItemStroke(series, item));
+        g2.setStroke(getStroke().getItemStroke(series, item));
         g2.setPaint(getPaint().getItemPaint(series, item));
         g2.draw(shape);
     }
@@ -1005,7 +1005,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
                     else {
                         g2.setPaint(getPaint().getItemPaint(series, item));
                     }
-                    g2.setStroke(getItemOutlineStroke(series, item));
+                    g2.setStroke(getStroke().getItemOutlineStroke(series, item));
                     g2.draw(shape);
                 }
             }
@@ -1080,9 +1080,9 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
         boolean shapeOutlineVisible = this.drawOutlines;
         Paint outlinePaint = (this.useOutlinePaint ? getPaint().lookupSeriesOutlinePaint(
                 series) : getPaint().lookupSeriesPaint(series));
-        Stroke outlineStroke = lookupSeriesOutlineStroke(series);
+        Stroke outlineStroke = getStroke().lookupSeriesOutlineStroke(series);
         boolean lineVisible = getItemLineVisible(series, 0);
-        Stroke lineStroke = lookupSeriesStroke(series);
+        Stroke lineStroke = getStroke().lookupSeriesStroke(series);
         Paint linePaint = getPaint().lookupSeriesPaint(series);
         LegendItem result = new LegendItem(label, description, toolTipText,
                 urlText, shapeIsVisible, shape, shapeIsFilled, fillPaint,

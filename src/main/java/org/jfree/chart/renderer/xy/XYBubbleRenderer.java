@@ -244,7 +244,7 @@ public class XYBubbleRenderer extends AbstractXYItemRenderer
             }
             g2.setPaint(getPaint().getItemPaint(series, item));
             g2.fill(circle);
-            g2.setStroke(getItemOutlineStroke(series, item));
+            g2.setStroke(getStroke().getItemOutlineStroke(series, item));
             g2.setPaint(getPaint().getItemOutlinePaint(series, item));
             g2.draw(circle);
 
@@ -312,7 +312,7 @@ public class XYBubbleRenderer extends AbstractXYItemRenderer
                 Shape shape = lookupLegendShape(series);
                 Paint paint = getPaint().lookupSeriesPaint(series);
                 Paint outlinePaint = getPaint().lookupSeriesOutlinePaint(series);
-                Stroke outlineStroke = lookupSeriesOutlineStroke(series);
+                Stroke outlineStroke = getStroke().lookupSeriesOutlineStroke(series);
                 result = new LegendItem(label, description, toolTipText,
                         urlText, shape, paint, outlineStroke, outlinePaint);
                 result.setLabelFont(lookupLegendTextFont(series));

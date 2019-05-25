@@ -304,7 +304,7 @@ public class WaferMapRenderer extends AbstractRenderer {
                     Paint paint = getPaint().lookupSeriesPaint(
                             ((Integer) entry.getValue()).intValue());
                     Paint outlinePaint = Color.BLACK;
-                    Stroke outlineStroke = DEFAULT_STROKE;
+                    Stroke outlineStroke = RenderStateStroke.DEFAULT_STROKE;
 
                     result.add(new LegendItem(label, description, null,
                             null, shape, paint, outlineStroke, outlinePaint));
@@ -328,7 +328,7 @@ public class WaferMapRenderer extends AbstractRenderer {
                                 ((Integer) entry.getValue()).intValue()
                         );
                         Paint outlinePaint = Color.BLACK;
-                        Stroke outlineStroke = DEFAULT_STROKE;
+                        Stroke outlineStroke = RenderStateStroke.DEFAULT_STROKE;
 
                         result.add(new LegendItem(label, description,
                                 null, null, shape, paint, outlineStroke,

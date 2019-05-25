@@ -334,7 +334,7 @@ public class StatisticalBarRenderer extends BarRenderer
         // draw the outline...
         if (isDrawBarOutline()
                 && state.getBarWidth() > BAR_OUTLINE_WIDTH_THRESHOLD) {
-            Stroke stroke = getItemOutlineStroke(row, column);
+            Stroke stroke = getStroke().getItemOutlineStroke(row, column);
             Paint paint = getPaint().getItemOutlinePaint(row, column);
             if (stroke != null && paint != null) {
                 g2.setStroke(stroke);
@@ -362,7 +362,7 @@ public class StatisticalBarRenderer extends BarRenderer
                 g2.setStroke(this.errorIndicatorStroke);
             }
             else {
-                g2.setStroke(getItemOutlineStroke(row, column));
+                g2.setStroke(getStroke().getItemOutlineStroke(row, column));
             }
             Line2D line;
             line = new Line2D.Double(lowVal, rectY + rectHeight / 2.0d,
@@ -481,7 +481,7 @@ public class StatisticalBarRenderer extends BarRenderer
         // draw the outline...
         if (isDrawBarOutline()
                 && state.getBarWidth() > BAR_OUTLINE_WIDTH_THRESHOLD) {
-            Stroke stroke = getItemOutlineStroke(row, column);
+            Stroke stroke = getStroke().getItemOutlineStroke(row, column);
             Paint paint = getPaint().getItemOutlinePaint(row, column);
             if (stroke != null && paint != null) {
                 g2.setStroke(stroke);
@@ -509,7 +509,7 @@ public class StatisticalBarRenderer extends BarRenderer
                 g2.setStroke(this.errorIndicatorStroke);
             }
             else {
-                g2.setStroke(getItemOutlineStroke(row, column));
+                g2.setStroke(getStroke().getItemOutlineStroke(row, column));
             }
 
             Line2D line;

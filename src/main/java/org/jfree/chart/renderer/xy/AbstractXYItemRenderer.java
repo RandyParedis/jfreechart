@@ -877,7 +877,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         }
         else {
             Paint outlinePaint = getPaint().lookupSeriesOutlinePaint(series);
-            Stroke outlineStroke = lookupSeriesOutlineStroke(series);
+            Stroke outlineStroke = getStroke().lookupSeriesOutlineStroke(series);
             item.setOutlinePaint(outlinePaint);
             item.setOutlineStroke(outlineStroke);
         }

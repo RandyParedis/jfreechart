@@ -446,7 +446,7 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
                 else {
                     g2.setPaint(getPaint().getItemPaint(row, column));
                 }
-                g2.setStroke(getItemOutlineStroke(row, column));
+                g2.setStroke(getStroke().getItemOutlineStroke(row, column));
                 g2.draw(shape);
             }
         }
@@ -491,12 +491,12 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
             boolean shapeOutlineVisible = this.drawOutlines;
             Paint outlinePaint = (this.useOutlinePaint
                     ? getPaint().getItemOutlinePaint(series, 0) : paint);
-            Stroke outlineStroke = lookupSeriesOutlineStroke(series);
+            Stroke outlineStroke = getStroke().lookupSeriesOutlineStroke(series);
             LegendItem result = new LegendItem(label, description, toolTipText,
                     urlText, true, shape, getItemShapeFilled(series, 0),
                     fillPaint, shapeOutlineVisible, outlinePaint, outlineStroke,
                     false, new Line2D.Double(-7.0, 0.0, 7.0, 0.0),
-                    getItemStroke(series, 0), getPaint().getItemPaint(series, 0));
+                    getStroke().getItemStroke(series, 0), getPaint().getItemPaint(series, 0));
             result.setLabelFont(lookupLegendTextFont(series));
             Paint labelPaint = lookupLegendTextPaint(series);
             if (labelPaint != null) {

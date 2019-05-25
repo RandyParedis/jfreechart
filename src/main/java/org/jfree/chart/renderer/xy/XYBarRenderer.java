@@ -757,7 +757,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
         Shape shape = this.legendBar;
         Paint paint = getPaint().lookupSeriesPaint(series);
         Paint outlinePaint = getPaint().lookupSeriesOutlinePaint(series);
-        Stroke outlineStroke = lookupSeriesOutlineStroke(series);
+        Stroke outlineStroke = getStroke().lookupSeriesOutlineStroke(series);
         if (this.drawBarOutline) {
             result = new LegendItem(label, description, toolTipText,
                     urlText, shape, paint, outlineStroke, outlinePaint);
