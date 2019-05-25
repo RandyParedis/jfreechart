@@ -37,7 +37,7 @@
 	
 	While on the topic, although all strategies have their merit and are important in some way, we believe some of them are more important and/or practical to follow. \textsl{Keep It Simple} (2.7 from \cite{demeyer2009object}) is one of them, which we will keep in mind during the refactoring process.
 	
-	\subsection{PERT Chart} 
+	\subsection{PERT-Chart} 
 	\begin{figure}[H] 
 		\centering 
 		\includegraphics[width=\textwidth]{pert.pdf}
@@ -93,13 +93,48 @@
 	
 	We also noticed that there is currently no mutation testing being done on this project. Even though we do realize this would give way too much situations and possibilities to cover, we currently have no idea of how good the tests currently are.
 	
-%	\section{Refactoring}
-%	\subsection{Design Recovery}
-%	\subsection{Design}
-%	\subsection{Management}
-%	\subsection{Refactoring}
-%	
-%	\section{Preserved Behaviour}
+	\subsection{IntelliJ/Eclipse}
+	Because of the jumbled mess \texttt{JFreeChart} is, we decided to look into some tools that might help with the refactoring process itself. The first one that came to mind (and the one that we used to the biggest extend) were the \textsf{IntelliJ} refactoring functionalities (extracting methods/classes, pulling functions up/down...).
+	
+	Due to our usage with \textsf{IntelliJ}, we also installed the \textsf{Code Smells Detector} plugin \cite{jetbrains-csd}. Unfortunately, this tool appears to be sort of buggy when actually trying to perform some refactoring from the builtin functionality. This is why we combined this plugin with the \textsf{CodeMetrics} plugin \cite{jetbrains-cm}, so we could obtain a valid annotation on the complexity of some functions that were highlighted by the \textsf{Code Smells Detector}. The functions we found here (mostly) lined up with the one we obtained from \textsf{CodeScene}, giving us additional confirmation.
+	
+	The \textsf{Eclipse} counterpart of this plugin would be \textsf{JDeodorant} \cite{jdeodorant}, but sadly it was quite confusing to use and the results it produced (extracting a few methods to a superclass, moving a method to the class that is used the most in that method...) were, in our opinion, not helpful whatsoever. This is why we decided to identify most of the methods that needed extracting ourselves first and checking the result again afterwards, to see if we have made a difference.
+	
+	\subsection{Code Clones with iClones}
+	While on the topic of code smells, we also used \textsf{iClones} so we could detect duplicate code and other aspects outside of the IDEs we're using. Seeing \textsf{iClones} has builtin functionality to compare different versions of a project, it allows us to easily compare the code at the start of our refactoring process and at the end\footnote{Although we could easily apply this somewhere in the middle of our refactoring process, we've decided that this information is not entirely useful within the context of what we're trying to obtain.}.
+	
+	Since the results we obtain from using this software are most useful in comparison over time, we will defer our conclusions to \textsl{section \ref{sec:pb}}.
+	
+	
+	\section{Refactoring}
+	\subsection{Design Recovery}
+	Trying to identify the problem domain, or more specifically, the functionality that required refactoring was quite tricky. This is mainly due to the high rate of exceptional entities and anomalies we've found while applying the \textsl{Study the Exceptional Entities} pattern (4.3 from \cite{demeyer2009object}). Some of these anomalies\footnote{As we would describe them. In \cite{demeyer2009object} they are not mentioned}, we've listed below.
+	\begin{itemize}
+		\item Renderers that do not render;
+		%\item Inconsistent usage of drawing shapes between classes that inherit from the same base. (e.g. \texttt{drawRect} and \texttt{draw(Rectange)});
+		\item Implicit implementation of interfaces due to extension of a class that does not implement the interface;
+		\item A mixture of a multitude of design patterns that are not all fully implemented (Abstract Factory, Adapters, Bridges, Model View Controller, Chain of Responsibility, Observers...)
+		\item ...
+	\end{itemize}
+
+	Now, in order for us to describe our proposed new design of \texttt{JFreeChart}, we must first tell you a little bit more about the current design.
+
+	\subsection{Design}
+	\subsection{Management}
+	\subsection{Refactoring}
+	
+	\section{Preserved Behaviour}
+	\label{sec:pb}
+	Of course, in order to be able to say that our refactoring process was effective, we must compare our results to the original source code. While tools like \textsf{iClones} \cite{iclones} automatically come bundled with a version comparison, others, unfortunately, do not. This is why, for this phase of the project, we decided to jump back and forth to the original version of our project and bundle all of our findings below.
+	
+	As we described in \textsl{section \ref{sec:coco}}, we've been using the tests from \texttt{JFreeChart}. As you can see, our project still passes on all of them, meaning that we (at least) provide the same functionality as when we started (6.1 and 7.6 from \cite{demeyer2009object}).
+	
+%	In fact, taking a look at our testing coverage, it's clear to see that the overall coverage went up, which is a good thing. This generally implies that our refactoring caused the tests to cover more code, giving us the information that there is more code that has passed the tests. We know now that the system after refactoring is a little bit more robust than before.
+	Taking a look at the code coverage reports from \textsf{Cobertura}, we can clearly see that we have some subtle differences. These changes can be either positive (the percentages went up) or negative (they went down).
+	
+	For the positive changes in these reports, we know they are a good thing. Generally, this implies the refactoring we've done caused the tests to cover more code, giving us the information that there is more code that has passed the tests.
+	
+	The negative changes on the other hand can also be seen as favorable. The main reason for this is because we removed some lines of code from these files and placed them elsewhere, while the existing covered functionality remained.
 
 	\clearpage
 	\bibliographystyle{plain}
