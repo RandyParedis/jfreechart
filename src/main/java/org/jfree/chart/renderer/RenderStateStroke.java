@@ -24,33 +24,33 @@ public class RenderStateStroke implements Serializable, Cloneable, IRendererStro
     /**
      * The stroke list.
      */
-    public StrokeList strokeList;
+    private StrokeList strokeList;
     /**
      * A flag that controls whether or not the strokeList is auto-populated
      * in the {@link #lookupSeriesStroke(int)} method.
      *
      * @since 1.0.6
      */
-    public boolean autoPopulateSeriesStroke;
+    private boolean autoPopulateSeriesStroke;
     /**
      * The base stroke.
      */
-    public transient Stroke defaultStroke;
+    private transient Stroke defaultStroke;
     /**
      * The outline stroke list.
      */
-    public StrokeList outlineStrokeList;
+    private StrokeList outlineStrokeList;
     /**
      * The base outline stroke.
      */
-    public transient Stroke defaultOutlineStroke;
+    private transient Stroke defaultOutlineStroke;
     /**
      * A flag that controls whether or not the outlineStrokeList is
      * auto-populated in the {@link #lookupSeriesOutlineStroke(int)} method.
      *
      * @since 1.0.6
      */
-    public boolean autoPopulateSeriesOutlineStroke;
+    private boolean autoPopulateSeriesOutlineStroke;
 
     public RenderStateStroke(AbstractRenderer abstractRenderer) {
         this.abstractRenderer = abstractRenderer;

@@ -14,20 +14,20 @@ public class RenderStateVisibility implements Serializable, Cloneable, IRenderer
     /**
      * A list of flags that controls whether or not each series is visible.
      */
-    public BooleanList seriesVisibleList = new BooleanList();
+    private BooleanList seriesVisibleList = new BooleanList();
     /**
      * The default visibility for all series.
      */
-    public boolean defaultSeriesVisible = true;
+    private boolean defaultSeriesVisible = true;
     /**
      * A list of flags that controls whether or not each series is visible in
      * the legend.
      */
-    public BooleanList seriesVisibleInLegendList = new BooleanList();
+    private BooleanList seriesVisibleInLegendList = new BooleanList();
     /**
      * The default visibility for each series in the legend.
      */
-    public boolean defaultSeriesVisibleInLegend = true;
+    private boolean defaultSeriesVisibleInLegend = true;
 
     public RenderStateVisibility(AbstractRenderer abstractRenderer) {
         this.abstractRenderer = abstractRenderer;
