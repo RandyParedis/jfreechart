@@ -1,0 +1,116 @@
+@startuml
+AbstractRenderer <|-- AbstractXYItemRenderer
+AbstractRenderer <|-- AbstractCategoryItemRenderer
+AbstractXYItemRenderer <|-- InheritedXYItemRendererClass
+AbstractCategoryItemRenderer <|-- InheritedCategoryItemRendererClass
+AbstractRenderer <|-- DefaultPolarItemRenderer
+AbstractRenderer <|-- WaferMapRenderer
+
+interface IRendererVisibility
+IRendererVisibility <|.. RenderStateVisibility
+RenderStateVisibility -- AbstractRenderer
+
+interface IRendererPaint
+IRendererPaint <|.. RenderStatePaint
+RenderStatePaint -- AbstractRenderer
+
+interface IRendererStroke
+IRendererStroke <|.. RenderStateStroke
+RenderStateStroke -- AbstractRenderer
+
+interface IRendererShape
+IRendererShape <|.. RenderStateShape
+RenderStateShape -- AbstractRenderer
+
+interface IRendererFont
+IRendererFont <|.. RenderStateFont
+RenderStateFont -- AbstractRenderer
+
+interface IRendererLabelPosition
+IRendererLabelPosition <|.. RenderStateLabelPosition
+RenderStateLabelPosition -- AbstractRenderer
+
+interface IAreaRenderer
+IAreaRenderer <|.. XYAreaRenderer
+IAreaRenderer <|.. XYAreaRenderer2
+IAreaRenderer <|.. AreaRenderer
+AbstractXYItemRenderer <|-- XYAreaRenderer
+AbstractXYItemRenderer <|-- XYAreaRenderer2
+AbstractCategoryItemRenderer <|-- AreaRenderer
+AreaRenderer <|-- StackedAreaRenderer
+XYAreaRenderer <|-- StackedXYAreaRenderer
+XYAreaRenderer2 <|-- StackedXYAreaRenderer2
+
+interface IBarRenderer
+IBarRenderer <|.. XYBarRenderer
+IBarRenderer <|.. BarRenderer
+AbstractXYItemRenderer <|-- XYBarRenderer
+XYBarRenderer <|-- ClusteredXYBarRenderer
+XYBarRenderer <|-- StackedXYBarRenderer
+AbstractCategoryItemRenderer <|-- BarRenderer
+BarRenderer <|-- IntervalBarRenderer
+BarRenderer <|-- StackedBarRenderer
+BarRenderer <|-- LayeredBarRenderer
+BarRenderer <|-- StatisticalBarRenderer
+BarRenderer <|-- WaterfallBarRenderer
+StackedBarRenderer <|-- GroupedStackedBarRenderer
+IntervalBarRenderer <|-- GhanttBarRenderer
+
+interface IBoxAndWhiskersRenderer
+IBoxAndWhiskersRenderer <|.. XYBoxAndWhiskersRenderer
+IBoxAndWhiskersRenderer <|.. BoxAndWhiskersRenderer
+AbstractXYItemRenderer <|-- XYBoxAndWhiskersRenderer
+AbstractCategoryItemRenderer <|-- BoxAndWhiskersRenderer
+
+interface ILineAndShapeRenderer
+ILineAndShapeRenderer <|.. XYLineAndShapeRenderer
+ILineAndShapeRenderer <|.. LineAndShapeRenderer
+AbstractXYItemRenderer <|-- XYLineAndShapeRenderer
+AbstractCategoryItemRenderer <|-- LineAndShapeRenderer
+LineAndShapeRenderer <|-- DefaultCategoryItemRenderer
+LineAndShapeRenderer <|-- StatisticalCategoryItemRenderer
+XYLineAndShapeRenderer <|-- DefaultXYItemRenderer
+XYLineAndShapeRenderer <|-- DeviationRenderer
+XYLineAndShapeRenderer <|-- XYErrorRenderer
+XYLineAndShapeRenderer <|-- XYSplineRenderer
+
+AbstractXYItemRenderer <|-- StandardXYItemRenderer
+StandardXYItemRenderer <|-- CyclicXYItemRenderer
+
+class InheritedXYItemRendererClass {
+    The list of classes that actually inherit and fall within
+    our problem domain are listed below:
+    ..
+    CandlestickRenderer
+    HighLowRenderer
+    SamplingXYLineRenderer
+    VectorRenderer
+    WindItemRenderer
+    XYBlockRenderer
+    XYBubbleRenderer
+    XYDifferenceRenderer
+    XYDotRenderer
+    XYShapeRenderer
+    XYStepAreaRenderer
+    XYStepRenderer
+    YIntervalRenderer
+}
+
+class InheritedCategoryItemRendererClass {
+    The list of classes that actually inherit and fall within
+    our problem domain are listed below:
+    ..
+    CategoryStepRenderer
+    LevelRenderer
+    MinMaxCategoryRenderer
+    ScatterRenderer
+}
+
+interface XYItemRenderer
+interface CategoryItemRenderer
+interface PolarItemRenderer
+
+XYItemRenderer <|.. AbstractXYItemRenderer
+CategoryItemRenderer <|.. AbstractCategoryItemRenderer
+PolarItemRenderer <|.. DefaultPolarItemRenderer
+@enduml

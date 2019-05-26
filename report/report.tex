@@ -42,10 +42,10 @@
 		\centering 
 		\includegraphics[width=\textwidth]{pert.pdf}
 		\caption{Simplified PERT-Chart for the Refactoring of \texttt{JFreeChart}} 
-		\label{pert} 
+		\label{fig:pert} 
 	\end{figure} 
    
-	In order for us to cleanly work on the reengineering of \texttt{JFreeChart}, we decided to make a \textsf{PERT}-chart \cite{pert}, as you can see in \textsl{Fig.\,\ref{pert}}. This is a simplified model, without annotations of any critical tasks, paths, or the latest end dates for each task. 
+	In order for us to cleanly work on the reengineering of \texttt{JFreeChart}, we decided to make a \textsf{PERT}-chart \cite{pert}, as you can see in \textsl{Fig.\,\ref{fig:pert}}. This is a simplified model, without annotations of any critical tasks, paths, or the latest end dates for each task. 
    
 	As you can see, \textsl{Management} is a task we will do throughout the entire process of refactoring the project. Tasks \textsl{3.1. Repo Visualisation}, \textsl{3.2 Repo Mining} and \textsl{3.3 Code Coverage} can be found later in this document, respectively in \textsl{sections \ref{sec:gource}, \ref{sec:codescene}} and \textsl{\ref{sec:coco}}. 
    
@@ -108,18 +108,47 @@
 	
 	\section{Refactoring}
 	\subsection{Design Recovery}
-	Trying to identify the problem domain, or more specifically, the functionality that required refactoring was quite tricky. This is mainly due to the high rate of exceptional entities and anomalies we've found while applying the \textsl{Study the Exceptional Entities} pattern (4.3 from \cite{demeyer2009object}). Some of these anomalies\footnote{As we would describe them. In \cite{demeyer2009object} they are not mentioned}, we've listed below.
+	In order for us to describe our proposed new design of \texttt{JFreeChart}, we must first tell you a little bit more about the original design.
+	
+	\texttt{JFreeChart} consisted of 658 classes, the multitude of which have nothing to do with our problem domain. When we only focus on the classes that are important (as per 2.4 and 2.6 from \cite{demeyer2009object}), we can create a UML diagram. But because the way \texttt{JFreeChart} is currently designed, the UML class diagram of the subsection we will describe is incredibly wide and messy to look at. This is why we adapted the UML specification to get a clearer picture of what is actually happening (see \textsl{Fig.\,\ref{fig:UML-start}}).
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.3]{pictures/class-diagram-begin.png}
+		\caption{A simplified representation of the UML class diagram at the beginning of the refactoring process. Image created with \cite{plantuml}. A bigger version can be found in \textsl{attachment \pageref{class-diagram-begin}}.}
+		\label{fig:UML-start}
+	\end{figure}
+	
+	The \texttt{InheritedXYItemRendererClass} in our UML class diagram represents any subclass of the \texttt{AbstractXYItemRenderer}. The same was done for the \texttt{InheritedCategoryItemRenderer} and the \texttt{AbstractCategoryItemRenderer}. In the \texttt{Extenders}, the few classes that extend from the \texttt{InheritedRenderers} are listed in the same way\footnote{Though, for the \texttt{Category} case there is another layer in the structure, hence the self-referring arrow in the \texttt{InheritedCategoryItemRendererClassExtenders}.}.
+	
+	This expansion of the UML specification allowed us to generally show the structure of our problem domain. Yet, trying to identify this domain, or more specifically, the functionality that required refactoring was quite tricky. This is mainly due to the high rate of exceptional entities and anomalies we've found while applying the \textsl{Study the Exceptional Entities} pattern (4.3 from \cite{demeyer2009object}).
+	
+	Some of these anomalies\footnote{As we would describe them. In \cite{demeyer2009object} they are not mentioned}, we've listed below.
 	\begin{itemize}
 		\item Renderers that do not render;
 		%\item Inconsistent usage of drawing shapes between classes that inherit from the same base. (e.g. \texttt{drawRect} and \texttt{draw(Rectange)});
-		\item Implicit implementation of interfaces due to extension of a class that does not implement the interface;
+		\item Implicit implementation of interfaces due to extension of a class that also implements the interface;
 		\item A mixture of a multitude of design patterns that are not all fully implemented (Abstract Factory, Adapters, Bridges, Model View Controller, Chain of Responsibility, Observers...)
+		\item Groups of renderers that have similar features are completely separated. (e.g. the \texttt{AreaRenderer} and the \texttt{XYItemRenderer} have no correlation whatsoever)
 		\item ...
 	\end{itemize}
 
-	Now, in order for us to describe our proposed new design of \texttt{JFreeChart}, we must first tell you a little bit more about the current design.
-
 	\subsection{Design}
+	Based upon the design we recovered, we can generate a new, better (and hopefully cleaner) design.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.3]{pictures/class-diagram-ours.png}
+		\caption{An UML diagram, showing how we see the design. Image created with \cite{plantuml}. A bigger version can be found in \textsl{attachment \pageref{class-diagram-ours}}.}
+		\label{fig:UML-start}
+	\end{figure}
+	
+	First things first, we can see that all methods that extend from the \texttt{AbstractXYItemRenderer} implement the \texttt{XYItemRenderer} interface, that is also implemented by their base class. From the \textsf{Liskov Substitution Principle} and the basic rules of inheritance, we know that it is not required for derived classes to also implement the interface that was implemented by the base class. Even stronger, we know that all of the functions that are required by this interface are implemented in the derived classes, because they are available in the base class. This is why we severed the implementation link of all classes that inherit from the \texttt{AbstractXYItemRenderer}.
+	
+	Unfortunately, without crowding too much of the class diagram, we didn't add all functions that are used in each class. If we would have done that, it would become clear that the \texttt{AbstractRenderer} is, in fact, a god class. \textsl{Split Up God Class} (9.3 from \cite{demeyer2009object}) tells us it is optimal to split up a class that holds too many functionalities, which is the case for the \texttt{AbstractRenderer}.
+	
+	From the comments in the code of the \texttt{AbstractRenderer}, we found that it had thirteen main functionalities, split up in vague sections: \texttt{Series Visibility}, \texttt{Series Visibility in Legend}, \texttt{Item Label Visibility}, \texttt{Paint}, \texttt{Fill Paint}, \texttt{Outline Paint}, \texttt{Item Label Paint}, \texttt{Stroke}, \texttt{Outline Stroke}, \texttt{Shape}, \texttt{Item Label Font}, \texttt{Positive Item Label Position} and \texttt{Negative Item Label Position}. Upon inspection, we found that not all extending classes used all these functions, which was an additional sign for us to split them up this way. We identified six categories from the original thirteen sections: \texttt{Visibility}, \texttt{Paint}, \texttt{Stroke}, \texttt{Shape}, \texttt{Font} and \texttt{Item}. Each of these categories are identified with the \texttt{RenderState*}-classes and their respective interfaces.
+	
 	\subsection{Management}
 	\subsection{Refactoring}
 	
@@ -130,7 +159,7 @@
 	As we described in \textsl{section \ref{sec:coco}}, we've been using the tests from \texttt{JFreeChart}. As you can see, our project still passes on all of them, meaning that we (at least) provide the same functionality as when we started (6.1 and 7.6 from \cite{demeyer2009object}).
 	
 %	In fact, taking a look at our testing coverage, it's clear to see that the overall coverage went up, which is a good thing. This generally implies that our refactoring caused the tests to cover more code, giving us the information that there is more code that has passed the tests. We know now that the system after refactoring is a little bit more robust than before.
-	Taking a look at the code coverage reports from \textsf{Cobertura}, we can clearly see that we have some subtle differences. These changes can be either positive (the percentages went up) or negative (they went down).
+	Taking a look at the code coverage reports from \textsf{Cobertura}, we can clearly see that we have some subtle differences. These changes can be either positive (the percentages went up) or negative (they went down). See \textsl{attachments \pageref{refactoring-package-plot} and \pageref{cobertura-begin}}
 	
 	For the positive changes in these reports, we know they are a good thing. Generally, this implies the refactoring we've done caused the tests to cover more code, giving us the information that there is more code that has passed the tests.
 	
@@ -145,6 +174,9 @@
 	
 	\clearpage
 	\setcounter{page}{1}
+	\attachment{cobertura-begin}
+	\attachment{class-diagram-begin}
+	\attachment{class-diagram-ours}
 	\attachment{hotspots-overview}
 	\attachment{hotspots-package-renderer}
 	\attachment{hotspots-package-plot}

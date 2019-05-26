@@ -1,0 +1,93 @@
+@startuml
+AbstractRenderer <|-- AbstractXYItemRenderer
+AbstractRenderer <|-- AbstractCategoryItemRenderer
+AbstractXYItemRenderer <|-- InheritedXYItemRendererClass
+AbstractCategoryItemRenderer <|-- InheritedCategoryItemRendererClass
+InheritedXYItemRendererClass <|-- InheritedXYItemRendererClassExtenders
+InheritedCategoryItemRendererClass <|-- InheritedCategoryItemRendererClassExtenders
+InheritedCategoryItemRendererClassExtenders --|> InheritedCategoryItemRendererClassExtenders
+AbstractRenderer <|-- DefaultPolarItemRenderer
+AbstractRenderer <|-- WaferMapRenderer
+
+class InheritedXYItemRendererClass {
+    The list of classes that actually inherit and fall within
+    our problem domain are listed below:
+    ..
+    CandlestickRenderer
+    HighLowRenderer
+    SamplingXYLineRenderer
+    StandardXYItemRenderer
+    VectorRenderer
+    WindItemRenderer
+    XYAreaRenderer
+    XYAreaRenderer2
+    XYBarRenderer
+    XYBlockRenderer
+    XYBoxAndWhiskersRenderer
+    XYBubbleRenderer
+    XYLineAndShapeRenderer
+    XYDifferenceRenderer
+    XYDotRenderer
+    XYShapeRenderer
+    XYStepAreaRenderer
+    XYStepRenderer
+    YIntervalRenderer
+}
+
+class InheritedXYItemRendererClassExtenders {
+    Of course, these classes can also have subclasses that also
+    fall in our problem domain.
+    These include:
+    ..
+    ClusteredXYBarRenderer (extends XYBarRenderer)
+    StackedXYBarRenderer (extends XYBarRenderer)
+    CyclicXYItemRenderer (extends StandardXYItemRenderer)
+    DefaultXYItemRenderer (extends XYLineAndShapeRenderer)
+    DeviationRenderer (extends XYLineAndShapeRenderer)
+    XYErrorRenderer (extends XYLineAndShapeRenderer)
+    XYSplineRenderer (extends XYLineAndShapeRenderer)
+    StackedXYAreaRenderer (extends XYAreaRenderer)
+    StackedXYAreaRenderer2 (extends XYAreaRenderer2)
+}
+
+class InheritedCategoryItemRendererClass {
+    The list of classes that actually inherit and fall within
+    our problem domain are listed below:
+    ..
+    AreaRenderer
+    BarRenderer
+    BoxAndWhiskerRenderer
+    CategoryStepRenderer
+    LevelRenderer
+    LineAndShapeRenderer
+    MinMaxCategoryRenderer
+    ScatterRenderer
+}
+
+class InheritedCategoryItemRendererClassExtenders {
+    Of course, these classes can also have subclasses that also
+    fall in our problem domain.
+    These include:
+    ..
+    DefaultCategoryItemRenderer (extends LineAndShapeRenderer)
+    StatisticalCategoryItemRenderer (extends LineAndShapeRenderer)
+    IntervalBarRenderer (extends BarRenderer)
+    StackedBarRenderer (extends BarRenderer)
+    LayeredBarRenderer (extends BarRenderer)
+    StatisticalBarRenderer (extends BarRenderer)
+    WaterfallBarRenderer (extends BarRenderer)
+    StackedAreaRenderer (extends AreaRenderer)
+    ..
+    GroupedStackedBarRenderer (extends StackedBarRenderer)
+    GhanttRenderer (extends IntervalBarRenderer)
+}
+
+interface XYItemRenderer
+interface CategoryItemRenderer
+interface PolarItemRenderer
+
+XYItemRenderer <|.. AbstractXYItemRenderer
+XYItemRenderer <|.. InheritedXYItemRendererClass
+CategoryItemRenderer <|.. AbstractCategoryItemRenderer
+PolarItemRenderer <|.. DefaultPolarItemRenderer
+@enduml
