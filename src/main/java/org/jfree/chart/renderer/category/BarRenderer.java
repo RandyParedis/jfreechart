@@ -1140,18 +1140,18 @@ public class BarRenderer extends AbstractCategoryItemRenderer
             return;  // nothing to do
         }
 
-        Font labelFont = getItemLabelFont(row, column);
+        Font labelFont = getItem().getItemLabelFont(row, column);
         g2.setFont(labelFont);
-        Paint paint = getItemLabelPaint(row, column);
+        Paint paint = getItem().getItemLabelPaint(row, column);
         g2.setPaint(paint);
 
         // find out where to place the label...
         ItemLabelPosition position;
         if (!negative) {
-            position = getPositiveItemLabelPosition(row, column);
+            position = getItem().getPositiveItemLabelPosition(row, column);
         }
         else {
-            position = getNegativeItemLabelPosition(row, column);
+            position = getItem().getNegativeItemLabelPosition(row, column);
         }
 
         // work out the label anchor point...
@@ -1204,7 +1204,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
                                               PlotOrientation orientation) {
 
         Point2D result = null;
-        double offset = getItemLabelAnchorOffset();
+        double offset = getItem().getItemLabelAnchorOffset();
         double x0 = bar.getX() - offset;
         double x1 = bar.getX();
         double x2 = bar.getX() + offset;

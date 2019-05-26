@@ -891,17 +891,17 @@ public abstract class ChartFactory {
         if (orientation == PlotOrientation.HORIZONTAL) {
             ItemLabelPosition position1 = new ItemLabelPosition(
                     ItemLabelAnchor.OUTSIDE3, TextAnchor.CENTER_LEFT);
-            renderer.setDefaultPositiveItemLabelPosition(position1);
+            renderer.getItem().setDefaultPositiveItemLabelPosition(position1);
             ItemLabelPosition position2 = new ItemLabelPosition(
                     ItemLabelAnchor.OUTSIDE9, TextAnchor.CENTER_RIGHT);
-            renderer.setDefaultNegativeItemLabelPosition(position2);
+            renderer.getItem().setDefaultNegativeItemLabelPosition(position2);
         } else if (orientation == PlotOrientation.VERTICAL) {
             ItemLabelPosition position1 = new ItemLabelPosition(
                     ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER);
-            renderer.setDefaultPositiveItemLabelPosition(position1);
+            renderer.getItem().setDefaultPositiveItemLabelPosition(position1);
             ItemLabelPosition position2 = new ItemLabelPosition(
                     ItemLabelAnchor.OUTSIDE6, TextAnchor.TOP_CENTER);
-            renderer.setDefaultNegativeItemLabelPosition(position2);
+            renderer.getItem().setDefaultNegativeItemLabelPosition(position2);
         }
         if (tooltips) {
             renderer.setDefaultToolTipGenerator(
@@ -1330,15 +1330,15 @@ public abstract class ChartFactory {
             ItemLabelPosition position = new ItemLabelPosition(
                     ItemLabelAnchor.CENTER, TextAnchor.CENTER,
                     TextAnchor.CENTER, Math.PI / 2.0);
-            renderer.setDefaultPositiveItemLabelPosition(position);
-            renderer.setDefaultNegativeItemLabelPosition(position);
+            renderer.getItem().setDefaultPositiveItemLabelPosition(position);
+            renderer.getItem().setDefaultNegativeItemLabelPosition(position);
          }
         else if (orientation == PlotOrientation.VERTICAL) {
             ItemLabelPosition position = new ItemLabelPosition(
                     ItemLabelAnchor.CENTER, TextAnchor.CENTER,
                     TextAnchor.CENTER, 0.0);
-            renderer.setDefaultPositiveItemLabelPosition(position);
-            renderer.setDefaultNegativeItemLabelPosition(position);
+            renderer.getItem().setDefaultPositiveItemLabelPosition(position);
+            renderer.getItem().setDefaultNegativeItemLabelPosition(position);
         }
         if (tooltips) {
             StandardCategoryToolTipGenerator generator

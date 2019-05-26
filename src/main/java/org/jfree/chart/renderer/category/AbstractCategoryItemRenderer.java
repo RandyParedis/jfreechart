@@ -1427,20 +1427,20 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         CategoryItemLabelGenerator generator = getItemLabelGenerator(row,
                 column);
         if (generator != null) {
-            Font labelFont = getItemLabelFont(row, column);
-            Paint paint = getItemLabelPaint(row, column);
+            Font labelFont = getItem().getItemLabelFont(row, column);
+            Paint paint = getItem().getItemLabelPaint(row, column);
             g2.setFont(labelFont);
             g2.setPaint(paint);
             String label = generator.generateLabel(dataset, row, column);
             ItemLabelPosition position;
             if (!negative) {
-                position = getPositiveItemLabelPosition(row, column);
+                position = getItem().getPositiveItemLabelPosition(row, column);
             }
             else {
-                position = getNegativeItemLabelPosition(row, column);
+                position = getItem().getNegativeItemLabelPosition(row, column);
             }
             Point2D anchorPoint = ItemLabelAnchor.calculateLabelAnchorPoint(
-                    position.getItemLabelAnchor(), x, y, orientation, getItemLabelAnchorOffset());
+                    position.getItemLabelAnchor(), x, y, orientation, getItem().getItemLabelAnchorOffset());
             TextUtils.drawRotatedString(label, g2,
                     (float) anchorPoint.getX(), (float) anchorPoint.getY(),
                     position.getTextAnchor(),

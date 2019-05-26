@@ -978,17 +978,17 @@ public class XYBarRenderer extends AbstractXYItemRenderer
             return;  // nothing to do
         }
 
-        Font labelFont = getItemLabelFont(series, item);
+        Font labelFont = getItem().getItemLabelFont(series, item);
         g2.setFont(labelFont);
-        Paint paint = getItemLabelPaint(series, item);
+        Paint paint = getItem().getItemLabelPaint(series, item);
         g2.setPaint(paint);
 
         // find out where to place the label...
         ItemLabelPosition position;
         if (!negative) {
-            position = getPositiveItemLabelPosition(series, item);
+            position = getItem().getPositiveItemLabelPosition(series, item);
         } else {
-            position = getNegativeItemLabelPosition(series, item);
+            position = getItem().getNegativeItemLabelPosition(series, item);
         }
 
         // work out the label anchor point...
@@ -1040,7 +1040,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
             Rectangle2D bar, PlotOrientation orientation) {
 
         Point2D result = null;
-        double offset = getItemLabelAnchorOffset();
+        double offset = getItem().getItemLabelAnchorOffset();
         double x0 = bar.getX() - offset;
         double x1 = bar.getX();
         double x2 = bar.getX() + offset;

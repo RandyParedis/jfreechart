@@ -1615,8 +1615,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
 
         XYItemLabelGenerator generator = getItemLabelGenerator(series, item);
         if (generator != null) {
-            Font labelFont = getItemLabelFont(series, item);
-            Paint paint = getItemLabelPaint(series, item);
+            Font labelFont = getItem().getItemLabelFont(series, item);
+            Paint paint = getItem().getItemLabelPaint(series, item);
             g2.setFont(labelFont);
             g2.setPaint(paint);
             String label = generator.generateLabel(dataset, series, item);
@@ -1624,15 +1624,15 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             // get the label position..
             ItemLabelPosition position;
             if (!negative) {
-                position = getPositiveItemLabelPosition(series, item);
+                position = getItem().getPositiveItemLabelPosition(series, item);
             }
             else {
-                position = getNegativeItemLabelPosition(series, item);
+                position = getItem().getNegativeItemLabelPosition(series, item);
             }
 
             // work out the label anchor point...
             Point2D anchorPoint = ItemLabelAnchor.calculateLabelAnchorPoint(
-                    position.getItemLabelAnchor(), x, y, orientation, getItemLabelAnchorOffset());
+                    position.getItemLabelAnchor(), x, y, orientation, getItem().getItemLabelAnchorOffset());
             TextUtils.drawRotatedString(label, g2,
                     (float) anchorPoint.getX(), (float) anchorPoint.getY(),
                     position.getTextAnchor(), position.getAngle(),

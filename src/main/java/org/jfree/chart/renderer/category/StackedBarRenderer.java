@@ -158,8 +158,8 @@ public class StackedBarRenderer extends BarRenderer
         // the user requests visible item labels...
         ItemLabelPosition p = new ItemLabelPosition(ItemLabelAnchor.CENTER,
                 TextAnchor.CENTER);
-        setDefaultPositiveItemLabelPosition(p);
-        setDefaultNegativeItemLabelPosition(p);
+        getItem().setDefaultPositiveItemLabelPosition(p);
+        getItem().setDefaultNegativeItemLabelPosition(p);
         setPositiveItemLabelPositionFallback(null);
         setNegativeItemLabelPositionFallback(null);
     }

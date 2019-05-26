@@ -97,10 +97,8 @@
 
 package org.jfree.chart.renderer.category;
 
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Paint;
-import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 
@@ -112,14 +110,11 @@ import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.event.RendererChangeListener;
 import org.jfree.chart.labels.CategoryItemLabelGenerator;
 import org.jfree.chart.labels.CategoryToolTipGenerator;
-import org.jfree.chart.labels.ItemLabelPosition;
 import org.jfree.chart.plot.CategoryMarker;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.renderer.IRendererPaint;
-import org.jfree.chart.renderer.IRendererStroke;
-import org.jfree.chart.renderer.IRendererVisibility;
+import org.jfree.chart.renderer.*;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.urls.CategoryURLGenerator;
 import org.jfree.data.Range;
@@ -163,6 +158,20 @@ public interface CategoryItemRenderer extends LegendItemSource {
      * @return Stroke render state.
      */
     IRendererStroke getStroke();
+
+    /**
+     * Returns the shape render state for the renderer.
+     *
+     * @return Shape render state.
+     */
+    IRendererShape getShape();
+
+    /**
+     * Returns the item render state for the renderer.
+     *
+     * @return Item render state.
+     */
+    IRendererItem getItem();
 
     /**
      * Returns the number of passes through the dataset required by the
@@ -370,283 +379,6 @@ public interface CategoryItemRenderer extends LegendItemSource {
     public void setDefaultToolTipGenerator(CategoryToolTipGenerator generator);
 
     public void setDefaultToolTipGenerator(CategoryToolTipGenerator generator,
-            boolean notify);
-
-    //// ITEM LABEL FONT  //////////////////////////////////////////////////////
-
-    /**
-     * Returns the font for an item label.
-     *
-     * @param row  the row index (zero-based).
-     * @param column  the column index (zero-based).
-     *
-     * @return The font (never {@code null}).
-     */
-    public Font getItemLabelFont(int row, int column);
-
-    /**
-     * Returns the font for all the item labels in a series.
-     *
-     * @param series  the series index (zero-based).
-     *
-     * @return The font (possibly {@code null}).
-     *
-     * @see #setSeriesItemLabelFont(int, Font)
-     */
-    public Font getSeriesItemLabelFont(int series);
-
-    /**
-     * Sets the item label font for a series and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param font  the font ({@code null} permitted).
-     *
-     * @see #getSeriesItemLabelFont(int)
-     */
-    public void setSeriesItemLabelFont(int series, Font font);
-
-    public void setSeriesItemLabelFont(int series, Font font, boolean notify);
-
-    /**
-     * Returns the default item label font (this is used when no other font
-     * setting is available).
-     *
-     * @return The font (never {@code null}).
-     *
-     * @see #setDefaultItemLabelFont(Font)
-     */
-    public Font getDefaultItemLabelFont();
-
-    /**
-     * Sets the default item label font and sends a {@link RendererChangeEvent}
-     * to all registered listeners.
-     *
-     * @param font  the font ({@code null} not permitted).
-     *
-     * @see #getDefaultItemLabelFont()
-     */
-    public void setDefaultItemLabelFont(Font font);
-
-    public void setDefaultItemLabelFont(Font font, boolean notify);
-
-    //// ITEM LABEL PAINT  /////////////////////////////////////////////////////
-
-    /**
-     * Returns the paint used to draw an item label.
-     *
-     * @param row  the row index (zero based).
-     * @param column  the column index (zero based).
-     *
-     * @return The paint (never {@code null}).
-     */
-    public Paint getItemLabelPaint(int row, int column);
-
-    /**
-     * Returns the paint used to draw the item labels for a series.
-     *
-     * @param series  the series index (zero based).
-     *
-     * @return The paint (possibly {@code null}).
-     *
-     * @see #setSeriesItemLabelPaint(int, Paint)
-     */
-    public Paint getSeriesItemLabelPaint(int series);
-
-    /**
-     * Sets the item label paint for a series and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series (zero based index).
-     * @param paint  the paint ({@code null} permitted).
-     *
-     * @see #getSeriesItemLabelPaint(int)
-     */
-    public void setSeriesItemLabelPaint(int series, Paint paint);
-
-    public void setSeriesItemLabelPaint(int series, Paint paint, boolean notify);
-
-    /**
-     * Returns the default item label paint.
-     *
-     * @return The paint (never {@code null}).
-     *
-     * @see #setDefaultItemLabelPaint(Paint)
-     */
-    public Paint getDefaultItemLabelPaint();
-
-    /**
-     * Sets the default item label paint and sends a {@link RendererChangeEvent}
-     * to all registered listeners.
-     *
-     * @param paint  the paint ({@code null} not permitted).
-     *
-     * @see #getDefaultItemLabelPaint()
-     */
-    public void setDefaultItemLabelPaint(Paint paint);
-
-    public void setDefaultItemLabelPaint(Paint paint, boolean notify);
-
-    // POSITIVE ITEM LABEL POSITION...
-
-    /**
-     * Returns the item label position for positive values.
-     *
-     * @param row  the row index (zero-based).
-     * @param column  the column index (zero-based).
-     *
-     * @return The item label position (never {@code null}).
-     */
-    public ItemLabelPosition getPositiveItemLabelPosition(int row, int column);
-
-    /**
-     * Returns the item label position for all positive values in a series.
-     *
-     * @param series  the series index (zero-based).
-     *
-     * @return The item label position.
-     *
-     * @see #setSeriesPositiveItemLabelPosition(int, ItemLabelPosition)
-     */
-    public ItemLabelPosition getSeriesPositiveItemLabelPosition(int series);
-
-    /**
-     * Sets the item label position for all positive values in a series and
-     * sends a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param position  the position ({@code null} permitted).
-     *
-     * @see #getSeriesPositiveItemLabelPosition(int)
-     */
-    public void setSeriesPositiveItemLabelPosition(int series,
-            ItemLabelPosition position);
-
-    /**
-     * Sets the item label position for all positive values in a series and (if
-     * requested) sends a {@link RendererChangeEvent} to all registered
-     * listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param position  the position ({@code null} permitted).
-     * @param notify  notify registered listeners?
-     *
-     * @see #getSeriesPositiveItemLabelPosition(int)
-     */
-    public void setSeriesPositiveItemLabelPosition(int series,
-            ItemLabelPosition position, boolean notify);
-
-    /**
-     * Returns the default positive item label position.
-     *
-     * @return The position.
-     *
-     * @see #setDefaultPositiveItemLabelPosition(ItemLabelPosition)
-     */
-    public ItemLabelPosition getDefaultPositiveItemLabelPosition();
-
-    /**
-     * Sets the default positive item label position.
-     *
-     * @param position  the position.
-     *
-     * @see #getDefaultPositiveItemLabelPosition()
-     */
-    public void setDefaultPositiveItemLabelPosition(ItemLabelPosition position);
-
-    /**
-     * Sets the default positive item label position and, if requested, sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param position  the position.
-     * @param notify  notify registered listeners?
-     *
-     * @see #getDefaultPositiveItemLabelPosition()
-     */
-    public void setDefaultPositiveItemLabelPosition(ItemLabelPosition position,
-           boolean notify);
-
-
-    // NEGATIVE ITEM LABEL POSITION...
-
-    /**
-     * Returns the item label position for negative values.  This method can be
-     * overridden to provide customisation of the item label position for
-     * individual data items.
-     *
-     * @param row  the row index (zero-based).
-     * @param column  the column (zero-based).
-     *
-     * @return The item label position.
-     */
-    public ItemLabelPosition getNegativeItemLabelPosition(int row, int column);
-
-    /**
-     * Returns the item label position for all negative values in a series.
-     *
-     * @param series  the series index (zero-based).
-     *
-     * @return The item label position.
-     *
-     * @see #setSeriesNegativeItemLabelPosition(int, ItemLabelPosition)
-     */
-    public ItemLabelPosition getSeriesNegativeItemLabelPosition(int series);
-
-    /**
-     * Sets the item label position for negative values in a series and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param position  the position ({@code null} permitted).
-     *
-     * @see #getSeriesNegativeItemLabelPosition(int)
-     */
-    public void setSeriesNegativeItemLabelPosition(int series,
-                                                   ItemLabelPosition position);
-
-    /**
-     * Sets the item label position for negative values in a series and (if
-     * requested) sends a {@link RendererChangeEvent} to all registered
-     * listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param position  the position ({@code null} permitted).
-     * @param notify  notify registered listeners?
-     *
-     * @see #getSeriesNegativeItemLabelPosition(int)
-     */
-    public void setSeriesNegativeItemLabelPosition(int series,
-            ItemLabelPosition position, boolean notify);
-
-    /**
-     * Returns the default item label position for negative values.
-     *
-     * @return The position.
-     *
-     * @see #setDefaultNegativeItemLabelPosition(ItemLabelPosition)
-     */
-    public ItemLabelPosition getDefaultNegativeItemLabelPosition();
-
-    /**
-     * Sets the default item label position for negative values and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param position  the position.
-     *
-     * @see #getDefaultNegativeItemLabelPosition()
-     */
-    public void setDefaultNegativeItemLabelPosition(ItemLabelPosition position);
-
-    /**
-     * Sets the default negative item label position and, if requested, sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param position  the position.
-     * @param notify  notify registered listeners?
-     *
-     * @see #getDefaultNegativeItemLabelPosition()
-     */
-    public void setDefaultNegativeItemLabelPosition(ItemLabelPosition position,
             boolean notify);
 
     // CREATE ENTITIES
