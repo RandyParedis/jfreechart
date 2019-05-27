@@ -62,7 +62,7 @@ import org.jfree.chart.plot.WaferMapPlot;
 import org.jfree.data.general.WaferMapDataset;
 
 /**
- * A renderer for wafer map plots.  Provides color managment facilities.
+ * A renderer for wafer map plots.  Provides color management facilities.
  */
 public class WaferMapRenderer extends AbstractRenderer {
 
