@@ -61,27 +61,25 @@ public class CloneUtils {
      * 
      * @throws CloneNotSupportedException if the object cannot be cloned.
      */
-    public static Object clone(Object object)
+    public static <T> T clone(T object)
         throws CloneNotSupportedException {
         if (object == null) {
             return null;
         }
         if (object instanceof PublicCloneable) {
             PublicCloneable pc = (PublicCloneable) object;
-            return pc.clone();
+            return (T) pc.clone();
         } else {
             try {
                 Method method = object.getClass().getMethod("clone",
                         (Class[]) null);
                 if (Modifier.isPublic(method.getModifiers())) {
-                    return method.invoke(object, (Object[]) null);
+                    return (T) method.invoke(object, (Object[]) null);
                 }
-            } catch (NoSuchMethodException e) {
+            } catch (NoSuchMethodException | InvocationTargetException e) {
                 throw new CloneNotSupportedException("Object without clone() method is impossible.");
             } catch (IllegalAccessException e) {
                 throw new CloneNotSupportedException("Object.clone(): unable to call method.");
-            } catch (InvocationTargetException e) {
-                throw new CloneNotSupportedException("Object without clone() method is impossible.");
             }
         }
         throw new CloneNotSupportedException("Failed to clone.");
@@ -95,10 +93,10 @@ public class CloneUtils {
      * 
      * @return A new list. 
      */
-    public static List<?> cloneList(List<?> source) {
+    public static <T> List<T> cloneList(List<T> source) {
         Args.nullNotPermitted(source, "source");
-        List result = new ArrayList();
-        for (Object obj: source) {
+        List<T> result = new ArrayList<T>();
+        for (T obj: source) {
             try {
                 result.add(CloneUtils.clone(obj));
             } catch (CloneNotSupportedException ex) {
@@ -118,14 +116,14 @@ public class CloneUtils {
      * 
      * @since 1.0.18
      */
-    public static Map cloneMapValues(Map source) {
+    public static <K, V> Map<K, V> cloneMapValues(Map<K, V> source) {
         Args.nullNotPermitted(source, "source");
-        Map result = new HashMap();
-        for (Object key : source.keySet()) {
-            Object value = source.get(key);
+        Map<K, V> result = new HashMap<>();
+        for (K key : source.keySet()) {
+            V value = source.get(key);
             if (value != null) {
                 try {
-                    result.put(key, ObjectUtils.clone(value));
+                    result.put(key, CloneUtils.clone(value));
                 } catch (CloneNotSupportedException ex) {
                     throw new RuntimeException(ex);
                 }

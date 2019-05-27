@@ -159,7 +159,7 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @return The plot.
      */
-    public XYPlot getPlot();
+    XYPlot getPlot();
 
     /**
      * Sets the plot that this renderer is assigned to.  This method will be
@@ -167,14 +167,14 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @param plot  the plot.
      */
-    public void setPlot(XYPlot plot);
+    void setPlot(XYPlot plot);
 
     /**
      * Returns the number of passes through the data required by the renderer.
      *
      * @return The pass count.
      */
-    public int getPassCount();
+    int getPassCount();
 
     /**
      * Returns the lower and upper bounds (range) of the x-values in the
@@ -184,7 +184,7 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @return The range.
      */
-    public Range findDomainBounds(XYDataset dataset);
+    Range findDomainBounds(XYDataset dataset);
 
     /**
      * Returns the lower and upper bounds (range) of the y-values in the
@@ -198,7 +198,7 @@ public interface XYItemRenderer extends LegendItemSource {
      * @return The range (or {@code null} if the dataset is
      *         {@code null} or empty).
      */
-    public Range findRangeBounds(XYDataset dataset);
+    Range findRangeBounds(XYDataset dataset);
 
     /**
      * Add a renderer change listener.
@@ -207,7 +207,7 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @see #removeChangeListener(RendererChangeListener)
      */
-    public void addChangeListener(RendererChangeListener listener);
+    void addChangeListener(RendererChangeListener listener);
 
     /**
      * Removes a change listener.
@@ -216,7 +216,7 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @see #addChangeListener(RendererChangeListener)
      */
-    public void removeChangeListener(RendererChangeListener listener);
+    void removeChangeListener(RendererChangeListener listener);
 
     //// LEGEND ITEMS /////////////////////////////////////////////////////////
 
@@ -228,7 +228,7 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @return The legend item (possibly {@code null}).
      */
-    public LegendItem getLegendItem(int datasetIndex, int series);
+    LegendItem getLegendItem(int datasetIndex, int series);
 
 
     //// LEGEND ITEM LABEL GENERATOR //////////////////////////////////////////
@@ -240,7 +240,7 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @see #setLegendItemLabelGenerator(XYSeriesLabelGenerator)
      */
-    public XYSeriesLabelGenerator getLegendItemLabelGenerator();
+    XYSeriesLabelGenerator getLegendItemLabelGenerator();
 
     /**
      * Sets the legend item label generator and sends a
@@ -248,7 +248,9 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @param generator  the generator ({@code null} not permitted).
      */
-    public void setLegendItemLabelGenerator(XYSeriesLabelGenerator generator);
+    void setLegendItemLabelGenerator(XYSeriesLabelGenerator generator);
+
+    void setLegendItemLabelGenerator(XYSeriesLabelGenerator generator, boolean notify);
 
 
     //// TOOL TIP GENERATOR ///////////////////////////////////////////////////
@@ -261,7 +263,7 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @return The generator (possibly {@code null}).
      */
-    public XYToolTipGenerator getToolTipGenerator(int row, int column);
+    XYToolTipGenerator getToolTipGenerator(int row, int column);
 
     /**
      * Returns the tool tip generator for a series.
@@ -272,7 +274,7 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @see #setSeriesToolTipGenerator(int, XYToolTipGenerator)
      */
-    public XYToolTipGenerator getSeriesToolTipGenerator(int series);
+    XYToolTipGenerator getSeriesToolTipGenerator(int series);
 
     /**
      * Sets the tool tip generator for a series and sends a
@@ -283,8 +285,9 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @see #getSeriesToolTipGenerator(int)
      */
-    public void setSeriesToolTipGenerator(int series, 
-            XYToolTipGenerator generator);
+    void setSeriesToolTipGenerator(int series, XYToolTipGenerator generator);
+
+    void setSeriesToolTipGenerator(int series, XYToolTipGenerator generator, boolean notify);
 
     /**
      * Returns the default tool tip generator.
@@ -293,7 +296,7 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @see #setDefaultToolTipGenerator(XYToolTipGenerator)
      */
-    public XYToolTipGenerator getDefaultToolTipGenerator();
+    XYToolTipGenerator getDefaultToolTipGenerator();
 
     /**
      * Sets the default tool tip generator and sends a {@link RendererChangeEvent}
@@ -303,7 +306,9 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @see #getDefaultToolTipGenerator()
      */
-    public void setDefaultToolTipGenerator(XYToolTipGenerator generator);
+    void setDefaultToolTipGenerator(XYToolTipGenerator generator);
+
+    void setDefaultToolTipGenerator(XYToolTipGenerator generator, boolean notify);
 
     //// URL GENERATOR ////////////////////////////////////////////////////////
 
@@ -312,14 +317,16 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @return The URL generator (possibly null).
      */
-    public XYURLGenerator getURLGenerator();
+    XYURLGenerator getURLGenerator();
 
     /**
      * Sets the URL generator for HTML image maps.
      *
      * @param urlGenerator the URL generator (null permitted).
      */
-    public void setURLGenerator(XYURLGenerator urlGenerator);
+    void setURLGenerator(XYURLGenerator urlGenerator);
+
+    void setURLGenerator(XYURLGenerator urlGenerator, boolean notify);
 
     //// ITEM LABEL GENERATOR /////////////////////////////////////////////////
 
@@ -331,7 +338,7 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @return The generator (possibly {@code null}).
      */
-    public XYItemLabelGenerator getItemLabelGenerator(int row, int column);
+    XYItemLabelGenerator getItemLabelGenerator(int row, int column);
 
     /**
      * Returns the item label generator for a series.
@@ -342,7 +349,7 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @see #setSeriesItemLabelGenerator(int, XYItemLabelGenerator)
      */
-    public XYItemLabelGenerator getSeriesItemLabelGenerator(int series);
+    XYItemLabelGenerator getSeriesItemLabelGenerator(int series);
 
     /**
      * Sets the item label generator for a series and sends a
@@ -353,8 +360,9 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @see #getSeriesItemLabelGenerator(int)
      */
-    public void setSeriesItemLabelGenerator(int series, 
-            XYItemLabelGenerator generator);
+    void setSeriesItemLabelGenerator(int series, XYItemLabelGenerator generator);
+
+    void setSeriesItemLabelGenerator(int series, XYItemLabelGenerator generator, boolean notify);
 
     /**
      * Returns the default item label generator.
@@ -363,7 +371,7 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @see #setDefaultItemLabelGenerator(XYItemLabelGenerator)
      */
-    public XYItemLabelGenerator getDefaultItemLabelGenerator();
+    XYItemLabelGenerator getDefaultItemLabelGenerator();
 
     /**
      * Sets the default item label generator and sends a
@@ -373,24 +381,26 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @see #getDefaultItemLabelGenerator()
      */
-    public void setDefaultItemLabelGenerator(XYItemLabelGenerator generator);
+    void setDefaultItemLabelGenerator(XYItemLabelGenerator generator);
+
+    void setDefaultItemLabelGenerator(XYItemLabelGenerator generator, boolean notify);
 
     // CREATE ENTITIES
 
-    public boolean getItemCreateEntity(int series, int item);
+    boolean getItemCreateEntity(int series, int item);
 
-    public Boolean getSeriesCreateEntities(int series);
+    Boolean getSeriesCreateEntities(int series);
 
-    public void setSeriesCreateEntities(int series, Boolean create);
+    void setSeriesCreateEntities(int series, Boolean create);
 
-    public void setSeriesCreateEntities(int series, Boolean create,
-            boolean notify);
+    void setSeriesCreateEntities(int series, Boolean create,
+                                 boolean notify);
 
-    public boolean getDefaultCreateEntities();
+    boolean getDefaultCreateEntities();
 
-    public void setDefaultCreateEntities(boolean create);
+    void setDefaultCreateEntities(boolean create);
 
-    public void setDefaultCreateEntities(boolean create, boolean notify);
+    void setDefaultCreateEntities(boolean create, boolean notify);
 
     //// ANNOTATIONS //////////////////////////////////////////////////////////
 
@@ -401,7 +411,7 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @param annotation  the annotation ({@code null} not permitted).
      */
-    public void addAnnotation(XYAnnotation annotation);
+    void addAnnotation(XYAnnotation annotation);
 
     /**
      * Adds an annotation to the specified layer.
@@ -409,7 +419,9 @@ public interface XYItemRenderer extends LegendItemSource {
      * @param annotation  the annotation ({@code null} not permitted).
      * @param layer  the layer ({@code null} not permitted).
      */
-    public void addAnnotation(XYAnnotation annotation, Layer layer);
+    void addAnnotation(XYAnnotation annotation, Layer layer);
+
+    void addAnnotation(XYAnnotation annotation, Layer layer, boolean notify);
 
     /**
      * Removes the specified annotation and sends a {@link RendererChangeEvent}
@@ -421,13 +433,17 @@ public interface XYItemRenderer extends LegendItemSource {
      * @return A boolean to indicate whether or not the annotation was
      *         successfully removed.
      */
-    public boolean removeAnnotation(XYAnnotation annotation);
+    boolean removeAnnotation(XYAnnotation annotation);
+
+    boolean removeAnnotation(XYAnnotation annotation, boolean notify);
 
     /**
      * Removes all annotations and sends a {@link RendererChangeEvent}
      * to all registered listeners.
      */
-    public void removeAnnotations();
+    void removeAnnotations();
+
+    void removeAnnotations(boolean notify);
 
     /**
      * Draws all the annotations for the specified layer.
@@ -439,9 +455,9 @@ public interface XYItemRenderer extends LegendItemSource {
      * @param layer  the layer.
      * @param info  the plot rendering info.
      */
-    public void drawAnnotations(Graphics2D g2, Rectangle2D dataArea,
-            ValueAxis domainAxis, ValueAxis rangeAxis, Layer layer,
-            PlotRenderingInfo info);
+    void drawAnnotations(Graphics2D g2, Rectangle2D dataArea,
+                         ValueAxis domainAxis, ValueAxis rangeAxis, Layer layer,
+                         PlotRenderingInfo info);
 
     //// DRAWING //////////////////////////////////////////////////////////////
 
@@ -461,8 +477,8 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @return The number of passes the renderer requires.
      */
-    public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
-            XYPlot plot, XYDataset dataset, PlotRenderingInfo info);
+    XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
+                                   XYPlot plot, XYDataset dataset, PlotRenderingInfo info);
 
     /**
      * Called for each item to be plotted.
@@ -485,10 +501,10 @@ public interface XYItemRenderer extends LegendItemSource {
      *                        ({@code null} permitted).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2, XYItemRendererState state,
-            Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
-            ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
-            int series, int item, CrosshairState crosshairState, int pass);
+    void drawItem(Graphics2D g2, XYItemRendererState state,
+                  Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
+                  ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
+                  int series, int item, CrosshairState crosshairState, int pass);
 
     /**
      * Fills a band between two values on the axis.  This can be used to color
@@ -501,8 +517,8 @@ public interface XYItemRenderer extends LegendItemSource {
      * @param start  the start value.
      * @param end  the end value.
      */
-    public void fillDomainGridBand(Graphics2D g2, XYPlot plot, ValueAxis axis,
-            Rectangle2D dataArea, double start, double end);
+    void fillDomainGridBand(Graphics2D g2, XYPlot plot, ValueAxis axis,
+                            Rectangle2D dataArea, double start, double end);
 
     /**
      * Fills a band between two values on the range axis.  This can be used to
@@ -515,8 +531,8 @@ public interface XYItemRenderer extends LegendItemSource {
      * @param start  the start value.
      * @param end  the end value.
      */
-    public void fillRangeGridBand(Graphics2D g2, XYPlot plot, ValueAxis axis,
-            Rectangle2D dataArea, double start, double end);
+    void fillRangeGridBand(Graphics2D g2, XYPlot plot, ValueAxis axis,
+                           Rectangle2D dataArea, double start, double end);
 
     /**
      * Draws a grid line against the domain axis.
@@ -529,8 +545,8 @@ public interface XYItemRenderer extends LegendItemSource {
      * @param paint  the paint ({@code null} not permitted).
      * @param stroke  the stroke ({@code null} not permitted).
      */
-    public void drawDomainLine(Graphics2D g2, XYPlot plot, ValueAxis axis,
-            Rectangle2D dataArea, double value, Paint paint, Stroke stroke);
+    void drawDomainLine(Graphics2D g2, XYPlot plot, ValueAxis axis,
+                        Rectangle2D dataArea, double value, Paint paint, Stroke stroke);
 
     /**
      * Draws a line perpendicular to the range axis.
@@ -543,8 +559,8 @@ public interface XYItemRenderer extends LegendItemSource {
      * @param paint  the paint ({@code null} not permitted).
      * @param stroke  the stroke ({@code null} not permitted).
      */
-    public void drawRangeLine(Graphics2D g2, XYPlot plot, ValueAxis axis,
-            Rectangle2D dataArea, double value, Paint paint, Stroke stroke);
+    void drawRangeLine(Graphics2D g2, XYPlot plot, ValueAxis axis,
+                       Rectangle2D dataArea, double value, Paint paint, Stroke stroke);
 
     /**
      * Draws the specified {@code marker} against the domain axis.
@@ -555,8 +571,8 @@ public interface XYItemRenderer extends LegendItemSource {
      * @param marker  the marker.
      * @param dataArea  the axis data area.
      */
-    public void drawDomainMarker(Graphics2D g2, XYPlot plot, ValueAxis axis,
-            Marker marker, Rectangle2D dataArea);
+    void drawDomainMarker(Graphics2D g2, XYPlot plot, ValueAxis axis,
+                          Marker marker, Rectangle2D dataArea);
 
     /**
      * Draws a horizontal line across the chart to represent a 'range marker'.
@@ -567,7 +583,7 @@ public interface XYItemRenderer extends LegendItemSource {
      * @param marker  the marker line.
      * @param dataArea  the axis data area.
      */
-    public void drawRangeMarker(Graphics2D g2, XYPlot plot, ValueAxis axis,
-            Marker marker, Rectangle2D dataArea);
+    void drawRangeMarker(Graphics2D g2, XYPlot plot, ValueAxis axis,
+                         Marker marker, Rectangle2D dataArea);
 
 }

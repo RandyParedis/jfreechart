@@ -246,14 +246,12 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     protected AbstractXYItemRenderer() {
         super();
-        this.itemLabelGeneratorMap 
-                = new HashMap<Integer, XYItemLabelGenerator>();
-        this.toolTipGeneratorMap = new HashMap<Integer, XYToolTipGenerator>();
+        this.itemLabelGeneratorMap = new HashMap<>();
+        this.toolTipGeneratorMap = new HashMap<>();
         this.urlGenerator = null;
-        this.backgroundAnnotations = new ArrayList<XYAnnotation>();
-        this.foregroundAnnotations = new ArrayList<XYAnnotation>();
-        this.legendItemLabelGenerator = new StandardXYSeriesLabelGenerator(
-                "{0}");
+        this.backgroundAnnotations = new ArrayList<>();
+        this.foregroundAnnotations = new ArrayList<>();
+        this.legendItemLabelGenerator = new StandardXYSeriesLabelGenerator("{0}");
     }
 
     /**
@@ -306,8 +304,11 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @return The renderer state (never {@code null}).
      */
     @Override
-    public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
-            XYPlot plot, XYDataset dataset, PlotRenderingInfo info) {
+    public XYItemRendererState initialise(Graphics2D g2,
+                                          Rectangle2D dataArea,
+                                          XYPlot plot,
+                                          XYDataset dataset,
+                                          PlotRenderingInfo info) {
         return new XYItemRendererState(info);
     }
 
@@ -323,8 +324,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * 
      * @since 1.0.20
      */
-    protected void beginElementGroup(Graphics2D g2, Comparable seriesKey,
-            int itemIndex) {
+    protected void beginElementGroup(Graphics2D g2, Comparable seriesKey, int itemIndex) {
         beginElementGroup(g2, new XYItemKey(seriesKey, itemIndex));    
     }
 
@@ -345,8 +345,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     public XYItemLabelGenerator getItemLabelGenerator(int series, int item) {
 
         // otherwise look up the generator table
-        XYItemLabelGenerator generator
-            = (XYItemLabelGenerator) this.itemLabelGeneratorMap.get(series);
+        XYItemLabelGenerator generator = this.itemLabelGeneratorMap.get(series);
         if (generator == null) {
             generator = this.defaultItemLabelGenerator;
         }
@@ -373,10 +372,16 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param generator  the generator ({@code null} permitted).
      */
     @Override
-    public void setSeriesItemLabelGenerator(int series,
-            XYItemLabelGenerator generator) {
+    public void setSeriesItemLabelGenerator(int series, XYItemLabelGenerator generator) {
+        setSeriesItemLabelGenerator(series, generator, true);
+    }
+
+    @Override
+    public void setSeriesItemLabelGenerator(int series, XYItemLabelGenerator generator, boolean notify) {
         this.itemLabelGeneratorMap.put(series, generator);
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     /**
@@ -397,8 +402,15 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
     public void setDefaultItemLabelGenerator(XYItemLabelGenerator generator) {
+        setDefaultItemLabelGenerator(generator, true);
+    }
+
+    @Override
+    public void setDefaultItemLabelGenerator(XYItemLabelGenerator generator, boolean notify) {
         this.defaultItemLabelGenerator = generator;
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     // TOOL TIP GENERATOR
@@ -417,8 +429,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     public XYToolTipGenerator getToolTipGenerator(int series, int item) {
 
         // otherwise look up the generator table
-        XYToolTipGenerator generator
-                = (XYToolTipGenerator) this.toolTipGeneratorMap.get(series);
+        XYToolTipGenerator generator = this.toolTipGeneratorMap.get(series);
         if (generator == null) {
             generator = this.defaultToolTipGenerator;
         }
@@ -445,10 +456,16 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param generator  the generator ({@code null} permitted).
      */
     @Override
-    public void setSeriesToolTipGenerator(int series,
-            XYToolTipGenerator generator) {
+    public void setSeriesToolTipGenerator(int series, XYToolTipGenerator generator) {
+        setSeriesToolTipGenerator(series, generator, true);
+    }
+
+    @Override
+    public void setSeriesToolTipGenerator(int series, XYToolTipGenerator generator, boolean notify) {
         this.toolTipGeneratorMap.put(series, generator);
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     /**
@@ -464,7 +481,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     }
 
     /**
-     * Sets the default tool tip generator and sends a 
+     * Sets the default tool tip generator and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param generator  the generator ({@code null} permitted).
@@ -473,8 +490,15 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
     public void setDefaultToolTipGenerator(XYToolTipGenerator generator) {
+        setDefaultToolTipGenerator(generator, true);
+    }
+
+    @Override
+    public void setDefaultToolTipGenerator(XYToolTipGenerator generator, boolean notify) {
         this.defaultToolTipGenerator = generator;
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     // URL GENERATOR
@@ -497,8 +521,15 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
     public void setURLGenerator(XYURLGenerator urlGenerator) {
+        setURLGenerator(urlGenerator, true);
+    }
+
+    @Override
+    public void setURLGenerator(XYURLGenerator urlGenerator, boolean notify) {
         this.urlGenerator = urlGenerator;
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     /**
@@ -523,22 +554,29 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
     public void addAnnotation(XYAnnotation annotation, Layer layer) {
+        addAnnotation(annotation, layer, true);
+    }
+
+    @Override
+    public void addAnnotation(XYAnnotation annotation, Layer layer, boolean notify) {
         Args.nullNotPermitted(annotation, "annotation");
         if (layer.equals(Layer.FOREGROUND)) {
             this.foregroundAnnotations.add(annotation);
-            annotation.addChangeListener(this);
-            fireChangeEvent();
         }
         else if (layer.equals(Layer.BACKGROUND)) {
             this.backgroundAnnotations.add(annotation);
-            annotation.addChangeListener(this);
-            fireChangeEvent();
         }
         else {
             // should never get here
             throw new RuntimeException("Unknown layer.");
         }
+
+        annotation.addChangeListener(this);
+        if (notify) {
+            fireChangeEvent();
+        }
     }
+
     /**
      * Removes the specified annotation and sends a {@link RendererChangeEvent}
      * to all registered listeners.
@@ -551,10 +589,17 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
     public boolean removeAnnotation(XYAnnotation annotation) {
+        return removeAnnotation(annotation, true);
+    }
+
+    @Override
+    public boolean removeAnnotation(XYAnnotation annotation, boolean notify) {
         boolean removed = this.foregroundAnnotations.remove(annotation);
         removed = removed & this.backgroundAnnotations.remove(annotation);
         annotation.removeChangeListener(this);
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
         return removed;
     }
 
@@ -564,6 +609,11 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
     public void removeAnnotations() {
+        removeAnnotations(true);
+    }
+
+    @Override
+    public void removeAnnotations(boolean notify) {
         for (XYAnnotation annotation : this.foregroundAnnotations) {
             annotation.removeChangeListener(this);
         }
@@ -572,7 +622,9 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         }
         this.foregroundAnnotations.clear();
         this.backgroundAnnotations.clear();
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
 
@@ -600,7 +652,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     public Collection<XYAnnotation> getAnnotations() {
         List<XYAnnotation> result 
-                = new ArrayList<XYAnnotation>(this.foregroundAnnotations);
+                = new ArrayList<>(this.foregroundAnnotations);
         result.addAll(this.backgroundAnnotations);
         return result;
     }
@@ -627,9 +679,16 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
     public void setLegendItemLabelGenerator(XYSeriesLabelGenerator generator) {
+        setLegendItemLabelGenerator(generator, true);
+    }
+
+    @Override
+    public void setLegendItemLabelGenerator(XYSeriesLabelGenerator generator, boolean notify) {
         Args.nullNotPermitted(generator, "generator");
         this.legendItemLabelGenerator = generator;
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     /**
@@ -651,10 +710,15 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @see #getLegendItemToolTipGenerator()
      */
-    public void setLegendItemToolTipGenerator(
-            XYSeriesLabelGenerator generator) {
+    public void setLegendItemToolTipGenerator(XYSeriesLabelGenerator generator) {
+        setLegendItemToolTipGenerator(generator, true);
+    }
+
+    public void setLegendItemToolTipGenerator(XYSeriesLabelGenerator generator, boolean notify) {
         this.legendItemToolTipGenerator = generator;
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     /**
@@ -677,8 +741,14 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @see #getLegendItemURLGenerator()
      */
     public void setLegendItemURLGenerator(XYSeriesLabelGenerator generator) {
+        setLegendItemURLGenerator(generator, true);
+    }
+
+    public void setLegendItemURLGenerator(XYSeriesLabelGenerator generator, boolean notify) {
         this.legendItemURLGenerator = generator;
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     /**
@@ -1454,30 +1524,21 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         AbstractXYItemRenderer clone = (AbstractXYItemRenderer) super.clone();
         // 'plot' : just retain reference, not a deep copy
 
-        clone.itemLabelGeneratorMap = CloneUtils.cloneMapValues(
-                this.itemLabelGeneratorMap);
-        clone.defaultItemLabelGenerator = (XYItemLabelGenerator) 
-                CloneUtils.clone(this.defaultItemLabelGenerator);
+        clone.itemLabelGeneratorMap = CloneUtils.cloneMapValues(this.itemLabelGeneratorMap);
+        clone.defaultItemLabelGenerator = CloneUtils.clone(this.defaultItemLabelGenerator);
 
-        clone.toolTipGeneratorMap = CloneUtils.cloneMapValues(
-                this.toolTipGeneratorMap);
-        
-        clone.defaultToolTipGenerator = (XYToolTipGenerator) CloneUtils.clone(
-                this.defaultToolTipGenerator);
+        clone.toolTipGeneratorMap = CloneUtils.cloneMapValues(this.toolTipGeneratorMap);
 
-        clone.legendItemLabelGenerator = (XYSeriesLabelGenerator)
-                CloneUtils.clone(this.legendItemLabelGenerator);
-        
-        clone.legendItemToolTipGenerator = (XYSeriesLabelGenerator)
-                CloneUtils.clone(this.legendItemToolTipGenerator);
+        clone.defaultToolTipGenerator = CloneUtils.clone(this.defaultToolTipGenerator);
 
-        clone.legendItemURLGenerator = (XYSeriesLabelGenerator)
-                CloneUtils.clone(this.legendItemURLGenerator);
-        
-        clone.foregroundAnnotations = (List) CloneUtils.cloneList(
-                this.foregroundAnnotations);
-        clone.backgroundAnnotations = (List) CloneUtils.cloneList(
-                this.backgroundAnnotations);
+        clone.legendItemLabelGenerator = CloneUtils.clone(this.legendItemLabelGenerator);
+
+        clone.legendItemToolTipGenerator = CloneUtils.clone(this.legendItemToolTipGenerator);
+
+        clone.legendItemURLGenerator = CloneUtils.clone(this.legendItemURLGenerator);
+
+        clone.foregroundAnnotations = CloneUtils.cloneList(this.foregroundAnnotations);
+        clone.backgroundAnnotations = CloneUtils.cloneList(this.backgroundAnnotations);
 
         return clone;
     }
@@ -1656,7 +1717,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             ValueAxis domainAxis, ValueAxis rangeAxis, Layer layer,
             PlotRenderingInfo info) {
 
-        List<XYAnnotation> toDraw = new ArrayList<XYAnnotation>();
+        List<XYAnnotation> toDraw = new ArrayList<>();
         if (layer.equals(Layer.FOREGROUND)) {
             toDraw.addAll(this.foregroundAnnotations);
         }
