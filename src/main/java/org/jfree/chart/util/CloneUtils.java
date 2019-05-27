@@ -76,10 +76,12 @@ public class CloneUtils {
                 if (Modifier.isPublic(method.getModifiers())) {
                     return (T) method.invoke(object, (Object[]) null);
                 }
-            } catch (NoSuchMethodException | InvocationTargetException e) {
+            } catch (NoSuchMethodException e) {
                 throw new CloneNotSupportedException("Object without clone() method is impossible.");
             } catch (IllegalAccessException e) {
                 throw new CloneNotSupportedException("Object.clone(): unable to call method.");
+            } catch (InvocationTargetException e) {
+                throw new CloneNotSupportedException("Object without clone() method is impossible.");
             }
         }
         throw new CloneNotSupportedException("Failed to clone.");
@@ -118,7 +120,7 @@ public class CloneUtils {
      */
     public static <K, V> Map<K, V> cloneMapValues(Map<K, V> source) {
         Args.nullNotPermitted(source, "source");
-        Map<K, V> result = new HashMap<>();
+        Map<K, V> result = new HashMap<K, V>();
         for (K key : source.keySet()) {
             V value = source.get(key);
             if (value != null) {

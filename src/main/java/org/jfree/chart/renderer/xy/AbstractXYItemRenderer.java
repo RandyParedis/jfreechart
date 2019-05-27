@@ -246,11 +246,11 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     protected AbstractXYItemRenderer() {
         super();
-        this.itemLabelGeneratorMap = new HashMap<>();
-        this.toolTipGeneratorMap = new HashMap<>();
+        this.itemLabelGeneratorMap = new HashMap<Integer, XYItemLabelGenerator>();
+        this.toolTipGeneratorMap = new HashMap<Integer, XYToolTipGenerator>();
         this.urlGenerator = null;
-        this.backgroundAnnotations = new ArrayList<>();
-        this.foregroundAnnotations = new ArrayList<>();
+        this.backgroundAnnotations = new ArrayList<XYAnnotation>();
+        this.foregroundAnnotations = new ArrayList<XYAnnotation>();
         this.legendItemLabelGenerator = new StandardXYSeriesLabelGenerator("{0}");
     }
 
@@ -652,7 +652,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     public Collection<XYAnnotation> getAnnotations() {
         List<XYAnnotation> result 
-                = new ArrayList<>(this.foregroundAnnotations);
+                = new ArrayList<XYAnnotation>(this.foregroundAnnotations);
         result.addAll(this.backgroundAnnotations);
         return result;
     }
@@ -1717,7 +1717,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             ValueAxis domainAxis, ValueAxis rangeAxis, Layer layer,
             PlotRenderingInfo info) {
 
-        List<XYAnnotation> toDraw = new ArrayList<>();
+        List<XYAnnotation> toDraw = new ArrayList<XYAnnotation>();
         if (layer.equals(Layer.FOREGROUND)) {
             toDraw.addAll(this.foregroundAnnotations);
         }
