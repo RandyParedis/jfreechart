@@ -136,7 +136,6 @@ import java.util.Locale;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.Timeline;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.labels.BoxAndWhiskerToolTipGenerator;
 import org.jfree.chart.labels.HighLowItemLabelGenerator;
@@ -200,7 +199,6 @@ import org.jfree.chart.urls.StandardXYURLGenerator;
 import org.jfree.chart.urls.StandardXYZURLGenerator;
 import org.jfree.chart.urls.XYURLGenerator;
 import org.jfree.chart.util.Args;
-import org.jfree.chart.util.SortOrder;
 import org.jfree.chart.util.TableOrder;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.IntervalCategoryDataset;
@@ -891,17 +889,17 @@ public abstract class ChartFactory {
         if (orientation == PlotOrientation.HORIZONTAL) {
             ItemLabelPosition position1 = new ItemLabelPosition(
                     ItemLabelAnchor.OUTSIDE3, TextAnchor.CENTER_LEFT);
-            renderer.getItem().setDefaultPositiveItemLabelPosition(position1);
+            renderer.getItemLabel().setDefaultPositiveItemLabelPosition(position1);
             ItemLabelPosition position2 = new ItemLabelPosition(
                     ItemLabelAnchor.OUTSIDE9, TextAnchor.CENTER_RIGHT);
-            renderer.getItem().setDefaultNegativeItemLabelPosition(position2);
+            renderer.getItemLabel().setDefaultNegativeItemLabelPosition(position2);
         } else if (orientation == PlotOrientation.VERTICAL) {
             ItemLabelPosition position1 = new ItemLabelPosition(
                     ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER);
-            renderer.getItem().setDefaultPositiveItemLabelPosition(position1);
+            renderer.getItemLabel().setDefaultPositiveItemLabelPosition(position1);
             ItemLabelPosition position2 = new ItemLabelPosition(
                     ItemLabelAnchor.OUTSIDE6, TextAnchor.TOP_CENTER);
-            renderer.getItem().setDefaultNegativeItemLabelPosition(position2);
+            renderer.getItemLabel().setDefaultNegativeItemLabelPosition(position2);
         }
         if (tooltips) {
             renderer.setDefaultToolTipGenerator(
@@ -1330,15 +1328,15 @@ public abstract class ChartFactory {
             ItemLabelPosition position = new ItemLabelPosition(
                     ItemLabelAnchor.CENTER, TextAnchor.CENTER,
                     TextAnchor.CENTER, Math.PI / 2.0);
-            renderer.getItem().setDefaultPositiveItemLabelPosition(position);
-            renderer.getItem().setDefaultNegativeItemLabelPosition(position);
+            renderer.getItemLabel().setDefaultPositiveItemLabelPosition(position);
+            renderer.getItemLabel().setDefaultNegativeItemLabelPosition(position);
          }
         else if (orientation == PlotOrientation.VERTICAL) {
             ItemLabelPosition position = new ItemLabelPosition(
                     ItemLabelAnchor.CENTER, TextAnchor.CENTER,
                     TextAnchor.CENTER, 0.0);
-            renderer.getItem().setDefaultPositiveItemLabelPosition(position);
-            renderer.getItem().setDefaultNegativeItemLabelPosition(position);
+            renderer.getItemLabel().setDefaultPositiveItemLabelPosition(position);
+            renderer.getItemLabel().setDefaultNegativeItemLabelPosition(position);
         }
         if (tooltips) {
             StandardCategoryToolTipGenerator generator

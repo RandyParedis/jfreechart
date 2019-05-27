@@ -158,8 +158,8 @@ public class StackedBarRenderer extends BarRenderer
         // the user requests visible item labels...
         ItemLabelPosition p = new ItemLabelPosition(ItemLabelAnchor.CENTER,
                 TextAnchor.CENTER);
-        getItem().setDefaultPositiveItemLabelPosition(p);
-        getItem().setDefaultNegativeItemLabelPosition(p);
+        getItemLabel().setDefaultPositiveItemLabelPosition(p);
+        getItemLabel().setDefaultNegativeItemLabelPosition(p);
         setPositiveItemLabelPositionFallback(null);
         setNegativeItemLabelPositionFallback(null);
     }
@@ -399,7 +399,7 @@ public class StackedBarRenderer extends BarRenderer
         else if (pass == 2) {
             CategoryItemLabelGenerator generator = getItemLabelGenerator(row,
                     column);
-            if (generator != null && getVisibility().isItemLabelVisible(row, column)) {
+            if (generator != null && getItemLabel().isItemLabelVisible(row, column)) {
                 drawItemLabel(g2, dataset, row, column, plot, generator, bar,
                         (value < 0.0));
             }

@@ -378,7 +378,7 @@ public class StatisticalBarRenderer extends BarRenderer
 
         CategoryItemLabelGenerator generator = getItemLabelGenerator(row,
                 column);
-        if (generator != null && getVisibility().isItemLabelVisible(row, column)) {
+        if (generator != null && getItemLabel().isItemLabelVisible(row, column)) {
             drawItemLabel(g2, dataset, row, column, plot, generator, bar,
                     (value < 0.0));
         }
@@ -526,7 +526,7 @@ public class StatisticalBarRenderer extends BarRenderer
 
         CategoryItemLabelGenerator generator = getItemLabelGenerator(row,
                 column);
-        if (generator != null && getVisibility().isItemLabelVisible(row, column)) {
+        if (generator != null && getItemLabel().isItemLabelVisible(row, column)) {
             drawItemLabel(g2, dataset, row, column, plot, generator, bar,
                     (value < 0.0));
         }

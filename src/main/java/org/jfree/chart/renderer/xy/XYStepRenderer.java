@@ -293,7 +293,7 @@ public class XYStepRenderer extends XYLineAndShapeRenderer
 
         if (pass == 1) {
             // draw the item label if there is one...
-            if (getVisibility().isItemLabelVisible(series, item)) {
+            if (getItemLabel().isItemLabelVisible(series, item)) {
                 double xx = transX1;
                 double yy = transY1;
                 if (orientation == PlotOrientation.HORIZONTAL) {

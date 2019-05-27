@@ -215,7 +215,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     private RenderStatePaint renderStatePaint = new RenderStatePaint(this);
     private RenderStateStroke renderStateStroke = new RenderStateStroke(this);
     private RenderStateShape renderStateShape = new RenderStateShape(this);
-    private RenderStateItem renderStateItem = new RenderStateItem(this);
+    private RenderStateItemLabel renderStateItem = new RenderStateItemLabel(this);
 
     /**
      * Default constructor.
@@ -272,7 +272,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
     // SERIES VISIBLE (not yet respected by all renderers)
     // SERIES VISIBLE IN LEGEND (not yet respected by all renderers)
-    // ITEM LABEL VISIBILITY...
     public IRenderStateVisibility getVisibility() {
         return this.renderStateVisibility;
     }
@@ -299,7 +298,8 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     // ITEM LABEL PAINT
     // POSITIVE ITEM LABEL POSITION
     // NEGATIVE ITEM LABEL POSITION
-    public IRenderStateItem getItem() {
+    // ITEM LABEL VISIBILITY
+    public IRenderStateItemLabel getItemLabel() {
         return renderStateItem;
     }
 
@@ -651,7 +651,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         if (!ObjectUtils.equal(this.getShape(), that.getShape())) {
             return false;
         }
-        if (!ObjectUtils.equal(this.getItem(), that.getItem())) {
+        if (!ObjectUtils.equal(this.getItemLabel(), that.getItemLabel())) {
             return false;
         }
         if (!ObjectUtils.equal(this.createEntitiesList,
@@ -730,7 +730,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         }
 
         if (this.renderStateItem != null) {
-            clone.renderStateItem = (RenderStateItem) this.renderStateItem.clone();
+            clone.renderStateItem = (RenderStateItemLabel) this.renderStateItem.clone();
             clone.renderStateItem.setAbstractRenderer(clone);
         }
 

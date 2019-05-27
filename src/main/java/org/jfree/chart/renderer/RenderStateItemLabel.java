@@ -1,5 +1,6 @@
 package org.jfree.chart.renderer;
 
+import org.jfree.chart.HashUtils;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
@@ -11,7 +12,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RenderStateItem implements Serializable, PublicCloneable, IRenderStateItem {
+public class RenderStateItemLabel implements Serializable, PublicCloneable, IRenderStateItemLabel {
     private transient AbstractRenderer abstractRenderer;
 
     /**
@@ -51,7 +52,17 @@ public class RenderStateItem implements Serializable, PublicCloneable, IRenderSt
      */
     private double itemLabelAnchorOffset = 2.0;
 
-    public RenderStateItem(AbstractRenderer abstractRenderer) {
+    /**
+     * Visibility of the item labels PER series.
+     */
+    private BooleanList itemLabelsVisibleList;
+
+    /**
+     * The base item labels visible.
+     */
+    private boolean defaultItemLabelsVisible;
+
+    public RenderStateItemLabel(AbstractRenderer abstractRenderer) {
         this.abstractRenderer = abstractRenderer;
 
         this.itemLabelFontMap = new HashMap<Integer, Font>();
@@ -69,6 +80,9 @@ public class RenderStateItem implements Serializable, PublicCloneable, IRenderSt
                 = new HashMap<Integer, ItemLabelPosition>();
         this.defaultNegativeItemLabelPosition = new ItemLabelPosition(
                 ItemLabelAnchor.OUTSIDE6, TextAnchor.TOP_CENTER);
+
+        this.itemLabelsVisibleList = new BooleanList();
+        this.defaultItemLabelsVisible = false;
     }
 
     public void setAbstractRenderer(AbstractRenderer abstractRenderer) {
@@ -301,8 +315,7 @@ public class RenderStateItem implements Serializable, PublicCloneable, IRenderSt
     @Override
     public ItemLabelPosition getSeriesPositiveItemLabelPosition(int series) {
         // otherwise look up the position table
-        ItemLabelPosition position = (ItemLabelPosition)
-                this.positiveItemLabelPositionMap.get(series);
+        ItemLabelPosition position = this.positiveItemLabelPositionMap.get(series);
         if (position == null) {
             position = this.defaultPositiveItemLabelPosition;
         }
@@ -318,8 +331,7 @@ public class RenderStateItem implements Serializable, PublicCloneable, IRenderSt
      * @see #getSeriesPositiveItemLabelPosition(int)
      */
     @Override
-    public void setSeriesPositiveItemLabelPosition(int series,
-                                                   ItemLabelPosition position) {
+    public void setSeriesPositiveItemLabelPosition(int series, ItemLabelPosition position) {
         setSeriesPositiveItemLabelPosition(series, position, true);
     }
 
@@ -334,8 +346,7 @@ public class RenderStateItem implements Serializable, PublicCloneable, IRenderSt
      * @see #getSeriesPositiveItemLabelPosition(int)
      */
     @Override
-    public void setSeriesPositiveItemLabelPosition(int series,
-                                                   ItemLabelPosition position, boolean notify) {
+    public void setSeriesPositiveItemLabelPosition(int series, ItemLabelPosition position, boolean notify) {
         this.positiveItemLabelPositionMap.put(series, position);
         if (notify) {
             abstractRenderer.fireChangeEvent();
@@ -426,8 +437,7 @@ public class RenderStateItem implements Serializable, PublicCloneable, IRenderSt
      * @see #getSeriesNegativeItemLabelPosition(int)
      */
     @Override
-    public void setSeriesNegativeItemLabelPosition(int series,
-                                                   ItemLabelPosition position) {
+    public void setSeriesNegativeItemLabelPosition(int series, ItemLabelPosition position) {
         setSeriesNegativeItemLabelPosition(series, position, true);
     }
 
@@ -442,8 +452,7 @@ public class RenderStateItem implements Serializable, PublicCloneable, IRenderSt
      * @see #getSeriesNegativeItemLabelPosition(int)
      */
     @Override
-    public void setSeriesNegativeItemLabelPosition(int series,
-                                                   ItemLabelPosition position, boolean notify) {
+    public void setSeriesNegativeItemLabelPosition(int series, ItemLabelPosition position, boolean notify) {
         this.negativeItemLabelPositionMap.put(series, position);
         if (notify) {
             abstractRenderer.fireChangeEvent();
@@ -469,8 +478,7 @@ public class RenderStateItem implements Serializable, PublicCloneable, IRenderSt
      * @see #getDefaultNegativeItemLabelPosition()
      */
     @Override
-    public void setDefaultNegativeItemLabelPosition(
-            ItemLabelPosition position) {
+    public void setDefaultNegativeItemLabelPosition(ItemLabelPosition position) {
         setDefaultNegativeItemLabelPosition(position, true);
     }
 
@@ -483,8 +491,7 @@ public class RenderStateItem implements Serializable, PublicCloneable, IRenderSt
      * @see #getDefaultNegativeItemLabelPosition()
      */
     @Override
-    public void setDefaultNegativeItemLabelPosition(ItemLabelPosition position,
-                                                    boolean notify) {
+    public void setDefaultNegativeItemLabelPosition(ItemLabelPosition position, boolean notify) {
         Args.nullNotPermitted(position, "position");
         this.defaultNegativeItemLabelPosition = position;
         if (notify) {
@@ -515,9 +522,121 @@ public class RenderStateItem implements Serializable, PublicCloneable, IRenderSt
         abstractRenderer.fireChangeEvent();
     }
 
+    /**
+     * Returns {@code true} if an item label is visible, and
+     * {@code false} otherwise.
+     *
+     * @param row    the row (or series) index (zero-based).
+     * @param column the column (or category) index (zero-based).
+     * @return A boolean.
+     */
+    @Override
+    public boolean isItemLabelVisible(int row, int column) {
+        return isSeriesItemLabelsVisible(row);
+    }
+
+    /**
+     * Returns {@code true} if the item labels for a series are visible,
+     * and {@code false} otherwise.
+     *
+     * @param series the series index (zero-based).
+     * @return A boolean.
+     */
+    @Override
+    public boolean isSeriesItemLabelsVisible(int series) {
+        Boolean b = this.itemLabelsVisibleList.getBoolean(series);
+        if (b == null) {
+            return this.defaultItemLabelsVisible;
+        }
+        return b;
+    }
+
+    /**
+     * Sets a flag that controls the visibility of the item labels for a series,
+     * and sends a {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param series  the series index (zero-based).
+     * @param visible the flag.
+     */
+    @Override
+    public void setSeriesItemLabelsVisible(int series, boolean visible) {
+        setSeriesItemLabelsVisible(series, Boolean.valueOf(visible));
+    }
+
+    /**
+     * Sets the visibility of the item labels for a series and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param series  the series index (zero-based).
+     * @param visible the flag ({@code null} permitted).
+     */
+    @Override
+    public void setSeriesItemLabelsVisible(int series, Boolean visible) {
+        setSeriesItemLabelsVisible(series, visible, true);
+    }
+
+    /**
+     * Sets the visibility of item labels for a series and, if requested, sends
+     * a {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param series  the series index (zero-based).
+     * @param visible the visible flag.
+     * @param notify  a flag that controls whether or not listeners are
+     *                notified.
+     */
+    @Override
+    public void setSeriesItemLabelsVisible(int series, Boolean visible, boolean notify) {
+        this.itemLabelsVisibleList.setBoolean(series, visible);
+        if (notify) {
+            this.abstractRenderer.fireChangeEvent();
+        }
+    }
+
+    /**
+     * Returns the base setting for item label visibility.  A {@code null}
+     * result should be interpreted as equivalent to {@code Boolean.FALSE}.
+     *
+     * @return A flag (possibly {@code null}).
+     * @see #setDefaultItemLabelsVisible(boolean)
+     */
+    @Override
+    public boolean getDefaultItemLabelsVisible() {
+        return this.defaultItemLabelsVisible;
+    }
+
+    /**
+     * Sets the base flag that controls whether or not item labels are visible,
+     * and sends a {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param visible the flag.
+     * @see #getDefaultItemLabelsVisible()
+     */
+    @Override
+    public void setDefaultItemLabelsVisible(boolean visible) {
+        setDefaultItemLabelsVisible(visible, true);
+    }
+
+    /**
+     * Sets the base visibility for item labels and, if requested, sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param visible the flag ({@code null} is permitted, and viewed
+     *                as equivalent to {@code Boolean.FALSE}).
+     * @param notify  a flag that controls whether or not listeners are
+     *                notified.
+     * @see #getDefaultItemLabelsVisible()
+     */
+    @Override
+    public void setDefaultItemLabelsVisible(boolean visible, boolean notify) {
+        this.defaultItemLabelsVisible = visible;
+        if (notify) {
+            this.abstractRenderer.fireChangeEvent();
+        }
+    }
+
     @Override
     public Object clone() throws CloneNotSupportedException {
-        RenderStateItem clone = (RenderStateItem) super.clone();
+        RenderStateItemLabel clone = (RenderStateItemLabel) super.clone();
 
         // 'itemLabelFont' : immutable, no need to clone reference
         if (this.itemLabelFontMap != null) {
@@ -541,6 +660,12 @@ public class RenderStateItem implements Serializable, PublicCloneable, IRenderSt
                     this.negativeItemLabelPositionMap);
         }
 
+        // 'itemLabelsVisible' : immutable, no need to clone reference
+        if (this.itemLabelsVisibleList != null) {
+            clone.itemLabelsVisibleList
+                    = (BooleanList) this.itemLabelsVisibleList.clone();
+        }
+
         return clone;
     }
 
@@ -549,10 +674,10 @@ public class RenderStateItem implements Serializable, PublicCloneable, IRenderSt
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof RenderStateItem)) {
+        if (!(obj instanceof RenderStateItemLabel)) {
             return false;
         }
-        RenderStateItem that = (RenderStateItem) obj;
+        RenderStateItemLabel that = (RenderStateItemLabel) obj;
 
         if (!ObjectUtils.equal(this.itemLabelFontMap,
                 that.itemLabelFontMap)) {
@@ -593,6 +718,15 @@ public class RenderStateItem implements Serializable, PublicCloneable, IRenderSt
         if (this.itemLabelAnchorOffset != that.itemLabelAnchorOffset) {
             return false;
         }
+
+        if (!ObjectUtils.equal(this.itemLabelsVisibleList,
+                that.itemLabelsVisibleList)) {
+            return false;
+        }
+        if (!ObjectUtils.equal(this.defaultItemLabelsVisible,
+                that.defaultItemLabelsVisible)) {
+            return false;
+        }
         return true;
     }
 
@@ -608,6 +742,8 @@ public class RenderStateItem implements Serializable, PublicCloneable, IRenderSt
         // negativeItemLabelPositionList
         // baseNegativeItemLabelPosition
         // itemLabelAnchorOffset
+        result = HashUtils.hashCode(result, this.itemLabelsVisibleList);
+        result = HashUtils.hashCode(result, this.defaultItemLabelsVisible);
         return result;
     }
 }

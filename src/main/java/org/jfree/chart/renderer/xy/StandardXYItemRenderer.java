@@ -906,7 +906,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
         }
 
         // draw the item label if there is one...
-        if (getVisibility().isItemLabelVisible(series, item)) {
+        if (getItemLabel().isItemLabelVisible(series, item)) {
             drawItemLabel(g2, orientation, dataset, series, item, xx, yy,
                     (y1 < 0.0));
         }

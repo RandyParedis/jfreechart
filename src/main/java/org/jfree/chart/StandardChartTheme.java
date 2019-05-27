@@ -1542,8 +1542,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
             applyToAbstractRenderer((AbstractRenderer) renderer);
         }
 
-        renderer.getItem().setDefaultItemLabelFont(this.regularFont);
-        renderer.getItem().setDefaultItemLabelPaint(this.itemLabelPaint);
+        renderer.getItemLabel().setDefaultItemLabelFont(this.regularFont);
+        renderer.getItemLabel().setDefaultItemLabelPaint(this.itemLabelPaint);
 
         // now we handle some special cases - yes, UGLY code alert!
 
@@ -1579,8 +1579,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         if (renderer instanceof AbstractRenderer) {
             applyToAbstractRenderer((AbstractRenderer) renderer);
         }
-        renderer.getItem().setDefaultItemLabelFont(this.regularFont);
-        renderer.getItem().setDefaultItemLabelPaint(this.itemLabelPaint);
+        renderer.getItemLabel().setDefaultItemLabelFont(this.regularFont);
+        renderer.getItemLabel().setDefaultItemLabelPaint(this.itemLabelPaint);
         if (renderer instanceof XYBarRenderer) {
             XYBarRenderer br = (XYBarRenderer) renderer;
             br.setBarPainter(this.xyBarPainter);

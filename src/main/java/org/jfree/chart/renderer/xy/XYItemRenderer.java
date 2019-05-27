@@ -152,7 +152,7 @@ public interface XYItemRenderer extends LegendItemSource {
      *
      * @return Item render state.
      */
-    IRenderStateItem getItem();
+    IRenderStateItemLabel getItemLabel();
 
     /**
      * Returns the plot that this renderer has been assigned to.

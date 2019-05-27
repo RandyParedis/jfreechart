@@ -120,8 +120,8 @@ public class StackedXYBarRenderer extends XYBarRenderer {
         // the user requests visible item labels...
         ItemLabelPosition p = new ItemLabelPosition(ItemLabelAnchor.CENTER,
                 TextAnchor.CENTER);
-        getItem().setDefaultPositiveItemLabelPosition(p);
-        getItem().setDefaultNegativeItemLabelPosition(p);
+        getItemLabel().setDefaultPositiveItemLabelPosition(p);
+        getItemLabel().setDefaultNegativeItemLabelPosition(p);
         setPositiveItemLabelPositionFallback(null);
         setNegativeItemLabelPositionFallback(null);
     }
@@ -395,7 +395,7 @@ public class StackedXYBarRenderer extends XYBarRenderer {
         else if (pass == 2) {
             // handle item label drawing, now that we know all the bars have
             // been drawn...
-            if (getVisibility().isItemLabelVisible(series, item)) {
+            if (getItemLabel().isItemLabelVisible(series, item)) {
                 XYItemLabelGenerator generator = getItemLabelGenerator(series,
                         item);
                 drawItemLabel(g2, dataset, series, item, plot, generator, bar,

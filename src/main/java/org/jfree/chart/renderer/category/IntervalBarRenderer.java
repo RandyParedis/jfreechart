@@ -241,7 +241,7 @@ public class IntervalBarRenderer extends BarRenderer {
 
         CategoryItemLabelGenerator generator = getItemLabelGenerator(row,
                 column);
-        if (generator != null && getVisibility().isItemLabelVisible(row, column)) {
+        if (generator != null && getItemLabel().isItemLabelVisible(row, column)) {
             drawItemLabel(g2, dataset, row, column, plot, generator, bar,
                     false);
         }

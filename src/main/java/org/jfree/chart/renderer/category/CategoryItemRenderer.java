@@ -97,11 +97,6 @@
 
 package org.jfree.chart.renderer.category;
 
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Stroke;
-import java.awt.geom.Rectangle2D;
-
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemSource;
 import org.jfree.chart.axis.CategoryAxis;
@@ -119,6 +114,9 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.urls.CategoryURLGenerator;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 /**
  * A plug-in object that is used by the {@link CategoryPlot} class to display
@@ -171,7 +169,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @return Item render state.
      */
-    IRenderStateItem getItem();
+    IRenderStateItemLabel getItemLabel();
 
     /**
      * Returns the number of passes through the dataset required by the
@@ -181,7 +179,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @return The pass count.
      */
-    public int getPassCount();
+    int getPassCount();
 
     /**
      * Returns the plot that the renderer has been assigned to (where
@@ -192,7 +190,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #setPlot(CategoryPlot)
      */
-    public CategoryPlot getPlot();
+    CategoryPlot getPlot();
 
     /**
      * Sets the plot that the renderer has been assigned to.  This method is
@@ -203,7 +201,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #getPlot()
      */
-    public void setPlot(CategoryPlot plot);
+    void setPlot(CategoryPlot plot);
 
     /**
      * Adds a change listener.
@@ -212,7 +210,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #removeChangeListener(RendererChangeListener)
      */
-    public void addChangeListener(RendererChangeListener listener);
+    void addChangeListener(RendererChangeListener listener);
 
     /**
      * Removes a change listener.
@@ -221,7 +219,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #addChangeListener(RendererChangeListener)
      */
-    public void removeChangeListener(RendererChangeListener listener);
+    void removeChangeListener(RendererChangeListener listener);
 
     /**
      * Returns the range of values the renderer requires to display all the
@@ -232,7 +230,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      * @return The range (or {@code null} if the dataset is
      *         {@code null} or empty).
      */
-    public Range findRangeBounds(CategoryDataset dataset);
+    Range findRangeBounds(CategoryDataset dataset);
 
     /**
      * Initialises the renderer.  This method will be called before the first
@@ -249,11 +247,11 @@ public interface CategoryItemRenderer extends LegendItemSource {
      * @return A state object (maintains state information relevant to one
      *         chart drawing).
      */
-    public CategoryItemRendererState initialise(Graphics2D g2,
-                                                Rectangle2D dataArea,
-                                                CategoryPlot plot,
-                                                int rendererIndex,
-                                                PlotRenderingInfo info);
+    CategoryItemRendererState initialise(Graphics2D g2,
+                                         Rectangle2D dataArea,
+                                         CategoryPlot plot,
+                                         int rendererIndex,
+                                         PlotRenderingInfo info);
 
     // ITEM LABEL GENERATOR
 
@@ -265,8 +263,8 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @return The generator (possibly {@code null}).
      */
-    public CategoryItemLabelGenerator getItemLabelGenerator(int series,
-            int item);
+    CategoryItemLabelGenerator getItemLabelGenerator(int series,
+                                                     int item);
 
     /**
      * Returns the item label generator for a series.
@@ -277,7 +275,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #setSeriesItemLabelGenerator(int, CategoryItemLabelGenerator)
      */
-    public CategoryItemLabelGenerator getSeriesItemLabelGenerator(int series);
+    CategoryItemLabelGenerator getSeriesItemLabelGenerator(int series);
 
     /**
      * Sets the item label generator for a series and sends a
@@ -288,11 +286,11 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #getSeriesItemLabelGenerator(int)
      */
-    public void setSeriesItemLabelGenerator(int series,
-            CategoryItemLabelGenerator generator);
+    void setSeriesItemLabelGenerator(int series,
+                                     CategoryItemLabelGenerator generator);
 
-    public void setSeriesItemLabelGenerator(int series,
-            CategoryItemLabelGenerator generator, boolean notify);
+    void setSeriesItemLabelGenerator(int series,
+                                     CategoryItemLabelGenerator generator, boolean notify);
 
     /**
      * Returns the default item label generator.
@@ -301,7 +299,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #setDefaultItemLabelGenerator(CategoryItemLabelGenerator)
      */
-    public CategoryItemLabelGenerator getDefaultItemLabelGenerator();
+    CategoryItemLabelGenerator getDefaultItemLabelGenerator();
 
     /**
      * Sets the default item label generator and sends a
@@ -311,10 +309,10 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #getDefaultItemLabelGenerator()
      */
-    public void setDefaultItemLabelGenerator(CategoryItemLabelGenerator generator);
+    void setDefaultItemLabelGenerator(CategoryItemLabelGenerator generator);
 
-    public void setDefaultItemLabelGenerator(CategoryItemLabelGenerator generator,
-            boolean notify);
+    void setDefaultItemLabelGenerator(CategoryItemLabelGenerator generator,
+                                      boolean notify);
 
     // TOOL TIP GENERATOR
 
@@ -328,7 +326,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @return The generator (possibly {@code null}).
      */
-    public CategoryToolTipGenerator getToolTipGenerator(int row, int column);
+    CategoryToolTipGenerator getToolTipGenerator(int row, int column);
 
     /**
      * Returns the tool tip generator for the specified series (a "layer 1"
@@ -340,7 +338,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #setSeriesToolTipGenerator(int, CategoryToolTipGenerator)
      */
-    public CategoryToolTipGenerator getSeriesToolTipGenerator(int series);
+    CategoryToolTipGenerator getSeriesToolTipGenerator(int series);
 
     /**
      * Sets the tool tip generator for a series and sends a
@@ -352,11 +350,11 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #getSeriesToolTipGenerator(int)
      */
-    public void setSeriesToolTipGenerator(int series,
-            CategoryToolTipGenerator generator);
+    void setSeriesToolTipGenerator(int series,
+                                   CategoryToolTipGenerator generator);
 
-    public void setSeriesToolTipGenerator(int series,
-            CategoryToolTipGenerator generator, boolean notify);
+    void setSeriesToolTipGenerator(int series,
+                                   CategoryToolTipGenerator generator, boolean notify);
 
     /**
      * Returns the default tool tip generator (the "layer 2" generator).
@@ -365,7 +363,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #setDefaultToolTipGenerator(CategoryToolTipGenerator)
      */
-    public CategoryToolTipGenerator getDefaultToolTipGenerator();
+    CategoryToolTipGenerator getDefaultToolTipGenerator();
 
     /**
      * Sets the default tool tip generator and sends a
@@ -376,27 +374,27 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #getDefaultToolTipGenerator()
      */
-    public void setDefaultToolTipGenerator(CategoryToolTipGenerator generator);
+    void setDefaultToolTipGenerator(CategoryToolTipGenerator generator);
 
-    public void setDefaultToolTipGenerator(CategoryToolTipGenerator generator,
-            boolean notify);
+    void setDefaultToolTipGenerator(CategoryToolTipGenerator generator,
+                                    boolean notify);
 
     // CREATE ENTITIES
 
-    public boolean getItemCreateEntity(int series, int item);
+    boolean getItemCreateEntity(int series, int item);
 
-    public Boolean getSeriesCreateEntities(int series);
+    Boolean getSeriesCreateEntities(int series);
 
-    public void setSeriesCreateEntities(int series, Boolean create);
+    void setSeriesCreateEntities(int series, Boolean create);
 
-    public void setSeriesCreateEntities(int series, Boolean create,
-            boolean notify);
+    void setSeriesCreateEntities(int series, Boolean create,
+                                 boolean notify);
 
-    public boolean getDefaultCreateEntities();
+    boolean getDefaultCreateEntities();
 
-    public void setDefaultCreateEntities(boolean create);
+    void setDefaultCreateEntities(boolean create);
 
-    public void setDefaultCreateEntities(boolean create, boolean notify);
+    void setDefaultCreateEntities(boolean create, boolean notify);
 
 
     // ITEM URL GENERATOR
@@ -409,7 +407,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @return The item URL generator.
      */
-    public CategoryURLGenerator getItemURLGenerator(int series, int item);
+    CategoryURLGenerator getItemURLGenerator(int series, int item);
 
     /**
      * Returns the item URL generator for a series.
@@ -420,7 +418,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #setSeriesItemURLGenerator(int, CategoryURLGenerator)
      */
-    public CategoryURLGenerator getSeriesItemURLGenerator(int series);
+    CategoryURLGenerator getSeriesItemURLGenerator(int series);
 
     /**
      * Sets the item URL generator for a series.
@@ -430,11 +428,11 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #getSeriesItemURLGenerator(int)
      */
-    public void setSeriesItemURLGenerator(int series,
-                                          CategoryURLGenerator generator);
+    void setSeriesItemURLGenerator(int series,
+                                   CategoryURLGenerator generator);
 
-    public void setSeriesItemURLGenerator(int series,
-            CategoryURLGenerator generator, boolean notify);
+    void setSeriesItemURLGenerator(int series,
+                                   CategoryURLGenerator generator, boolean notify);
 
     /**
      * Returns the default item URL generator.
@@ -443,7 +441,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #setDefaultItemURLGenerator(CategoryURLGenerator)
      */
-    public CategoryURLGenerator getDefaultItemURLGenerator();
+    CategoryURLGenerator getDefaultItemURLGenerator();
 
     /**
      * Sets the default item URL generator and sends a {@link RendererChangeEvent}
@@ -453,9 +451,9 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @see #getDefaultItemURLGenerator()
      */
-    public void setDefaultItemURLGenerator(CategoryURLGenerator generator);
+    void setDefaultItemURLGenerator(CategoryURLGenerator generator);
 
-    public void setDefaultItemURLGenerator(CategoryURLGenerator generator, boolean notify);
+    void setDefaultItemURLGenerator(CategoryURLGenerator generator, boolean notify);
 
     /**
      * Returns a legend item for a series.  This method can return
@@ -467,7 +465,7 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @return The legend item (possibly {@code null}).
      */
-    public LegendItem getLegendItem(int datasetIndex, int series);
+    LegendItem getLegendItem(int datasetIndex, int series);
 
     /**
      * Draws a background for the data area.
@@ -476,8 +474,8 @@ public interface CategoryItemRenderer extends LegendItemSource {
      * @param plot  the plot.
      * @param dataArea  the data area.
      */
-    public void drawBackground(Graphics2D g2, CategoryPlot plot,
-            Rectangle2D dataArea);
+    void drawBackground(Graphics2D g2, CategoryPlot plot,
+                        Rectangle2D dataArea);
 
     /**
      * Draws an outline for the data area.
@@ -486,8 +484,8 @@ public interface CategoryItemRenderer extends LegendItemSource {
      * @param plot  the plot.
      * @param dataArea  the data area.
      */
-    public void drawOutline(Graphics2D g2, CategoryPlot plot,
-            Rectangle2D dataArea);
+    void drawOutline(Graphics2D g2, CategoryPlot plot,
+                     Rectangle2D dataArea);
 
     /**
      * Draws a single data item.
@@ -503,10 +501,10 @@ public interface CategoryItemRenderer extends LegendItemSource {
      * @param column  the column index (zero-based).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2, CategoryItemRendererState state,
-            Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
-            ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
-            int pass);
+    void drawItem(Graphics2D g2, CategoryItemRendererState state,
+                  Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
+                  ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
+                  int pass);
 
     /**
      * Draws a grid line against the domain axis.
@@ -516,8 +514,8 @@ public interface CategoryItemRenderer extends LegendItemSource {
      * @param dataArea  the area for plotting data.
      * @param value  the value.
      */
-    public void drawDomainGridline(Graphics2D g2, CategoryPlot plot,
-            Rectangle2D dataArea, double value);
+    void drawDomainGridline(Graphics2D g2, CategoryPlot plot,
+                            Rectangle2D dataArea, double value);
 
     /**
      * Draws a grid line against the range axis.
@@ -530,8 +528,8 @@ public interface CategoryItemRenderer extends LegendItemSource {
      * @param paint  the paint ({@code null} not permitted).
      * @param stroke  the line stroke ({@code null} not permitted).
      */
-    public void drawRangeLine(Graphics2D g2, CategoryPlot plot, ValueAxis axis,
-            Rectangle2D dataArea, double value, Paint paint, Stroke stroke);
+    void drawRangeLine(Graphics2D g2, CategoryPlot plot, ValueAxis axis,
+                       Rectangle2D dataArea, double value, Paint paint, Stroke stroke);
 
     /**
      * Draws a line (or some other marker) to indicate a particular category on
@@ -546,8 +544,8 @@ public interface CategoryItemRenderer extends LegendItemSource {
      * @see #drawRangeMarker(Graphics2D, CategoryPlot, ValueAxis, Marker,
      *     Rectangle2D)
      */
-    public void drawDomainMarker(Graphics2D g2, CategoryPlot plot,
-            CategoryAxis axis, CategoryMarker marker, Rectangle2D dataArea);
+    void drawDomainMarker(Graphics2D g2, CategoryPlot plot,
+                          CategoryAxis axis, CategoryMarker marker, Rectangle2D dataArea);
 
     /**
      * Draws a line (or some other marker) to indicate a particular value on
@@ -562,8 +560,8 @@ public interface CategoryItemRenderer extends LegendItemSource {
      * @see #drawDomainMarker(Graphics2D, CategoryPlot, CategoryAxis,
      *     CategoryMarker, Rectangle2D)
      */
-    public void drawRangeMarker(Graphics2D g2, CategoryPlot plot,
-            ValueAxis axis, Marker marker, Rectangle2D dataArea);
+    void drawRangeMarker(Graphics2D g2, CategoryPlot plot,
+                         ValueAxis axis, Marker marker, Rectangle2D dataArea);
 
     /**
      * Returns the Java2D coordinate for the middle of the specified data item.
@@ -579,8 +577,8 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @since 1.0.11
      */
-    public double getItemMiddle(Comparable rowKey, Comparable columnKey,
-            CategoryDataset dataset, CategoryAxis axis, Rectangle2D area,
-            RectangleEdge edge);
+    double getItemMiddle(Comparable rowKey, Comparable columnKey,
+                         CategoryDataset dataset, CategoryAxis axis, Rectangle2D area,
+                         RectangleEdge edge);
 
 }

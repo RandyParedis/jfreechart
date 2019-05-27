@@ -3,7 +3,6 @@ package org.jfree.chart.renderer;
 import org.jfree.chart.HashUtils;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.util.BooleanList;
-import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 
 import java.io.Serializable;
@@ -32,16 +31,6 @@ public class RenderStateVisibility implements Serializable, PublicCloneable, IRe
     private boolean defaultSeriesVisibleInLegend = true;
 
     /**
-     * Visibility of the item labels PER series.
-     */
-    private BooleanList itemLabelsVisibleList;
-
-    /**
-     * The base item labels visible.
-     */
-    private boolean defaultItemLabelsVisible;
-
-    /**
      * A flag that controls whether or not the renderer will include the
      * non-visible series when calculating the data bounds.
      *
@@ -51,9 +40,6 @@ public class RenderStateVisibility implements Serializable, PublicCloneable, IRe
 
     public RenderStateVisibility(AbstractRenderer abstractRenderer) {
         this.abstractRenderer = abstractRenderer;
-
-        this.itemLabelsVisibleList = new BooleanList();
-        this.defaultItemLabelsVisible = false;
     }
 
     public void setAbstractRenderer(AbstractRenderer abstractRenderer) {
@@ -291,119 +277,6 @@ public class RenderStateVisibility implements Serializable, PublicCloneable, IRe
     }
 
     /**
-     * Returns {@code true} if an item label is visible, and
-     * {@code false} otherwise.
-     *
-     * @param row    the row (or series) index (zero-based).
-     * @param column the column (or category) index (zero-based).
-     * @return A boolean.
-     */
-    @Override
-    public boolean isItemLabelVisible(int row, int column) {
-        return isSeriesItemLabelsVisible(row);
-    }
-
-    /**
-     * Returns {@code true} if the item labels for a series are visible,
-     * and {@code false} otherwise.
-     *
-     * @param series the series index (zero-based).
-     * @return A boolean.
-     */
-    @Override
-    public boolean isSeriesItemLabelsVisible(int series) {
-        Boolean b = this.itemLabelsVisibleList.getBoolean(series);
-        if (b == null) {
-            return this.defaultItemLabelsVisible;
-        }
-        return b;
-    }
-
-    /**
-     * Sets a flag that controls the visibility of the item labels for a series,
-     * and sends a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param visible the flag.
-     */
-    @Override
-    public void setSeriesItemLabelsVisible(int series, boolean visible) {
-        setSeriesItemLabelsVisible(series, Boolean.valueOf(visible));
-    }
-
-    /**
-     * Sets the visibility of the item labels for a series and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param visible the flag ({@code null} permitted).
-     */
-    @Override
-    public void setSeriesItemLabelsVisible(int series, Boolean visible) {
-        setSeriesItemLabelsVisible(series, visible, true);
-    }
-
-    /**
-     * Sets the visibility of item labels for a series and, if requested, sends
-     * a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param series  the series index (zero-based).
-     * @param visible the visible flag.
-     * @param notify  a flag that controls whether or not listeners are
-     *                notified.
-     */
-    @Override
-    public void setSeriesItemLabelsVisible(int series, Boolean visible,
-                                           boolean notify) {
-        this.itemLabelsVisibleList.setBoolean(series, visible);
-        if (notify) {
-            this.abstractRenderer.fireChangeEvent();
-        }
-    }
-
-    /**
-     * Returns the base setting for item label visibility.  A {@code null}
-     * result should be interpreted as equivalent to {@code Boolean.FALSE}.
-     *
-     * @return A flag (possibly {@code null}).
-     * @see #setDefaultItemLabelsVisible(boolean)
-     */
-    @Override
-    public boolean getDefaultItemLabelsVisible() {
-        return this.defaultItemLabelsVisible;
-    }
-
-    /**
-     * Sets the base flag that controls whether or not item labels are visible,
-     * and sends a {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param visible the flag.
-     * @see #getDefaultItemLabelsVisible()
-     */
-    @Override
-    public void setDefaultItemLabelsVisible(boolean visible) {
-        setDefaultItemLabelsVisible(visible, true);
-    }
-
-    /**
-     * Sets the base visibility for item labels and, if requested, sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param visible the flag ({@code null} is permitted, and viewed
-     *                as equivalent to {@code Boolean.FALSE}).
-     * @param notify  a flag that controls whether or not listeners are
-     *                notified.
-     * @see #getDefaultItemLabelsVisible()
-     */
-    @Override
-    public void setDefaultItemLabelsVisible(boolean visible, boolean notify) {
-        this.defaultItemLabelsVisible = visible;
-        if (notify) {
-            this.abstractRenderer.fireChangeEvent();
-        }
-    }
-
-    /**
      * Returns the flag that controls whether or not the data bounds reported
      * by this renderer will exclude non-visible series.
      *
@@ -441,12 +314,6 @@ public class RenderStateVisibility implements Serializable, PublicCloneable, IRe
             clone.seriesVisibleInLegendList = (BooleanList) this.seriesVisibleInLegendList.clone();
         }
 
-        // 'itemLabelsVisible' : immutable, no need to clone reference
-        if (this.itemLabelsVisibleList != null) {
-            clone.itemLabelsVisibleList
-                    = (BooleanList) this.itemLabelsVisibleList.clone();
-        }
-
         return clone;
     }
 
@@ -478,14 +345,6 @@ public class RenderStateVisibility implements Serializable, PublicCloneable, IRe
                 != that.dataBoundsIncludesVisibleSeriesOnly) {
             return false;
         }
-        if (!ObjectUtils.equal(this.itemLabelsVisibleList,
-                that.itemLabelsVisibleList)) {
-            return false;
-        }
-        if (!ObjectUtils.equal(this.defaultItemLabelsVisible,
-                that.defaultItemLabelsVisible)) {
-            return false;
-        }
         return true;
     }
 
@@ -496,8 +355,6 @@ public class RenderStateVisibility implements Serializable, PublicCloneable, IRe
         result = HashUtils.hashCode(result, this.defaultSeriesVisible);
         result = HashUtils.hashCode(result, this.seriesVisibleInLegendList);
         result = HashUtils.hashCode(result, this.defaultSeriesVisibleInLegend);
-        result = HashUtils.hashCode(result, this.itemLabelsVisibleList);
-        result = HashUtils.hashCode(result, this.defaultItemLabelsVisible);
         return result;
     }
 }

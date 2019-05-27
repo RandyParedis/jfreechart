@@ -62,7 +62,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
@@ -210,79 +209,79 @@ public class AbstractRendererTest {
         assertTrue(r1.equals(r2));
 
         // itemLabelsVisibleList
-        r1.getVisibility().setSeriesItemLabelsVisible(1, Boolean.TRUE);
+        r1.getItemLabel().setSeriesItemLabelsVisible(1, Boolean.TRUE);
         assertFalse(r1.equals(r2));
-        r2.getVisibility().setSeriesItemLabelsVisible(1, Boolean.TRUE);
+        r2.getItemLabel().setSeriesItemLabelsVisible(1, Boolean.TRUE);
         assertTrue(r1.equals(r2));
 
         // baseItemLabelsVisible
-        r1.getVisibility().setDefaultItemLabelsVisible(true);
+        r1.getItemLabel().setDefaultItemLabelsVisible(true);
         assertFalse(r1.equals(r2));
-        r2.getVisibility().setDefaultItemLabelsVisible(true);
+        r2.getItemLabel().setDefaultItemLabelsVisible(true);
         assertTrue(r1.equals(r2));
 
         // itemLabelFontList
-        r1.getItem().setSeriesItemLabelFont(1, new Font("Serif", Font.BOLD, 9));
+        r1.getItemLabel().setSeriesItemLabelFont(1, new Font("Serif", Font.BOLD, 9));
         assertFalse(r1.equals(r2));
-        r2.getItem().setSeriesItemLabelFont(1, new Font("Serif", Font.BOLD, 9));
+        r2.getItemLabel().setSeriesItemLabelFont(1, new Font("Serif", Font.BOLD, 9));
         assertTrue(r1.equals(r2));
 
         // defaultItemLabelFont
-        r1.getItem().setDefaultItemLabelFont(new Font("Serif", Font.PLAIN, 10));
+        r1.getItemLabel().setDefaultItemLabelFont(new Font("Serif", Font.PLAIN, 10));
         assertFalse(r1.equals(r2));
-        r2.getItem().setDefaultItemLabelFont(new Font("Serif", Font.PLAIN, 10));
+        r2.getItemLabel().setDefaultItemLabelFont(new Font("Serif", Font.PLAIN, 10));
         assertTrue(r1.equals(r2));
 
         // itemLabelPaintList
-        r1.getItem().setSeriesItemLabelPaint(0, new GradientPaint(1.0f, 2.0f, Color.RED,
+        r1.getItemLabel().setSeriesItemLabelPaint(0, new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.GRAY));
         assertFalse(r1.equals(r2));
-        r2.getItem().setSeriesItemLabelPaint(0, new GradientPaint(1.0f, 2.0f, Color.RED,
+        r2.getItemLabel().setSeriesItemLabelPaint(0, new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.GRAY));
         assertTrue(r1.equals(r2));
 
         // defaultItemLabelPaint
-        r1.getItem().setDefaultItemLabelPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+        r1.getItemLabel().setDefaultItemLabelPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.GRAY));
         assertFalse(r1.equals(r2));
-        r2.getItem().setDefaultItemLabelPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+        r2.getItemLabel().setDefaultItemLabelPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.GRAY));
         assertTrue(r1.equals(r2));
 
         // positiveItemLabelPositionList;
-        r1.getItem().setSeriesPositiveItemLabelPosition(0, new ItemLabelPosition());
+        r1.getItemLabel().setSeriesPositiveItemLabelPosition(0, new ItemLabelPosition());
         assertFalse(r1.equals(r2));
-        r2.getItem().setSeriesPositiveItemLabelPosition(0, new ItemLabelPosition());
+        r2.getItemLabel().setSeriesPositiveItemLabelPosition(0, new ItemLabelPosition());
         assertTrue(r1.equals(r2));
 
         // defaultPositiveItemLabelPosition;
-        r1.getItem().setDefaultPositiveItemLabelPosition(new ItemLabelPosition(
+        r1.getItemLabel().setDefaultPositiveItemLabelPosition(new ItemLabelPosition(
                 ItemLabelAnchor.INSIDE10, TextAnchor.BASELINE_RIGHT));
         assertFalse(r1.equals(r2));
-        r2.getItem().setDefaultPositiveItemLabelPosition(new ItemLabelPosition(
+        r2.getItemLabel().setDefaultPositiveItemLabelPosition(new ItemLabelPosition(
                 ItemLabelAnchor.INSIDE10, TextAnchor.BASELINE_RIGHT));
         assertTrue(r1.equals(r2));
 
         // negativeItemLabelPositionList;
-        r1.getItem().setSeriesNegativeItemLabelPosition(1, new ItemLabelPosition(
+        r1.getItemLabel().setSeriesNegativeItemLabelPosition(1, new ItemLabelPosition(
                 ItemLabelAnchor.INSIDE10, TextAnchor.BASELINE_RIGHT));
         assertFalse(r1.equals(r2));
-        r2.getItem().setSeriesNegativeItemLabelPosition(1, new ItemLabelPosition(
+        r2.getItemLabel().setSeriesNegativeItemLabelPosition(1, new ItemLabelPosition(
                 ItemLabelAnchor.INSIDE10, TextAnchor.BASELINE_RIGHT));
         assertTrue(r1.equals(r2));
 
         // defaultNegativeItemLabelPosition;
-        r1.getItem().setDefaultNegativeItemLabelPosition(new ItemLabelPosition(
+        r1.getItemLabel().setDefaultNegativeItemLabelPosition(new ItemLabelPosition(
                 ItemLabelAnchor.INSIDE10, TextAnchor.BASELINE_RIGHT));
         assertFalse(r1.equals(r2));
-        r2.getItem().setDefaultNegativeItemLabelPosition(new ItemLabelPosition(
+        r2.getItemLabel().setDefaultNegativeItemLabelPosition(new ItemLabelPosition(
                 ItemLabelAnchor.INSIDE10, TextAnchor.BASELINE_RIGHT));
         assertTrue(r1.equals(r2));
 
         // itemLabelAnchorOffset
-        r1.getItem().setItemLabelAnchorOffset(3.0);
+        r1.getItemLabel().setItemLabelAnchorOffset(3.0);
         assertFalse(r1.equals(r2));
-        r2.getItem().setItemLabelAnchorOffset(3.0);
+        r2.getItemLabel().setItemLabelAnchorOffset(3.0);
         assertTrue(r1.equals(r2));
 
         // createEntitiesList;
@@ -341,11 +340,11 @@ public class AbstractRendererTest {
     @Test
     public void testEquals_ObjectList() {
         BarRenderer r1 = new BarRenderer();
-        r1.getItem().setSeriesItemLabelFont(0, new Font(Font.DIALOG, Font.BOLD, 10));
+        r1.getItemLabel().setSeriesItemLabelFont(0, new Font(Font.DIALOG, Font.BOLD, 10));
         BarRenderer r2 = new BarRenderer();
-        r2.getItem().setSeriesItemLabelFont(0, new Font(Font.DIALOG, Font.BOLD, 10));
+        r2.getItemLabel().setSeriesItemLabelFont(0, new Font(Font.DIALOG, Font.BOLD, 10));
         assertEquals(r1, r2);
-        r2.getItem().setSeriesItemLabelFont(1, new Font(Font.DIALOG, Font.PLAIN, 5));
+        r2.getItemLabel().setSeriesItemLabelFont(1, new Font(Font.DIALOG, Font.PLAIN, 5));
         assertNotEquals(r1, r2);
     }
     
@@ -363,13 +362,13 @@ public class AbstractRendererTest {
     @Test
     public void testEquals_ObjectList3() {
         BarRenderer r1 = new BarRenderer();
-        r1.getItem().setSeriesPositiveItemLabelPosition(0,
+        r1.getItemLabel().setSeriesPositiveItemLabelPosition(0,
                 new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         BarRenderer r2 = new BarRenderer();
-        r2.getItem().setSeriesPositiveItemLabelPosition(0,
+        r2.getItemLabel().setSeriesPositiveItemLabelPosition(0,
                 new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         assertEquals(r1, r2);
-        r2.getItem().setSeriesPositiveItemLabelPosition(1,
+        r2.getItemLabel().setSeriesPositiveItemLabelPosition(1,
                 new ItemLabelPosition(ItemLabelAnchor.INSIDE1, TextAnchor.CENTER));
         assertNotEquals(r1, r2);
     }
@@ -377,13 +376,13 @@ public class AbstractRendererTest {
     @Test
     public void testEquals_ObjectList4() {
         BarRenderer r1 = new BarRenderer();
-        r1.getItem().setSeriesNegativeItemLabelPosition(0,
+        r1.getItemLabel().setSeriesNegativeItemLabelPosition(0,
                 new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         BarRenderer r2 = new BarRenderer();
-        r2.getItem().setSeriesNegativeItemLabelPosition(0,
+        r2.getItemLabel().setSeriesNegativeItemLabelPosition(0,
                 new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         assertEquals(r1, r2);
-        r2.getItem().setSeriesNegativeItemLabelPosition(1,
+        r2.getItemLabel().setSeriesNegativeItemLabelPosition(1,
                 new ItemLabelPosition(ItemLabelAnchor.INSIDE1, TextAnchor.CENTER));
         assertNotEquals(r1, r2);
     }
@@ -421,11 +420,11 @@ public class AbstractRendererTest {
         r1.getShape().setDefaultLegendShape(new Rectangle(4, 3, 2, 1));
         r1.setDefaultLegendTextFont(new Font("Dialog", Font.PLAIN, 3));
         r1.setDefaultLegendTextPaint(new Color(1, 2, 3));
-        r1.getItem().setSeriesItemLabelFont(0, new Font(Font.MONOSPACED, Font.BOLD, 13));
+        r1.getItemLabel().setSeriesItemLabelFont(0, new Font(Font.MONOSPACED, Font.BOLD, 13));
         r1.setLegendTextFont(0, new Font(Font.MONOSPACED, Font.BOLD, 14));
-        r1.getItem().setSeriesPositiveItemLabelPosition(0, new ItemLabelPosition(
+        r1.getItemLabel().setSeriesPositiveItemLabelPosition(0, new ItemLabelPosition(
                 ItemLabelAnchor.CENTER, TextAnchor.TOP_LEFT));
-        r1.getItem().setSeriesNegativeItemLabelPosition(0, new ItemLabelPosition(
+        r1.getItemLabel().setSeriesNegativeItemLabelPosition(0, new ItemLabelPosition(
                 ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         
         LineAndShapeRenderer r2 = (LineAndShapeRenderer) r1.clone();
@@ -478,24 +477,24 @@ public class AbstractRendererTest {
         r2.getShape().setSeriesShape(0, new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
         assertTrue(r1.equals(r2));
 
-        r1.getVisibility().setSeriesItemLabelsVisible(0, Boolean.TRUE);
+        r1.getItemLabel().setSeriesItemLabelsVisible(0, Boolean.TRUE);
         assertFalse(r1.equals(r2));
-        r2.getVisibility().setSeriesItemLabelsVisible(0, Boolean.TRUE);
+        r2.getItemLabel().setSeriesItemLabelsVisible(0, Boolean.TRUE);
         assertTrue(r1.equals(r2));
 
-        r1.getItem().setSeriesItemLabelPaint(0, Color.RED);
+        r1.getItemLabel().setSeriesItemLabelPaint(0, Color.RED);
         assertFalse(r1.equals(r2));
-        r2.getItem().setSeriesItemLabelPaint(0, Color.RED);
+        r2.getItemLabel().setSeriesItemLabelPaint(0, Color.RED);
         assertTrue(r1.equals(r2));
         
-        r1.getItem().setSeriesPositiveItemLabelPosition(0, new ItemLabelPosition());
+        r1.getItemLabel().setSeriesPositiveItemLabelPosition(0, new ItemLabelPosition());
         assertFalse(r1.equals(r2));
-        r2.getItem().setSeriesPositiveItemLabelPosition(0, new ItemLabelPosition());
+        r2.getItemLabel().setSeriesPositiveItemLabelPosition(0, new ItemLabelPosition());
         assertTrue(r1.equals(r2));
 
-        r1.getItem().setSeriesNegativeItemLabelPosition(0, new ItemLabelPosition());
+        r1.getItemLabel().setSeriesNegativeItemLabelPosition(0, new ItemLabelPosition());
         assertFalse(r1.equals(r2));
-        r2.getItem().setSeriesNegativeItemLabelPosition(0, new ItemLabelPosition());
+        r2.getItemLabel().setSeriesNegativeItemLabelPosition(0, new ItemLabelPosition());
         assertTrue(r1.equals(r2));
 
         r1.setSeriesCreateEntities(0, Boolean.FALSE);
@@ -633,50 +632,50 @@ public class AbstractRendererTest {
 
         // ITEM_LABELS_VISIBLE
         detector.setNotified(false);
-        r1.getVisibility().setSeriesItemLabelsVisible(0, Boolean.TRUE);
+        r1.getItemLabel().setSeriesItemLabelsVisible(0, Boolean.TRUE);
         assertTrue(detector.getNotified());
 
         detector.setNotified(false);
-        r1.getVisibility().setDefaultItemLabelsVisible(Boolean.TRUE);
+        r1.getItemLabel().setDefaultItemLabelsVisible(Boolean.TRUE);
         assertTrue(detector.getNotified());
 
         // ITEM_LABEL_FONT
         detector.setNotified(false);
-        r1.getItem().setSeriesItemLabelFont(0, new Font("Serif", Font.PLAIN, 12));
+        r1.getItemLabel().setSeriesItemLabelFont(0, new Font("Serif", Font.PLAIN, 12));
         assertTrue(detector.getNotified());
 
         detector.setNotified(false);
-        r1.getItem().setDefaultItemLabelFont(new Font("Serif", Font.PLAIN, 12));
+        r1.getItemLabel().setDefaultItemLabelFont(new Font("Serif", Font.PLAIN, 12));
         assertTrue(detector.getNotified());
 
         // ITEM_LABEL_PAINT
         detector.setNotified(false);
-        r1.getItem().setSeriesItemLabelPaint(0, Color.BLUE);
+        r1.getItemLabel().setSeriesItemLabelPaint(0, Color.BLUE);
         assertTrue(detector.getNotified());
 
         detector.setNotified(false);
-        r1.getItem().setDefaultItemLabelPaint(Color.BLUE);
+        r1.getItemLabel().setDefaultItemLabelPaint(Color.BLUE);
         assertTrue(detector.getNotified());
 
         // POSITIVE ITEM LABEL POSITION
         detector.setNotified(false);
-        r1.getItem().setSeriesPositiveItemLabelPosition(0, new ItemLabelPosition(
+        r1.getItemLabel().setSeriesPositiveItemLabelPosition(0, new ItemLabelPosition(
                 ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         assertTrue(detector.getNotified());
 
         detector.setNotified(false);
-        r1.getItem().setDefaultPositiveItemLabelPosition(new ItemLabelPosition(
+        r1.getItemLabel().setDefaultPositiveItemLabelPosition(new ItemLabelPosition(
                 ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         assertTrue(detector.getNotified());
 
         // NEGATIVE ITEM LABEL ANCHOR
         detector.setNotified(false);
-        r1.getItem().setSeriesNegativeItemLabelPosition(0, new ItemLabelPosition(
+        r1.getItemLabel().setSeriesNegativeItemLabelPosition(0, new ItemLabelPosition(
                 ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         assertTrue(detector.getNotified());
 
         detector.setNotified(false);
-        r1.getItem().setDefaultNegativeItemLabelPosition(new ItemLabelPosition(
+        r1.getItemLabel().setDefaultNegativeItemLabelPosition(new ItemLabelPosition(
                 ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         assertTrue(detector.getNotified());
 

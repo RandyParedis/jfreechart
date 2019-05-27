@@ -235,7 +235,7 @@ public class YIntervalRenderer extends AbstractXYItemRenderer
         // possibility to draw (a) the regular item label near to just the
         // upper y-value, or (b) the regular item label near the upper y-value
         // PLUS an additional item label near the lower y-value.
-        if (getVisibility().isItemLabelVisible(series, item)) {
+        if (getItemLabel().isItemLabelVisible(series, item)) {
             drawItemLabel(g2, orientation, dataset, series, item, xx, yyHigh,
                     false);
             drawAdditionalItemLabel(g2, orientation, dataset, series, item,
@@ -269,16 +269,16 @@ public class YIntervalRenderer extends AbstractXYItemRenderer
             return;
         }
 
-        Font labelFont = getItem().getItemLabelFont(series, item);
-        Paint paint = getItem().getItemLabelPaint(series, item);
+        Font labelFont = getItemLabel().getItemLabelFont(series, item);
+        Paint paint = getItemLabel().getItemLabelPaint(series, item);
         g2.setFont(labelFont);
         g2.setPaint(paint);
         String label = this.additionalItemLabelGenerator.generateLabel(dataset,
                 series, item);
 
-        ItemLabelPosition position = getItem().getNegativeItemLabelPosition(series, item);
+        ItemLabelPosition position = getItemLabel().getNegativeItemLabelPosition(series, item);
         Point2D anchorPoint = ItemLabelAnchor.calculateLabelAnchorPoint(
-                position.getItemLabelAnchor(), x, y, orientation, getItem().getItemLabelAnchorOffset());
+                position.getItemLabelAnchor(), x, y, orientation, getItemLabel().getItemLabelAnchorOffset());
         TextUtils.drawRotatedString(label, g2,
                 (float) anchorPoint.getX(), (float) anchorPoint.getY(),
                 position.getTextAnchor(), position.getAngle(),

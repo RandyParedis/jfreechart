@@ -353,7 +353,7 @@ public class LevelRenderer extends AbstractCategoryItemRenderer
 
         CategoryItemLabelGenerator generator = getItemLabelGenerator(row,
                 column);
-        if (generator != null && getVisibility().isItemLabelVisible(row, column)) {
+        if (generator != null && getItemLabel().isItemLabelVisible(row, column)) {
             drawItemLabel(g2, orientation, dataset, row, column, x, y,
                     (value < 0.0));
         }
