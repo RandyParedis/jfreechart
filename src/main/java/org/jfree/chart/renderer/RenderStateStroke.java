@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 // STROKE
 // OUTLINE STROKE
-public class RenderStateStroke implements Serializable, PublicCloneable, IRendererStroke {
+public class RenderStateStroke implements Serializable, PublicCloneable, IRenderStateStroke {
     private transient AbstractRenderer abstractRenderer;
 
     /**

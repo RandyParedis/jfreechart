@@ -4,7 +4,7 @@ import org.jfree.chart.event.RendererChangeEvent;
 
 import java.awt.*;
 
-public interface IRendererPaint {
+public interface IRenderStatePaint {
     /**
      * Returns the paint used to fill data items as they are drawn.
      * (this is typically the same for an entire series).

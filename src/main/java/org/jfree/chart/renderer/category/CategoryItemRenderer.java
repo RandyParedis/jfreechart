@@ -143,35 +143,35 @@ public interface CategoryItemRenderer extends LegendItemSource {
      *
      * @return Series visible render state.
      */
-    IRendererVisibility getVisibility();
+    IRenderStateVisibility getVisibility();
 
     /**
      * Returns the paint render state for the renderer.
      *
      * @return Paint render state.
      */
-    IRendererPaint getPaint();
+    IRenderStatePaint getPaint();
 
     /**
      * Returns the stroke render state for the renderer.
      *
      * @return Stroke render state.
      */
-    IRendererStroke getStroke();
+    IRenderStateStroke getStroke();
 
     /**
      * Returns the shape render state for the renderer.
      *
      * @return Shape render state.
      */
-    IRendererShape getShape();
+    IRenderStateShape getShape();
 
     /**
      * Returns the item render state for the renderer.
      *
      * @return Item render state.
      */
-    IRendererItem getItem();
+    IRenderStateItem getItem();
 
     /**
      * Returns the number of passes through the dataset required by the

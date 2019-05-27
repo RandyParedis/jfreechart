@@ -2,7 +2,7 @@ package org.jfree.chart.renderer;
 
 import org.jfree.chart.event.RendererChangeEvent;
 
-public interface IRendererVisibility {
+public interface IRenderStateVisibility {
 
     /**
      * Returns a boolean that indicates whether or not the specified item

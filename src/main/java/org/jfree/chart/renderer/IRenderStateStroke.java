@@ -4,7 +4,7 @@ import org.jfree.chart.event.RendererChangeEvent;
 
 import java.awt.*;
 
-public interface IRendererStroke {
+public interface IRenderStateStroke {
     /**
      * Returns the stroke used to draw data items.
      * <p>

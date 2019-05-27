@@ -4,7 +4,7 @@ import org.jfree.chart.event.RendererChangeEvent;
 
 import java.awt.*;
 
-public interface IRendererShape {
+public interface IRenderStateShape {
     /**
      * Returns a shape used to represent a data item.
      * <p>

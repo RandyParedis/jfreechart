@@ -9,7 +9,7 @@ import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
 // SHAPE
-public class RenderStateShape implements Serializable, PublicCloneable, IRendererShape {
+public class RenderStateShape implements Serializable, PublicCloneable, IRenderStateShape {
     private transient AbstractRenderer abstractRenderer;
 
     /**

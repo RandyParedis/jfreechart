@@ -273,25 +273,25 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     // SERIES VISIBLE (not yet respected by all renderers)
     // SERIES VISIBLE IN LEGEND (not yet respected by all renderers)
     // ITEM LABEL VISIBILITY...
-    public IRendererVisibility getVisibility() {
+    public IRenderStateVisibility getVisibility() {
         return this.renderStateVisibility;
     }
 
     // PAINT
     // FILL PAINT
     // OUTLINE PAINT
-    public IRendererPaint getPaint() {
+    public IRenderStatePaint getPaint() {
         return this.renderStatePaint;
     }
 
     // STROKE
     // OUTLINE STROKE
-    public IRendererStroke getStroke() {
+    public IRenderStateStroke getStroke() {
         return renderStateStroke;
     }
 
     // SHAPE
-    public IRendererShape getShape() {
+    public IRenderStateShape getShape() {
         return renderStateShape;
     }
 
@@ -299,7 +299,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     // ITEM LABEL PAINT
     // POSITIVE ITEM LABEL POSITION
     // NEGATIVE ITEM LABEL POSITION
-    public IRendererItem getItem() {
+    public IRenderStateItem getItem() {
         return renderStateItem;
     }
 

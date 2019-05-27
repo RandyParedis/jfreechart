@@ -5,7 +5,7 @@ import org.jfree.chart.labels.ItemLabelPosition;
 
 import java.awt.*;
 
-public interface IRendererItem {
+public interface IRenderStateItem {
     /**
      * Returns the font for an item label.
      *

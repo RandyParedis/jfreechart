@@ -1,6 +1,5 @@
 package org.jfree.chart.renderer;
 
-import org.jfree.chart.HashUtils;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
@@ -12,7 +11,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RenderStateItem implements Serializable, PublicCloneable, IRendererItem {
+public class RenderStateItem implements Serializable, PublicCloneable, IRenderStateItem {
     private transient AbstractRenderer abstractRenderer;
 
     /**

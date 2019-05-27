@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 // SERIES VISIBLE (not yet respected by all renderers)
 // SERIES VISIBLE IN LEGEND (not yet respected by all renderers)
-public class RenderStateVisibility implements Serializable, PublicCloneable, IRendererVisibility {
+public class RenderStateVisibility implements Serializable, PublicCloneable, IRenderStateVisibility {
     private transient AbstractRenderer abstractRenderer;
 
     /**
