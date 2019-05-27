@@ -128,12 +128,28 @@
 		\item Renderers that do not render;
 		%\item Inconsistent usage of drawing shapes between classes that inherit from the same base. (e.g. \texttt{drawRect} and \texttt{draw(Rectange)});
 		\item Implicit implementation of interfaces due to extension of a class that also implements the interface;
-		\item A mixture of a multitude of design patterns that are not all fully implemented (Abstract Factory, Adapters, Bridges, Model View Controller, Chain of Responsibility, Observers...)
+		\item A mixture of a multitude of design patterns that are not all fully implemented (\textsf{Abstract Factory}, \textsf{Adapters}, \textsf{Bridges}, \textsf{Model View Controller}, \textsf{Chain of Responsibility}, \textsf{Observers}...)
 		\item Groups of renderers that have similar features are completely separated. (e.g. the \texttt{AreaRenderer} and the \texttt{XYItemRenderer} have no correlation whatsoever)
 		\item ...
 	\end{itemize}
 
+	But up to this point, we've only been talking about the functionality of the renderers. \texttt{JFreeChart} consists of so much more than just renderers, but because we do not have the experience working with it, actually trying to identify how everything works was a hard task.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{pictures/draw-seq.png}
+		\caption{A graphical representation of the main execution of calls required to draw a plot with data. Image created with \cite{plantuml}.}
+		\label{fig:draw-seq}
+	\end{figure}
+
+	\textsl{Fig. \ref{fig:draw-seq}} is a representation of our understanding of the current code with respect to actually drawing/plotting some data. From our \texttt{main} function (the entrypoint of our system), there will be a sequence of calls resulting in us using the \textsf{Abstract Factory} design pattern from \texttt{JFreeChart}, located in the abstract \texttt{ChartFactory} class. Calling any of the create functions on this class, we will get an instance of a \texttt{Plot}. This can be any kind of \texttt{Plot}, as long as it is supported in \texttt{JFreeChart} and in the \texttt{ChartFactory}.
+	
+	Once we have obtained this \texttt{Plot}, we will probably add some data to it. This data comes in the form of the \texttt{Dataset} interface, which may or may not have been created already. Anyhow, assuming we have populated our \texttt{Plot}, we can now strive to display it.
+	
+	This will be done by calling the \texttt{draw} method on the \texttt{Plot} instance. In some cases, this function will automatically draw the plot, while in other classes, it first calls the internal (protected) \texttt{render} method. This \texttt{render} method in their turn will ask the renderer associated with this \texttt{Plot} to \texttt{draw} the data.
+
 	\subsection{Design}
+	\label{sec:design}
 	Based upon the design we recovered, we can generate a new, better (and hopefully cleaner) design.
 	
 	\begin{figure}[H]
@@ -147,11 +163,17 @@
 	
 	Unfortunately, without crowding too much of the class diagram, we didn't add all functions that are used in each class. If we would have done that, it would become clear that the \texttt{AbstractRenderer} is, in fact, a god class. \textsl{Split Up God Class} (9.3 from \cite{demeyer2009object}) tells us it is optimal to split up a class that holds too many functionalities, which is the case for the \texttt{AbstractRenderer}.
 	
-	From the comments in the code of the \texttt{AbstractRenderer}, we found that it had thirteen main functionalities, split up in vague sections: \texttt{Series Visibility}, \texttt{Series Visibility in Legend}, \texttt{Item Label Visibility}, \texttt{Paint}, \texttt{Fill Paint}, \texttt{Outline Paint}, \texttt{Item Label Paint}, \texttt{Stroke}, \texttt{Outline Stroke}, \texttt{Shape}, \texttt{Item Label Font}, \texttt{Positive Item Label Position} and \texttt{Negative Item Label Position}. Upon inspection, we found that not all extending classes used all these functions, which was an additional sign for us to split them up this way. We identified six categories from the original thirteen sections: \texttt{Visibility}, \texttt{Paint}, \texttt{Stroke}, \texttt{Shape}, \texttt{Font} and \texttt{Item}. Each of these categories are identified with the \texttt{RenderState*}-classes and their respective interfaces.
+	From the comments in the code of the \texttt{AbstractRenderer}, we found that it had thirteen main functionalities, split up in sections: \texttt{Series Visibility}, \texttt{Series Visibility in Legend}, \texttt{Item Label Visibility}, \texttt{Paint}, \texttt{Fill Paint}, \texttt{Outline Paint}, \texttt{Item Label Paint}, \texttt{Stroke}, \texttt{Outline Stroke}, \texttt{Shape}, \texttt{Item Label Font}, \texttt{Positive Item Label Position} and \texttt{Negative Item Label Position}. Upon inspection, we found that not all extending classes used all these functions, which was an additional sign for us to split them up this way. We identified six categories from the original thirteen sections: \texttt{Visibility}, \texttt{Paint}, \texttt{Stroke}, \texttt{Shape}, \texttt{Font} and \texttt{Item}. Each of these categories are identified with the \texttt{RenderState*}-classes and their respective interfaces.
 	
 	\subsection{Management}
+	Of course, refactoring is not necessarily a guarantee for success. It has to be logical, sensible and maintainable long after the refactoring process is finished. The latter is definitely the case for our new design.
+	
+	The \texttt{AbstractRenderer} in our new design is no longer a God Class, but acts like a simple parent for all renderers. If you want to give them all some new functionality, you no longer have to search its previously massive file, but instead, you can add a new (or adapt an existing) \texttt{RenderState} class and/or interface. This way, all renderers became more modular and easier to maintain.
+	
 	\subsection{Refactoring}
 	The refactoring process itself can contain a lot of different aspects. As far as the \texttt{plot} package is concerned, we would have liked to \textsl{Transform Conditionals to Polymorphism} (10 from \cite{demeyer2009object}), but unfortunately for us, these patterns were not applicable\footnote{Which is a good thing for the official maintainers of \texttt{JFreeChart}.}. So instead, we tried to reduce the cyclomatic complexity of the \texttt{XYPlot} and the \texttt{CategoryPlot} classes.
+	
+	As for the \texttt{AbstractRenderer}, we explained earlier in this document (see \textsl{section \ref{sec:design}}) how we could refactor this class.
 	
 	\section{Preserved Behaviour}
 	\label{sec:pb}
