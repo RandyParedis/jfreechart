@@ -1,0 +1,21 @@
+@startuml
+[Start] as [1] lasts 4 days
+[Code Analysis] as [2] lasts 8 days
+[Repo Visualisation] as [3.1] lasts 8 days
+[Repo Mining] as [3.2] lasts 6 days
+[Code Coverage] as [3.3] lasts 1 day
+[Design] as [4] lasts 3 days
+[Test Restructuring] as [5.1] lasts 3 days
+[Test Alterations] as [5.2] lasts 5 days
+[Code Refactoring] as [7] lasts 2 days
+[Management] as [6] lasts 30 days
+
+[2] starts at [1]'s end
+[3.1] starts at [2]'s end
+[3.2] starts at [2]'s end
+[3.3] starts at [3.2]'s end
+[4] starts at [3.1]'s end
+[5.1] starts at [4]'s end
+[5.2] starts at [4]'s end
+[7] starts at [5.2]'s end
+@enduml

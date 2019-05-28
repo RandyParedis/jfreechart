@@ -37,17 +37,33 @@
 	
 	While on the topic, although all strategies have their merit and are important in some way, we believe some of them are more important and/or practical to follow. \textsl{Keep It Simple} (2.7 from \cite{demeyer2009object}) is one of them, which we will keep in mind during the refactoring process.
 	
-	\subsection{PERT-Chart} 
+	\subsection{Original Idea}
+	\label{sec:original}
+	Not all planning processes will happen as they were imagined. In our original report, we showed a simplified \textsf{PERT} chart, on which we would base ourselves in the refactoring process. Unfortunately, as we will mention in \textsl{section \ref{sec:management2}}, our original concept was turned upside-down.
+	
+	\subsubsection{PERT Chart} 
 	\begin{figure}[H] 
 		\centering 
-		\includegraphics[width=\textwidth]{pert.pdf}
-		\caption{Simplified PERT-Chart for the Refactoring of \texttt{JFreeChart}} 
-		\label{fig:pert} 
+		\includegraphics[width=\textwidth]{pictures/pert-original.pdf}
+		\caption{Original simplified \textsf{PERT} chart idea for the Refactoring of \texttt{JFreeChart}.} 
+		\label{fig:pert-orig} 
 	\end{figure} 
    
-	In order for us to cleanly work on the reengineering of \texttt{JFreeChart}, we decided to make a \textsf{PERT}-chart \cite{pert}, as you can see in \textsl{Fig.\,\ref{fig:pert}}. This is a simplified model, without annotations of any critical tasks, paths, or the latest end dates for each task. 
+	In order for us to cleanly work on the reengineering of \texttt{JFreeChart}, we decided to make a \textsf{PERT} chart \cite{pert}, as you can see in \textsl{Fig.\,\ref{fig:pert-orig}}. This is a simplified model, without annotations of any critical tasks, paths, or the latest end dates for each task. 
    
-	As you can see, \textsl{Management} is a task we will do throughout the entire process of refactoring the project. Tasks \textsl{3.1. Repo Visualisation}, \textsl{3.2 Repo Mining} and \textsl{3.3 Code Coverage} can be found later in this document, respectively in \textsl{sections \ref{sec:gource}, \ref{sec:codescene}} and \textsl{\ref{sec:coco}}. 
+	As you can see, \textsl{Management} is a task we will do throughout the entire process of refactoring the project. Tasks \textsl{3.1. Repo Visualisation}, \textsl{3.2 Repo Mining} and \textsl{3.3 Code Coverage} can be found later in this document, respectively in \textsl{sections \ref{sec:gource}, \ref{sec:codescene}} and \textsl{\ref{sec:coco}}.
+	
+	\subsubsection{Gantt Chart}
+	To accommodate for our original \textsf{PERT} chart, we decided to add a \textsf{Gantt} chart \cite{gantt} with our guesses on timing constraints.
+	
+	\begin{figure}[H] 
+		\centering 
+		\includegraphics[width=\textwidth]{pictures/gantt-original.png}
+		\caption{Original \textsf{Gantt} chart idea for the Refactoring of \texttt{JFreeChart}. Image made with \cite{plantuml}.} 
+		\label{fig:gantt-orig} 
+	\end{figure} 
+
+	As you can see in the chart above, all tasks that appear in the \textsf{PERT} chart are listed here, with an approximation of how long we believe these should take and when we should start working on them.
    
 	
 	\subsection{First Contact}
@@ -87,7 +103,7 @@
 	\label{sec:coco}
 	Chapter 6.3 of \cite{demeyer2009object} tells us to \textsl{Use a Testing Framework}. Not only is this a good idea in refactoring, but in all software projects in general. JUnit was already available in \texttt{JFreeChart}, so there is no need to change of alter this part of the project. Linked with JUnit was \textsf{Cobertura} \cite{cobertura}, a maven plugin that allows us to check how much code was covered with the available tests.
 	
-	The overview that is generated from this plugin gives us enough information in order to determine which classes and functions were not covered in the project, also yielding possible missing tests. These missing tests can be seen as a symptom for code requiring refactoring (1.1 from \cite{demeyer2009object}). But as discussed above, we will \textsl{Fix Problems, Not Symptoms} (2.5 from \cite{demeyer2009object}) and more specifically, we will mainly focus on the tests that concern our main refactoring targets.
+	The overview that is generated from this plugin (see \textsl{attachment \pageref{cobertura-begin}}) gives us enough information in order to determine which classes and functions were not covered in the project, also yielding possible missing tests. These missing tests can be seen as a symptom for code requiring refactoring (1.1 from \cite{demeyer2009object}). But as discussed above, we will \textsl{Fix Problems, Not Symptoms} (2.5 from \cite{demeyer2009object}) and more specifically, we will mainly focus on the tests that concern our main refactoring targets.
 	
 	In general, we can deduce that the code coverage of \texttt{JFreeChart} at this point in time is way below comfortable for us.
 	
@@ -123,12 +139,12 @@
 	
 	This expansion of the UML specification allowed us to generally show the structure of our problem domain. Yet, trying to identify this domain, or more specifically, the functionality that required refactoring was quite tricky. This is mainly due to the high rate of exceptional entities and anomalies we've found while applying the \textsl{Study the Exceptional Entities} pattern (4.3 from \cite{demeyer2009object}).
 	
-	Some of these anomalies\footnote{As we would describe them. In \cite{demeyer2009object} they are not mentioned}, we've listed below.
+	Some of these anomalies\footnote{As we would describe them. In \cite{demeyer2009object} they are not mentioned.}, we've listed below.
 	\begin{itemize}
 		\item Renderers that do not render;
 		%\item Inconsistent usage of drawing shapes between classes that inherit from the same base. (e.g. \texttt{drawRect} and \texttt{draw(Rectange)});
 		\item Implicit implementation of interfaces due to extension of a class that also implements the interface;
-		\item A mixture of a multitude of design patterns that are not all fully implemented (\textsf{Abstract Factory}, \textsf{Adapters}, \textsf{Bridges}, \textsf{Model View Controller}, \textsf{Chain of Responsibility}, \textsf{Observers}...)
+		\item A mixture of a multitude of design patterns that are not all fully implemented (\textsl{A.3.1. Abstract Factory}, \textsl{A.3.2 Adapter}, \textsl{A.3.3 Facade}, \textsl{A.3.9 State}, \textsl{A.3.13 Visitor} from \cite{demeyer2009object})
 		\item Groups of renderers that have similar features are completely separated. (e.g. the \texttt{AreaRenderer} and the \texttt{XYItemRenderer} have no correlation whatsoever)
 		\item ...
 	\end{itemize}
@@ -152,25 +168,46 @@
 	\label{sec:design}
 	Based upon the design we recovered, we can generate a new, better (and hopefully cleaner) design.
 	
+	First things first, we can see that all methods that extend from the \texttt{AbstractXYItemRenderer} implement the \texttt{XYItemRenderer} interface, that is also implemented by their base class. From the \textsf{Liskov Substitution Principle} \cite{Liskov94abehavioral} and the basic rules of inheritance, we know that it is not required for derived classes to also implement the interface that was implemented by the base class. Even stronger, we know that all of the functions that are required by this interface are implemented in the derived classes, because they are available in the base class. This is why we severed the implementation link of all classes that inherit from the \texttt{AbstractXYItemRenderer}.
+	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.3]{pictures/class-diagram-ours.png}
 		\caption{An UML diagram, showing how we see the design. Image created with \cite{plantuml}. A bigger version can be found in \textsl{attachment \pageref{class-diagram-ours}}.}
-		\label{fig:UML-start}
+		\label{fig:UML-ours}
 	\end{figure}
-	
-	First things first, we can see that all methods that extend from the \texttt{AbstractXYItemRenderer} implement the \texttt{XYItemRenderer} interface, that is also implemented by their base class. From the \textsf{Liskov Substitution Principle} and the basic rules of inheritance, we know that it is not required for derived classes to also implement the interface that was implemented by the base class. Even stronger, we know that all of the functions that are required by this interface are implemented in the derived classes, because they are available in the base class. This is why we severed the implementation link of all classes that inherit from the \texttt{AbstractXYItemRenderer}.
 	
 	Unfortunately, without crowding too much of the class diagram, we didn't add all functions that are used in each class. If we would have done that, it would become clear that the \texttt{AbstractRenderer} is, in fact, a god class. \textsl{Split Up God Class} (9.3 from \cite{demeyer2009object}) tells us it is optimal to split up a class that holds too many functionalities, which is the case for the \texttt{AbstractRenderer}.
 	
-	From the comments in the code of the \texttt{AbstractRenderer}, we found that it had thirteen main functionalities, split up in sections: \texttt{Series Visibility}, \texttt{Series Visibility in Legend}, \texttt{Item Label Visibility}, \texttt{Paint}, \texttt{Fill Paint}, \texttt{Outline Paint}, \texttt{Item Label Paint}, \texttt{Stroke}, \texttt{Outline Stroke}, \texttt{Shape}, \texttt{Item Label Font}, \texttt{Positive Item Label Position} and \texttt{Negative Item Label Position}. Upon inspection, we found that not all extending classes used all these functions, which was an additional sign for us to split them up this way. We identified six categories from the original thirteen sections: \texttt{Visibility}, \texttt{Paint}, \texttt{Stroke}, \texttt{Shape}, \texttt{Font} and \texttt{Item}. Each of these categories are identified with the \texttt{RenderState*}-classes and their respective interfaces.
+	From the comments in the code of the \texttt{AbstractRenderer}, we found that it had thirteen main functionalities, split up in sections: \texttt{Series Visibility}, \texttt{Series Visibility in Legend}, \texttt{Item Label Visibility}, \texttt{Paint}, \texttt{Fill Paint}, \texttt{Outline Paint}, \texttt{Item Label Paint}, \texttt{Stroke}, \texttt{Outline Stroke}, \texttt{Shape}, \texttt{Item Label Font}, \texttt{Positive Item Label Position} and \texttt{Negative Item Label Position}. Upon inspection, we found that not all extending classes used all these functions, which was an additional sign for us to split them up this way. We identified five categories from the original thirteen sections: \texttt{Visibility}, \texttt{Paint}, \texttt{Stroke}, \texttt{Shape} and \texttt{Item}. Each of these categories are identified with the \texttt{RenderState*}-classes and their respective interfaces.
 	
 	\subsection{Management}
+	\label{sec:management2}
+	\subsubsection{Actual Progress}
+	As was mentioned in \textsl{section \ref{sec:original}}, we were not able to hold ourselves to the original planning of \textsl{Fig. \ref{fig:pert-orig}} and \textsl{Fig. \ref{fig:gantt-orig}}. This was mainly due to deadlines of other projects getting in the way and everything being due in the same week.
+	
+	\begin{figure}[H] 
+		\centering 
+		\includegraphics[width=\textwidth]{pictures/gantt-actual.png}
+		\caption{Actual \textsf{Gantt} chart for the Refactoring of \texttt{JFreeChart}. Image made with \cite{plantuml}.} 
+		\label{fig:gantt-actual} 
+	\end{figure}
+
+	The \textsf{Code Analysis} task was stretched thin over 31 days, allowing us to do a little bit here and there once we found the time. \textsl{Repo Mining} and \textsl{Code Coverage} were split into multiple tasks, the first around the deadline of the previous report and the second around the time of the actual \textsl{Design} phase.
+	
+	When looking back at the original \textsf{Gantt} chart, it's easy to identify a waterfall structure over the overall span of our project. And, besides the fact that this was an incredibly optimistic view on the project, we're glad we decided to work in an \textsf{Agile} manner for the actual refactoring. This way of working happened automatically, because we wanted to \textsl{Always have a Running Version} (7.5 from \cite{demeyer2009object}).
+	
+	This explains the recurrence of both the \textsl{Repo Mining} and \textsl{Code Coverage} tasks and also why, the second time they came around, these tasks span over the remainder of the project. At every new commit of main importance, we compared the new coverage and analyzed our repository again in \textsf{CodeScene}, making sure everything went as expected.
+	
+	Testing (both \textsl{Test Restructuring} and \textsl{Test Alterations}) went hand-in-hand with the \textsl{Code Refactoring} task. Because of our way of making sure that everything still worked and no tests failed (6.1, 6.3 and 7.6\footnote{\textsl{Test the Interface, not the Implementation} (6.4) also applies, mainly because this can be implicit due to refactoring. If we refactor some functionality and the tests keep working, they most definitely do not test the implementation.} from \cite{demeyer2009object}), some changes in the \textsl{Code Refactoring} also impacted these tasks.
+	
+	\subsubsection{Maintaining the Project}
 	Of course, refactoring is not necessarily a guarantee for success. It has to be logical, sensible and maintainable long after the refactoring process is finished. The latter is definitely the case for our new design.
 	
-	The \texttt{AbstractRenderer} in our new design is no longer a God Class, but acts like a simple parent for all renderers. If you want to give them all some new functionality, you no longer have to search its previously massive file, but instead, you can add a new (or adapt an existing) \texttt{RenderState} class and/or interface. This way, all renderers became more modular and easier to maintain.
+	The \texttt{AbstractRenderer} in our new design is no longer a God Class, but acts like a simple parent for all renderers. If you want to give them all some new functionality, you no longer have to search its previously massive file, but instead, you can add a new (or adapt an existing) \texttt{RenderState} class and/or interface. This way, all renderers became more modular and easier to maintain, while we \textsl{Conserve Familiarity} (7.11 from \cite{demeyer2009object}).
 	
 	\subsection{Refactoring}
+	\label{sec:refactoring}
 	The refactoring process itself can contain a lot of different aspects. As far as the \texttt{plot} package is concerned, we would have liked to \textsl{Transform Conditionals to Polymorphism} (10 from \cite{demeyer2009object}), but unfortunately for us, these patterns were not applicable\footnote{Which is a good thing for the official maintainers of \texttt{JFreeChart}.}. So instead, we tried to reduce the cyclomatic complexity of the \texttt{XYPlot} and the \texttt{CategoryPlot} classes.
 	
 	As for the \texttt{AbstractRenderer}, we explained earlier in this document (see \textsl{section \ref{sec:design}}) how we could refactor this class.
@@ -179,14 +216,21 @@
 	\label{sec:pb}
 	Of course, in order to be able to say that our refactoring process was effective, we must compare our results to the original source code. While tools like \textsf{iClones} \cite{iclones} automatically come bundled with a version comparison, others, unfortunately, do not. This is why, for this phase of the project, we decided to jump back and forth to the original version of our project and bundle all of our findings below.
 	
+	\subsection{Test Coverage (Cobertura)}
 	As we described in \textsl{section \ref{sec:coco}}, we've been using the tests from \texttt{JFreeChart}. As you can see, our project still passes on all of them, meaning that we (at least) provide the same functionality as when we started (6.1 and 7.6 from \cite{demeyer2009object}).
 	
-%	In fact, taking a look at our testing coverage, it's clear to see that the overall coverage went up, which is a good thing. This generally implies that our refactoring caused the tests to cover more code, giving us the information that there is more code that has passed the tests. We know now that the system after refactoring is a little bit more robust than before.
-	Taking a look at the code coverage reports from \textsf{Cobertura}, we can clearly see that we have some subtle differences. These changes can be either positive (the percentages went up) or negative (they went down). See \textsl{attachments \pageref{refactoring-package-plot} and \pageref{cobertura-begin}}
+	Taking a look at the code coverage reports from \textsf{Cobertura}, we can clearly see that we have some subtle differences. These changes can be either positive (the percentages went up) or negative (they went down). See \textsl{attachments \pageref{refactoring-package-plot} and \pageref{cobertura-begin}}.
 	
 	For the positive changes in these reports, we know they are a good thing. Generally, this implies the refactoring we've done caused the tests to cover more code, giving us the information that there is more code that has passed the tests.
 	
 	The negative changes on the other hand can also be seen as favorable. The main reason for this is because we removed some lines of code from these files and placed them elsewhere, while the existing covered functionality remained.
+	
+	\subsection{Hotspots (CodeScene)}
+	At the beginning of our project, \textsf{CodeScene} gave us about 5 percent in \textsl{Red Hotspots}. These refer to the complexity of the code, internal coupling, refactoring targets... Our refactoring process allowed this number to drop to about 3.7\%.
+	
+	This means that, even though we now have some \textsl{High-Risk Commits}, our refactored project is overall better and cleaner designed.
+	
+	As said previously (in \textsl{section \ref{sec:refactoring}}), we tried our best in reducing the overall cyclomatic complexity of the project (mainly the \texttt{plot} package). But for the most part, this isn't the way to go. Refactoring because of refactoring is bad practice if it doesn't optimize the overall structure of the system.
 
 	\clearpage
 	\bibliographystyle{plain}
