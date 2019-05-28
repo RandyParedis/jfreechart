@@ -10,28 +10,24 @@ AbstractRenderer <|-- DefaultPolarItemRenderer
 AbstractRenderer <|-- WaferMapRenderer
 
 
-interface IRendererVisibility
-IRendererVisibility <|.. RenderStateVisibility
+interface IRenderStateVisibility
+IRenderStateVisibility <|.. RenderStateVisibility
 RenderStateVisibility -- AbstractRenderer
 
-interface IRendererPaint
-IRendererPaint <|.. RenderStatePaint
+interface IRenderStatePaint
+IRenderStatePaint <|.. RenderStatePaint
 RenderStatePaint -- AbstractRenderer
 
-interface IRendererStroke
-IRendererStroke <|.. RenderStateStroke
+interface IRenderStateStroke
+IRenderStateStroke <|.. RenderStateStroke
 RenderStateStroke -- AbstractRenderer
 
-interface IRendererShape
-IRendererShape <|.. RenderStateShape
+interface IRenderStateShape
+IRenderStateShape <|.. RenderStateShape
 RenderStateShape -- AbstractRenderer
 
-interface IRendererFont
-IRendererFont <|.. RenderStateFont
-RenderStateFont -- AbstractRenderer
-
-interface IRendererItem
-IRendererItem <|.. RenderStateItem
+interface IRenderStateItem
+IRenderStateItem <|.. RenderStateItem
 RenderStateItem -- AbstractRenderer
 
 
