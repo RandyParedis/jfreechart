@@ -22,6 +22,7 @@
 	The ability for such a library for being flexible and expandable with a vast amount of new features would therefore be an incredible advantage for this.
 	
 	\subsection{Problem at Hand}
+	\label{sec:pah}
 	At this point in time, \texttt{JFreeChart} has a wide range of possible graphs, charts and plots it can generate for any kind of data you'd like. However, there is some functionality missing that we'd like to have. Namely, we'd like to be able to have a different shape or symbol for each datapoint. In order for us to introduce this feature, we'll first have to figure out the current way rendering of datapoints is handeled and afterwards we'll refactor the code so we can easily add this feature.
 	
 	Additionally, when we take a closer look at the code in general, there are some symptoms indicating it should be refactored\footnote{\textit{Missing tests}, \textit{Too much time for simple changes}...; 1.1 from \cite{demeyer2009object})}.
@@ -226,11 +227,18 @@
 	The negative changes on the other hand can also be seen as favorable. The main reason for this is because we removed some lines of code from these files and placed them elsewhere, while the existing covered functionality remained.
 	
 	\subsection{Hotspots (CodeScene)}
-	At the beginning of our project, \textsf{CodeScene} gave us about 5 percent in \textsl{Red Hotspots}. These refer to the complexity of the code, internal coupling, refactoring targets... Our refactoring process allowed this number to drop to about 3.7\%.
+	At the beginning of our project, \textsf{CodeScene} gave us about 5 percent in \textsl{Red Hotspots}. These refer to the complexity of the code, internal coupling, refactoring targets... Our refactoring process allowed this number to drop to about 2.8\%.
 	
 	This means that, even though we now have some \textsl{High-Risk Commits}, our refactored project is overall better and cleaner designed.
 	
 	As said previously (in \textsl{section \ref{sec:refactoring}}), we tried our best in reducing the overall cyclomatic complexity of the project (mainly the \texttt{plot} package). But for the most part, this isn't the way to go. Refactoring because of refactoring is bad practice if it doesn't optimize the overall structure of the system.
+	
+	This is why we went looking for duplicate code and features that could be extracted to other places. Overall, we tried to reduce the complexity and coupling of the original system.
+	
+	\section{Further Work}
+	As with any software project, it is perfectly possible to keep on being fixated on small, unimportant details. This is why it is important to retain a clear image of the problem at hand (see \textsl{section \ref{sec:pah}}).
+	
+	The main focus of this project was to refactor so that the feature of allowing each point to have another shape can be easily implemented. Thus, we focused our attention on the \texttt{AbstractRenderer} and \texttt{plot} package, but there is more to \texttt{JFreeChart}. Possible further work includes the refactoring of other aspects of the code, so there are more features to be added easily.
 
 	\clearpage
 	\bibliographystyle{plain}

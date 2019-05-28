@@ -1141,10 +1141,10 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     }
 
     private void drawValueMarker(Marker marker, Graphics2D g2, XYPlot plot,
-                                 ValueAxis domainAxis, Rectangle2D dataArea, boolean flipToRange) {
+                                 ValueAxis axis, Rectangle2D dataArea, boolean flipToRange) {
         ValueMarker vm = (ValueMarker) marker;
         double value = vm.getValue();
-        Range range = domainAxis.getRange();
+        Range range = axis.getRange();
         if (!range.contains(value)) {
             return;
         }
@@ -1154,7 +1154,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             axisEdge = plot.getRangeAxisEdge();
         }
 
-        double v = domainAxis.valueToJava2D(value, dataArea, axisEdge);
+        double v = axis.valueToJava2D(value, dataArea, axisEdge);
         PlotOrientation orientation = getDrawMarkerPlotOrientation(plot, flipToRange);
         Line2D line = null;
         if (orientation == PlotOrientation.HORIZONTAL) {

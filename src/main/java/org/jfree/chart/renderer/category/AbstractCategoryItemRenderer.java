@@ -1584,27 +1584,30 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             return result;
         }
         int seriesCount = dataset.getRowCount();
+        getLegendItems(result, index, seriesCount);
+        return result;
+    }
+
+    private void getLegendItems(LegendItemCollection result, int index, int seriesCount) {
         if (plot.getRowRenderingOrder().equals(SortOrder.ASCENDING)) {
             for (int i = 0; i < seriesCount; i++) {
-                if (getVisibility().isSeriesVisibleInLegend(i)) {
-                    LegendItem item = getLegendItem(index, i);
-                    if (item != null) {
-                        result.add(item);
-                    }
-                }
+                getLegendItemsHelper(result, index, i);
             }
         }
         else {
             for (int i = seriesCount - 1; i >= 0; i--) {
-                if (getVisibility().isSeriesVisibleInLegend(i)) {
-                    LegendItem item = getLegendItem(index, i);
-                    if (item != null) {
-                        result.add(item);
-                    }
-                }
+                getLegendItemsHelper(result, index, i);
             }
         }
-        return result;
+    }
+
+    private void getLegendItemsHelper(LegendItemCollection result, int index, int i) {
+        if (getVisibility().isSeriesVisibleInLegend(i)) {
+            LegendItem item = getLegendItem(index, i);
+            if (item != null) {
+                result.add(item);
+            }
+        }
     }
 
     /**
