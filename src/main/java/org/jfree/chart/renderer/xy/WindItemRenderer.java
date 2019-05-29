@@ -84,7 +84,7 @@ import org.jfree.data.xy.XYDataset;
  * alt="WindItemRendererSample.png">
  */
 public class WindItemRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
+        implements Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 8078914101916976844L;

@@ -153,7 +153,7 @@ import org.jfree.data.xy.XYDataset;
  * alt="XYBarRendererSample.png">
  */
 public class XYBarRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
+        implements Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 770559577251370036L;

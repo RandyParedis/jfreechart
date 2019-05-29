@@ -76,7 +76,7 @@ import org.jfree.data.xy.XYDataset;
  * @since 1.0.13
  */
 public class SamplingXYLineRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
+        implements Cloneable, PublicCloneable, Serializable {
 
     /** The shape that is used to represent a line in the legend. */
     private transient Shape legendLine;

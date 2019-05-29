@@ -154,7 +154,7 @@ import org.jfree.data.xy.XYDataset;
  * should use the {@link XYLineAndShapeRenderer} class instead.
  */
 public class StandardXYItemRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
+        implements Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -3271351259436865995L;

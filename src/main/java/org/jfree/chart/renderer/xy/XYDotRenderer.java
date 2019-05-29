@@ -87,7 +87,7 @@ import org.jfree.data.xy.XYDataset;
  * alt="XYDotRendererSample.png">
  */
 public class XYDotRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, PublicCloneable {
+        implements PublicCloneable {
 
     /** For serialization. */
     private static final long serialVersionUID = -2764344339073566425L;

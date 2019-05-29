@@ -100,7 +100,7 @@ import org.jfree.data.xy.XYZDataset;
  * @since 1.0.11
  */
 public class XYShapeRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
+        implements Cloneable, PublicCloneable, Serializable {
 
     /** Auto generated serial version id. */
     private static final long serialVersionUID = 8320552104211173221L;

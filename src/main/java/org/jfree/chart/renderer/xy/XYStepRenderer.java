@@ -106,7 +106,7 @@ import org.jfree.data.xy.XYDataset;
  * alt="XYStepRendererSample.png">
  */
 public class XYStepRenderer extends XYLineAndShapeRenderer
-        implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
+        implements Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -8918141928884796108L;

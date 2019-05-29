@@ -115,7 +115,7 @@ import org.jfree.data.xy.XYDataset;
  *
  */
 public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
+        implements Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -7435246895986425885L;

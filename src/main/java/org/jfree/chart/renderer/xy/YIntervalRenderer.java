@@ -89,7 +89,7 @@ import org.jfree.data.xy.XYDataset;
  * alt="YIntervalRendererSample.png">
  */
 public class YIntervalRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
+        implements Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -2951586537224143260L;

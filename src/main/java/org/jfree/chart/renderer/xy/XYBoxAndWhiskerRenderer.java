@@ -128,7 +128,7 @@ import org.jfree.data.xy.XYDataset;
  * This renderer does not include any code to calculate the crosshair point.
  */
 public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
+        implements Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -8020170108532232324L;

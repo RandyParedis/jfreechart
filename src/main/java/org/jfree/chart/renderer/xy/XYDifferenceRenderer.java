@@ -126,7 +126,7 @@ import org.jfree.data.xy.XYDataset;
  * alt="XYDifferenceRendererSample.png">
  */
 public class XYDifferenceRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, PublicCloneable {
+        implements PublicCloneable {
 
     /** For serialization. */
     private static final long serialVersionUID = -8447915602375584857L;

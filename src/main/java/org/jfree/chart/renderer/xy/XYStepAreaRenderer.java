@@ -89,7 +89,7 @@ import org.jfree.data.xy.XYDataset;
  * alt="XYStepAreaRendererSample.png">
  */
 public class XYStepAreaRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
+        implements Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -7311560779702649635L;

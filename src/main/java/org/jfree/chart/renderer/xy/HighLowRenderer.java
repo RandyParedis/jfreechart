@@ -107,7 +107,7 @@ import org.jfree.data.xy.XYDataset;
  * alt="HighLowRendererSample.png">
  */
 public class HighLowRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
+        implements Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -8135673815876552516L;

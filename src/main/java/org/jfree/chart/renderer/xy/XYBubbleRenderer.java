@@ -94,7 +94,7 @@ import org.jfree.data.xy.XYZDataset;
  * alt="XYBubbleRendererSample.png">
  */
 public class XYBubbleRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, PublicCloneable {
+        implements PublicCloneable {
 
     /** For serialization. */
     public static final long serialVersionUID = -5221991598674249125L;

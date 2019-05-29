@@ -77,7 +77,7 @@ import org.jfree.data.xy.XYDataset;
  * @since 1.0.6
  */
 public class VectorRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
+        implements Cloneable, PublicCloneable, Serializable {
 
     /** The length of the base. */
     private double baseLength = 0.10;

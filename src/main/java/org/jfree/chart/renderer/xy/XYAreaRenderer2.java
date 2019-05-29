@@ -124,7 +124,7 @@ import org.jfree.data.xy.XYDataset;
  * alt="XYAreaRenderer2Sample.png">
  */
 public class XYAreaRenderer2 extends AbstractXYItemRenderer
-        implements XYItemRenderer, PublicCloneable {
+        implements PublicCloneable {
 
     /** For serialization. */
     private static final long serialVersionUID = -7378069681579984133L;

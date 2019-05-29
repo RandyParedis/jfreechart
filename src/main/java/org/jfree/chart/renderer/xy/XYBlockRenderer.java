@@ -71,7 +71,7 @@ import org.jfree.data.xy.XYZDataset;
  * @since 1.0.4
  */
 public class XYBlockRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
+        implements Cloneable, PublicCloneable, Serializable {
 
     /**
      * The block width (defaults to 1.0).
