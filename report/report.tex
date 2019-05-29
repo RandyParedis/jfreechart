@@ -5,6 +5,10 @@
 	\incgraph[label={#1},overlay page number at bottom][scale=0.5]{pictures/#1.png}
 }
 
+\newcommand{\attachmentpdf}[1]{
+	\incgraph[label={#1},overlay page number at bottom][scale=0.5]{pictures/#1.pdf}
+}
+
 \begin{document}
 	\title{Software Reengineering Project}
 	\author{Mitchel Pyl \& Randy Paredis}
@@ -92,6 +96,8 @@
 	
 	Classes that remained mainly untouched could indicate abandoned code, but let's assume another possibility. Let's say that these classes indicate features or functionality that are complete. Usually these features cannot give a good enough representation of what's important in the system and whatnot. In either case of untouched code, we can remove our focus from these classes.
 	
+	As much as we want to add screenshots to explain our findings better, \textsf{Gource} makes a video of the history of a repository. We don't want to cloud our document by adding each frame as a screenshot.
+	
 	\subsection{Repository Mining with CodeScene}
 	\label{sec:codescene}
 	Another tool we made use of was \textsf{CodeScene} \cite{codescene}, the powerful visualization tool using \textit{Predictive Analytics} to find hidden risks and social patterns in your code.
@@ -124,9 +130,10 @@
 	After talking to other groups, we heard that we were not the only ones that found this.
 	
 	\subsection{SonarQube}
+	\label{sec:sonarqube}
 	After the disappointment that \textsf{iClones} is, we took a look at \textsf{SonarQube} \cite{sonarqube}. It is an online resource that can easily be integrated with a \textsf{GitHub} repository. It supports a general analysis of code smells, bugs and vulnerabilities.
 	
-	In \textsl{attachment \pageref{sonarcloud}} you can find a general overview of what \textsf{SonarQube} found of \texttt{JFreeChart} after our refactoring.
+	In \textsl{attachment \pageref{sonarcloud-orig}} you can find a general overview of what \textsf{SonarQube} found of \texttt{JFreeChart} after our refactoring. As you can see, the thing that jumps out the most is the 0\% coverage of unit tests. We believe this is due to the usage of \textsf{Cobertura} instead of \textsf{JaCoCo}, which is more common.
 	
 	
 	\section{Refactoring}
@@ -226,7 +233,7 @@
 	\subsection{Test Coverage (Cobertura)}
 	As we described in \textsl{section \ref{sec:coco}}, we've been using the tests from \texttt{JFreeChart}. As you can see, our project still passes on all of them, meaning that we (at least) provide the same functionality as when we started (6.1 and 7.6 from \cite{demeyer2009object}).
 	
-	Taking a look at the code coverage reports from \textsf{Cobertura}, we can clearly see that we have some subtle differences. These changes can be either positive (the percentages went up) or negative (they went down). See \textsl{attachments \pageref{refactoring-package-plot} and \pageref{cobertura-begin}}.
+	Taking a look at the code coverage reports from \textsf{Cobertura}, we can clearly see that we have some subtle differences. These changes can be either positive (the percentages went up) or negative (they went down). See \textsl{attachments \pageref{cobertura-begin} and \pageref{cobertura-now}}.
 	
 	For the positive changes in these reports, we know they are a good thing. Generally, this implies the refactoring we've done caused the tests to cover more code, giving us the information that there is more code that has passed the tests.
 	
@@ -241,6 +248,14 @@
 	
 	This is why we went looking for duplicate code and features that could be extracted to other places. Overall, we tried to reduce the complexity and coupling of the original system.
 	
+	When comparing \textsl{attachment \pageref{refactoring-package-plot}} to \textsl{attachment \pageref{refactoring-package-plot-ours}}, you can clearly see that more classes are identified as refactoring targets. Seeing as we did not change any code in these classes, we deduce that \textsf{CodeScene} identifies these targets percentage-wise and that our overall percentage must have dropped. The same can be said when comparing the overviews of both the refactoring targets (\textsl{attachment \pageref{refactoring-overview}} to \textsl{attachment \pageref{refactoring-overview-ours}}) and the hotspots (\textsl{attachment \pageref{hotspots-overview}} to \textsl{attachment \pageref{hotspots-overview-ours}}). Although, in the latter comparison, we clearly have smaller orbs to compare, meaning the hotspot-percentage went down.
+	
+	In \textsl{attachment \pageref{refactoring-package-renderer-ours}}, you can find that the \texttt{AbstractRenderer} is a refactoring target no more.
+	
+	\subsection{Code Smells (SonarQube)}
+	As discussed in \textsl{section \ref{sec:sonarqube}}, we tried identifying our code smells using \textsf{SonarQube}. When we take a look at the general results (which can be seen in \textsl{attachment \pageref{sonarcloud-orig}}) and lay them next to those of our new system (as in \textsl{attachement \pageref{sonarcloud}}), we see our debt\footnote{The estimated time to fix all code smells.} and our duplication percentage went down.
+	
+	As for all other metrics, those all remained the same, a sign that we purely redesigned our system instead of us trying to fix all issues.
 	
 	
 	\section{Further Work}
@@ -257,14 +272,21 @@
 	
 	\clearpage
 	\setcounter{page}{1}
+	
 	\attachment{cobertura-begin}
-	\attachment{class-diagram-begin}
-	\attachment{class-diagram-ours}
+	\attachment{cobertura-now}
+	
+	\attachmentpdf{class-diagram-begin}
+	\attachmentpdf{class-diagram-ours}
+	
+	\attachment{intellij-plugins}
+	
+	\attachment{sonarcloud-orig}
+	\attachment{sonarcloud}
+	
 	\attachment{hotspots-overview}
 	\attachment{hotspots-package-renderer}
 	\attachment{hotspots-package-plot}
-	\attachment{intellij-plugins}
-	\attachment{sonarcloud}
 	\attachment{refactoring-overview}
 	\attachment{refactoring-package-plot}
 	\attachment{refactoring-list}
@@ -273,5 +295,11 @@
 	\attachment{refactoring-PiePlot}
 	\attachment{refactoring-AbstractXYItemRenderer}
 	\attachment{refactoring-AbstractCategoryItemRenderer}
+
+	\attachment{hotspots-overview-ours}
+	\attachment{hotspots-package-renderer-ours}
+	\attachment{refactoring-overview-ours}
+	\attachment{refactoring-package-plot-ours}
+	\attachment{refactoring-package-renderer-ours}
 	
 \end{document}
