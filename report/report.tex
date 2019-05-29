@@ -74,6 +74,8 @@
 	\section{Project Analysis and Tool Usage}
 	In order to solidly identify the issues with \texttt{JFreeChart} and find possible refactoring targets, we made use of a few helpful tools that allowed for clear identification of possible problem areas. This way we can clearly \textsl{Study the Exceptional Entities} (4.3 from \cite{demeyer2009object}). Even though we know that what we find may be tedious or ambiguous to interpret, we will still make our conclusions based on what we know and expect.
 	
+	In general, we used both \textsf{IntelliJ} \cite{intellij} and \textsf{Ecipse} \cite{eclipse} for analyzing and browsing through our project. Both IDEs have easy functionalities to allow for refactoring, but our main process was done using \textsf{IntelliJ}, with additional analysis in \textsf{Eclipse}.
+	
 	\subsection{Repository Visualization with Gource}
 	\label{sec:gource}
 	The first tool we made use of was \textsf{Gource} \cite{gource}. It is a clean and fancy piece of software that can turn the history of a git repository into a visual representation. This is useful for a few reasons. First, it allows us to see clearly who the main contributers are. There was no surprise that this was \textsl{David Gilbert}.
@@ -110,17 +112,21 @@
 	
 	We also noticed that there is currently no mutation testing being done on this project. Even though we do realize this would give way too much situations and possibilities to cover, we currently have no idea of how good the tests currently are.
 	
-	\subsection{IntelliJ/Eclipse}
-	Because of the jumbled mess \texttt{JFreeChart} is, we decided to look into some tools that might help with the refactoring process itself. The first one that came to mind (and the one that we used to the biggest extend) were the \textsf{IntelliJ} refactoring functionalities (extracting methods/classes, pulling functions up/down...).
-	
-	Due to our usage with \textsf{IntelliJ}, we also installed the \textsf{Code Smells Detector} plugin \cite{jetbrains-csd}. Unfortunately, this tool appears to be sort of buggy when actually trying to perform some refactoring from the builtin functionality. This is why we combined this plugin with the \textsf{CodeMetrics} plugin \cite{jetbrains-cm}, so we could obtain a valid annotation on the complexity of some functions that were highlighted by the \textsf{Code Smells Detector}. The functions we found here (mostly) lined up with the one we obtained from \textsf{CodeScene}, giving us additional confirmation.
+	\subsection{Code Smells}
+	\subsubsection{IntelliJ/Eclipse Plugins}	
+	Due to our usage with \textsf{IntelliJ}, we also installed the \textsf{Code Smells Detector} plugin \cite{jetbrains-csd}. It allows refactoring of methods with a high cyclomatic complexity at their most complex statements, but unfortunately it does not take code clones in the functions themselves into a count. This is why we combined this plugin with the \textsf{CodeMetrics} plugin \cite{jetbrains-cm}, so we could obtain a valid annotation on the complexity of some functions that were highlighted by the \textsf{Code Smells Detector}. The functions we found here (mostly) lined up with the one we obtained from \textsf{CodeScene}, giving us additional confirmation. See \textsl{attachment \pageref{intellij-plugins}} for an example of how these two plugins look combined on a section of the \texttt{RenderStateShape} class\footnote{Which is a class we created during our refactoring process.}.
 	
 	The \textsf{Eclipse} counterpart of this plugin would be \textsf{JDeodorant} \cite{jdeodorant}, but sadly it was quite confusing to use and the results it produced (extracting a few methods to a superclass, moving a method to the class that is used the most in that method...) were, in our opinion, not helpful whatsoever. This is why we decided to identify most of the methods that needed extracting ourselves first and checking the result again afterwards, to see if we have made a difference.
 	
-	\subsection{Code Clones with iClones}
-	While on the topic of code smells, we also used \textsf{iClones} so we could detect duplicate code and other aspects outside of the IDEs we're using. Seeing \textsf{iClones} has builtin functionality to compare different versions of a project, it allows us to easily compare the code at the start of our refactoring process and at the end\footnote{Although we could easily apply this somewhere in the middle of our refactoring process, we've decided that this information is not entirely useful within the context of what we're trying to obtain.}.
+	\subsubsection{Code Clones with iClones}
+	While on the topic of code smells, we also used \textsf{iClones} so we could detect duplicate code and other aspects outside of the IDEs we're using. But in our opinion, this software is confusing, overly complex and does not actually show clones. It has the functionality to compare different versions of a project, but we did not find how to use this.
 	
-	Since the results we obtain from using this software are most useful in comparison over time, we will defer our conclusions to \textsl{section \ref{sec:pb}}.
+	After talking to other groups, we heard that we were not the only ones that found this.
+	
+	\subsection{SonarQube}
+	After the disappointment that \textsf{iClones} is, we took a look at \textsf{SonarQube} \cite{sonarqube}. It is an online resource that can easily be integrated with a \textsf{GitHub} repository. It supports a general analysis of code smells, bugs and vulnerabilities.
+	
+	In \textsl{attachment \pageref{soundcloud}} you can find a general overview of what \textsf{SonarQube} found of \texttt{JFreeChart} after our refactoring.
 	
 	
 	\section{Refactoring}
@@ -235,6 +241,8 @@
 	
 	This is why we went looking for duplicate code and features that could be extracted to other places. Overall, we tried to reduce the complexity and coupling of the original system.
 	
+	
+	
 	\section{Further Work}
 	As with any software project, it is perfectly possible to keep on being fixated on small, unimportant details. This is why it is important to retain a clear image of the problem at hand (see \textsl{section \ref{sec:pah}}).
 	
@@ -255,6 +263,8 @@
 	\attachment{hotspots-overview}
 	\attachment{hotspots-package-renderer}
 	\attachment{hotspots-package-plot}
+	\attachment{intellij-plugins}
+	\attachment{sonarcloud}
 	\attachment{refactoring-overview}
 	\attachment{refactoring-package-plot}
 	\attachment{refactoring-list}
