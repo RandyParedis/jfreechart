@@ -1,12 +1,14 @@
 \documentclass[11pt]{article}
 \usepackage{incgraph, tikz, csquotes, float}
 
-\newcommand{\attachment}[1]{
-	\incgraph[label={#1},overlay page number at bottom][scale=0.5]{pictures/#1.png}
+\newcommand{\attachment}[2]{
+%	\incgraph[label={#1},overlay page number at bottom][scale=0.5]{pictures/#1.png}
+	\incgraph[overlay={\node at (page.south) [draw,rectangle,fill=black!20,opacity=.5,text opacity=.7,text width=7cm,above=10] {\tiny A.\thepage. #2};}][scale=0.5]{pictures/#1.png}
 }
 
-\newcommand{\attachmentpdf}[1]{
-	\incgraph[label={#1},overlay page number at bottom][scale=0.5]{pictures/#1.pdf}
+\newcommand{\attachmentpdf}[2]{
+%	\incgraph[label={#1},overlay page number at bottom][scale=0.5]{pictures/#1.pdf}
+	\incgraph[overlay={\tiny \node at (page.south) [draw,rectangle,fill=black!20,opacity=.5,text opacity=.7,text width=7cm,above=10] {A.\thepage. #2};}][scale=0.5]{pictures/#1.pdf}
 }
 
 \begin{document}
@@ -64,7 +66,7 @@
 	\begin{figure}[H] 
 		\centering 
 		\includegraphics[width=\textwidth]{pictures/gantt-original.pdf}
-		\caption{Original \textsf{Gantt} chart idea for the Refactoring of \texttt{JFreeChart}. Image made with \cite{plantuml}.} 
+		\caption{Original \textsf{Gantt} chart idea for the Refactoring of \texttt{JFreeChart}. Image made with \textsf{PlantUML} \cite{plantuml}.} 
 		\label{fig:gantt-orig} 
 	\end{figure} 
 
@@ -78,7 +80,7 @@
 	\section{Project Analysis and Tool Usage}
 	In order to solidly identify the issues with \texttt{JFreeChart} and find possible refactoring targets, we made use of a few helpful tools that allowed for clear identification of possible problem areas. This way we can clearly \textsl{Study the Exceptional Entities} (4.3 from \cite{demeyer2009object}). Even though we know that what we find may be tedious or ambiguous to interpret, we will still make our conclusions based on what we know and expect.
 	
-	In general, we used both \textsf{IntelliJ} \cite{intellij} and \textsf{Ecipse} \cite{eclipse} for analyzing and browsing through our project. Both IDEs have easy functionalities to allow for refactoring, but our main process was done using \textsf{IntelliJ}, with additional analysis in \textsf{Eclipse}.
+	In general, we used both \textsf{IntelliJ} \cite{intellij} and \textsf{Eclipse} \cite{eclipse} for analyzing and browsing through our project. Both IDEs have easy functionalities to allow for refactoring, but our main process was done using \textsf{IntelliJ}, with additional analysis in \textsf{Eclipse}.
 	
 	\subsection{Repository Visualization with Gource}
 	\label{sec:gource}
@@ -120,7 +122,7 @@
 	
 	\subsection{Code Smells}
 	\subsubsection{IntelliJ/Eclipse Plugins}	
-	Due to our usage with \textsf{IntelliJ}, we also installed the \textsf{Code Smells Detector} plugin \cite{jetbrains-csd}. It allows refactoring of methods with a high cyclomatic complexity at their most complex statements, but unfortunately it does not take code clones in the functions themselves into a count. This is why we combined this plugin with the \textsf{CodeMetrics} plugin \cite{jetbrains-cm}, so we could obtain a valid annotation on the complexity of some functions that were highlighted by the \textsf{Code Smells Detector}. The functions we found here (mostly) lined up with the one we obtained from \textsf{CodeScene}, giving us additional confirmation. See \textsl{attachment \pageref{intellij-plugins}} for an example of how these two plugins look combined on a section of the \texttt{RenderStateShape} class\footnote{Which is a class we created during our refactoring process.}.
+	Due to our usage with \textsf{IntelliJ}, we also installed the \textsf{Code Smells Detector} plugin \cite{jetbrains-csd}. It allows refactoring of methods with a high cyclomatic complexity at their most complex statements, but unfortunately it does not take code clones in the functions themselves into account. This is why we combined this plugin with the \textsf{CodeMetrics} plugin \cite{jetbrains-cm}, so we could obtain a valid annotation on the complexity of some functions that were highlighted by the \textsf{Code Smells Detector}. The functions we found here (mostly) lined up with the one we obtained from \textsf{CodeScene}, giving us additional confirmation. See \textsl{attachment \pageref{intellij-plugins}} for an example of how these two plugins look combined on a section of the \texttt{RenderStateShape} class\footnote{Which is a class we created during our refactoring process.}.
 	
 	The \textsf{Eclipse} counterpart of this plugin would be \textsf{JDeodorant} \cite{jdeodorant}, but sadly it was quite confusing to use and the results it produced (extracting a few methods to a superclass, moving a method to the class that is used the most in that method...) were, in our opinion, not helpful whatsoever. This is why we decided to identify most of the methods that needed extracting ourselves first and checking the result again afterwards, to see if we have made a difference.
 	
@@ -145,7 +147,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{pictures/class-diagram-begin.pdf}
-		\caption{A simplified representation of the UML class diagram at the beginning of the refactoring process. Image created with \cite{plantuml}. A bigger version can be found in \textsl{attachment \pageref{class-diagram-begin}}.}
+		\caption{A simplified representation of the UML class diagram at the beginning of the refactoring process. Image created with \textsf{PlantUML} \cite{plantuml}. A bigger version can be found in \textsl{attachment \pageref{class-diagram-begin}}.}
 		\label{fig:UML-start}
 	\end{figure}
 	
@@ -168,7 +170,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\textwidth]{pictures/draw-seq.pdf}
-		\caption{A graphical representation of the main execution of calls required to draw a plot with data. Image created with \cite{plantuml}.}
+		\caption{A graphical representation of the main execution of calls required to draw a plot with data. Image created with \textsf{PlantUML} \cite{plantuml}.}
 		\label{fig:draw-seq}
 	\end{figure}
 
@@ -187,7 +189,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{pictures/class-diagram-ours.pdf}
-		\caption{An UML diagram, showing how we see the design. Image created with \cite{plantuml}. A bigger version can be found in \textsl{attachment \pageref{class-diagram-ours}}.}
+		\caption{An UML diagram, showing how we see the design. Image created with \textsf{PlantUML} \cite{plantuml}. A bigger version can be found in \textsl{attachment \pageref{class-diagram-ours}}.}
 		\label{fig:UML-ours}
 	\end{figure}
 	
@@ -203,7 +205,7 @@
 	\begin{figure}[H] 
 		\centering 
 		\includegraphics[width=\textwidth]{pictures/gantt-actual.pdf}
-		\caption{Actual \textsf{Gantt} chart for the Refactoring of \texttt{JFreeChart}. Image made with \cite{plantuml}.} 
+		\caption{Actual \textsf{Gantt} chart for the Refactoring of \texttt{JFreeChart}. Image made with \textsf{PlantUML} \cite{plantuml}.} 
 		\label{fig:gantt-actual} 
 	\end{figure}
 
@@ -240,7 +242,7 @@
 	The negative changes on the other hand can also be seen as favorable. The main reason for this is because we removed some lines of code from these files and placed them elsewhere, while the existing covered functionality remained.
 	
 	\subsection{Hotspots (CodeScene)}
-	At the beginning of our project, \textsf{CodeScene} gave us about 5 percent in \textsl{Red Hotspots}. These refer to the complexity of the code, internal coupling, refactoring targets... Our refactoring process allowed this number to drop to about 2.8\%.
+	At the beginning of our project, \textsf{CodeScene} gave us about 5 percent in \textsl{Red Hotspots}. These refer to the complexity of the code, internal coupling, refactoring targets... Our refactoring process allowed this number to drop to about 2.8 percent.
 	
 	This means that, even though we now have some \textsl{High-Risk Commits}, our refactored project is overall better and cleaner designed.
 	
@@ -262,44 +264,50 @@
 	As with any software project, it is perfectly possible to keep on being fixated on small, unimportant details. This is why it is important to retain a clear image of the problem at hand (see \textsl{section \ref{sec:pah}}).
 	
 	The main focus of this project was to refactor so that the feature of allowing each point to have another shape can be easily implemented. Thus, we focused our attention on the \texttt{AbstractRenderer} and \texttt{plot} package, but there is more to \texttt{JFreeChart}. Possible further work includes the refactoring of other aspects of the code, so there are more features to be added easily.
+	
+	We would also have liked the project to have moved to \textsf{Java 8}, to allow for default implementations in interfaces. This way we could have used the \textsf{Mixin Design Pattern} \cite{mixin} and our \texttt{AbstractRenderer} could have implemented these interfaces, instead of holding them as fields.
 
 	\clearpage
 	\bibliographystyle{plain}
 	\bibliography{references}
 	
 	\section*{Attachments}
-	On the following pages, we've included a set of screenshots from \textsf{CodeScene} that are referred to in the previous sections. The attachment number is overlayed over the image.
+	On the following pages, we've included a set of screenshots from the tools that we used (\textsf{Cobertura}, \textsf{IntelliJ}, \textsf{SonarQube} and \textsf{CodeScene}) that are referred to in the previous sections. You will also find a larger version of \textsl{Fig. \ref{fig:UML-start}} and \textsl{Fig. \ref{fig:UML-ours}}.
+	
+	Each attachment has a short line of description and is annotated with \texttt{A.n.}, where \texttt{n} is the number of the attachment.
+	
+	
 	
 	\clearpage
 	\setcounter{page}{1}
 	
-	\attachment{cobertura-begin}
-	\attachment{cobertura-now}
+	\attachment{cobertura-begin}{Coverage report at the start.}
+	\attachment{cobertura-now}{Coverage report of our implementation.}
 	
-	\attachmentpdf{class-diagram-begin}
-	\attachmentpdf{class-diagram-ours}
+	\attachmentpdf{class-diagram-begin}{UML diagram at the start.}
+	\attachmentpdf{class-diagram-ours}{UML diagram of our system.}
 	
-	\attachment{intellij-plugins}
+	\attachment{intellij-plugins}{The \textsf{CodeMetrics} and the \textsf{Code Smell Detector} plugins from \textsf{IntelliJ}.}
 	
-	\attachment{sonarcloud-orig}
-	\attachment{sonarcloud}
+	\attachment{sonarcloud-orig}{Original results from \textsf{SonarCloud}/\textsf{SonarQube}.}
+	\attachment{sonarcloud}{Results from \textsf{SonarCloud}/\textsf{SonarQube} after our changes.}
 	
-	\attachment{hotspots-overview}
-	\attachment{hotspots-package-renderer}
-	\attachment{hotspots-package-plot}
-	\attachment{refactoring-overview}
-	\attachment{refactoring-package-plot}
-	\attachment{refactoring-list}
-	\attachment{refactoring-XYPlot}
-	\attachment{refactoring-CategoryPlot}
-	\attachment{refactoring-PiePlot}
-	\attachment{refactoring-AbstractXYItemRenderer}
-	\attachment{refactoring-AbstractCategoryItemRenderer}
+	\attachment{hotspots-overview}{Overall overview of the hotspots before our changes.}
+	\attachment{hotspots-package-renderer}{Hotspots of the \texttt{renderer} package before our changes.}
+	\attachment{hotspots-package-plot}{Hotspots of the \texttt{plot} package before our changes.}
+	\attachment{refactoring-overview}{Overall overview of the refactoring targets before our changes.}
+	\attachment{refactoring-package-plot}{Refactoring targets of the \texttt{plot} package before our changes.}
+	\attachment{refactoring-list}{Summary of the biggest refactoring targets at the beginning of the refactoring process.}
+	\attachment{refactoring-XYPlot}{X-Ray of the \texttt{XYPlot} at the beginning of the refactoring process.}
+	\attachment{refactoring-CategoryPlot}{X-Ray of the \texttt{CategoryPlot} at the beginning of the refactoring process.}
+	\attachment{refactoring-PiePlot}{X-Ray of the \texttt{PiePlot} at the beginning of the refactoring process.}
+	\attachment{refactoring-AbstractXYItemRenderer}{X-Ray of the \texttt{AbstractXYItemRenderer} at the beginning of the refactoring process.}
+	\attachment{refactoring-AbstractCategoryItemRenderer}{X-Ray of the \texttt{AbstractCategoryItemRenderer} at the beginning of the refactoring process.}
 
-	\attachment{hotspots-overview-ours}
-	\attachment{hotspots-package-renderer-ours}
-	\attachment{refactoring-overview-ours}
-	\attachment{refactoring-package-plot-ours}
-	\attachment{refactoring-package-renderer-ours}
+	\attachment{hotspots-overview-ours}{Overall overview of the hotspots after our changes.}
+	\attachment{hotspots-package-renderer-ours}{Hotspots of the \texttt{renderer} package after our changes.}
+	\attachment{refactoring-overview-ours}{Overall overview of the refactoring targets after our changes.}
+	\attachment{refactoring-package-plot-ours}{Refactoring targets of the \texttt{plot} package after our changes.}
+	\attachment{refactoring-package-renderer-ours}{Refactoring targets of the \texttt{renderer} package after our changes.}
 	
 \end{document}
