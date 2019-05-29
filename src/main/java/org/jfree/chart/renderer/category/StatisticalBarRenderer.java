@@ -104,8 +104,7 @@ import org.jfree.data.statistics.StatisticalCategoryDataset;
  * alt="StatisticalBarRendererSample.png">
  */
 public class StatisticalBarRenderer extends BarRenderer
-        implements CategoryItemRenderer, Cloneable, PublicCloneable,
-                   Serializable {
+        implements Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -4986038395414039117L;
