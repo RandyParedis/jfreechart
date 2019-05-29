@@ -1,4 +1,4 @@
-@startuml
+@startgantt
 [Start] as [1] lasts 10 days
 [Repo Mining 1] as [3.21] lasts 3 days
 [Repo Visualisation] as [3.1] lasts 13 days
@@ -22,4 +22,4 @@
 [5.1] starts at [4]'s end
 [5.2] starts at [4]'s end
 [7] starts at [4]'s end
-@enduml
+@endgantt
