@@ -3,12 +3,12 @@
 
 \newcommand{\attachment}[2]{
 %	\incgraph[label={#1},overlay page number at bottom][scale=0.5]{pictures/#1.png}
-	\incgraph[overlay={\node at (page.south) [draw,rectangle,fill=black!20,opacity=.5,text opacity=.7,text width=7cm,above=10] {\tiny A.\thepage. #2};}][scale=0.5]{pictures/#1.png}
+	\incgraph[label={#1},overlay={\node at (page.south) [draw,rectangle,fill=black!20,opacity=.5,text opacity=.7,text width=7cm,above=10] {\tiny A.\thepage. #2};}][scale=0.5]{pictures/#1.png}
 }
 
 \newcommand{\attachmentpdf}[2]{
 %	\incgraph[label={#1},overlay page number at bottom][scale=0.5]{pictures/#1.pdf}
-	\incgraph[overlay={\tiny \node at (page.south) [draw,rectangle,fill=black!20,opacity=.5,text opacity=.7,text width=7cm,above=10] {A.\thepage. #2};}][scale=0.5]{pictures/#1.pdf}
+	\incgraph[label={#1},overlay={\tiny \node at (page.south) [draw,rectangle,fill=black!20,opacity=.5,text opacity=.7,text width=7cm,above=10] {A.\thepage. #2};}][scale=0.5]{pictures/#1.pdf}
 }
 
 \begin{document}
